@@ -8,8 +8,10 @@ import { buildGraph } from '@/lib/graph';
 
 export default function Graph() {
   const navigate = useNavigate();
-  const notes = useNotesStore((s) => Object.values(s.notes));
-  const cards = useDecksCardsStore((s) => Object.values(s.cards));
+  const notesMap = useNotesStore((s) => s.notes);
+  const cardsMap = useDecksCardsStore((s) => s.cards);
+  const notes = Object.values(notesMap);
+  const cards = Object.values(cardsMap);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const graph = useMemo(() => buildGraph(notes), [notes]);

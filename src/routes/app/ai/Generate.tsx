@@ -12,7 +12,8 @@ export default function AIGenerate() {
   const [params] = useSearchParams();
   const noteId = params.get('noteId');
   const note = useNotesStore((s) => (noteId ? s.notes[noteId] : undefined));
-  const decks = useDecksCardsStore((s) => Object.values(s.decks));
+  const decksMap = useDecksCardsStore((s) => s.decks);
+  const decks = Object.values(decksMap);
   const addCards = useDecksCardsStore((s) => s.addCards);
   const addXp = useGameStore((s) => s.addXp);
   const navigate = useNavigate();

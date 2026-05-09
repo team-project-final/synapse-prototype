@@ -13,7 +13,8 @@ const QA_TEMPLATES: Record<string, string> = {
 };
 
 export default function Search() {
-  const notes = useNotesStore((s) => Object.values(s.notes));
+  const notesMap = useNotesStore((s) => s.notes);
+  const notes = Object.values(notesMap);
   const [query, setQuery] = useState('');
   const [tab, setTab] = useState<'search' | 'qa'>('search');
   const [streaming, setStreaming] = useState('');

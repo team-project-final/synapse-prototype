@@ -4,7 +4,8 @@ import { Card, Button, Input, Badge } from '@/components/ds';
 import { useNotesStore } from '@/stores/use-notes';
 
 export default function NotesList() {
-  const notes = useNotesStore((s) => Object.values(s.notes));
+  const notesMap = useNotesStore((s) => s.notes);
+  const notes = Object.values(notesMap);
   const [query, setQuery] = useState('');
   const [tag, setTag] = useState<string | null>(null);
 

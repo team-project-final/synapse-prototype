@@ -3,8 +3,10 @@ import { Card, Button, Badge } from '@/components/ds';
 import { useDecksCardsStore } from '@/stores/use-decks-cards';
 
 export default function DecksList() {
-  const decks = useDecksCardsStore((s) => Object.values(s.decks));
-  const cards = useDecksCardsStore((s) => Object.values(s.cards));
+  const decksMap = useDecksCardsStore((s) => s.decks);
+  const cardsMap = useDecksCardsStore((s) => s.cards);
+  const decks = Object.values(decksMap);
+  const cards = Object.values(cardsMap);
   const now = Date.now();
 
   return (
