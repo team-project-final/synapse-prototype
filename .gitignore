@@ -20,3 +20,4 @@ coverage
 .omc/
 *.tsbuildinfo
 public/docs-md/
+.gstack/
