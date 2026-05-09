@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useParams, Link, useNavigate } from 'react-router';
 import { Card, Button, Badge } from '@/components/ds';
 import { MarkdownRenderer } from '@/components/shared/MarkdownRenderer';
@@ -7,8 +8,14 @@ export default function NoteView() {
   const { id } = useParams();
   const navigate = useNavigate();
   const note = useNotesStore((s) => (id ? s.notes[id] : undefined));
-  const backlinks = useNotesStore((s) => (note ? s.backlinksOf(note.title) : []));
   const allNotes = useNotesStore((s) => s.notes);
+  const backlinks = useMemo(
+    () =>
+      note
+        ? Object.values(allNotes).filter((n) => n.outgoingLinks.includes(note.title))
+        : [],
+    [allNotes, note],
+  );
 
   if (!note) return <div className="p-6">노트를 찾을 수 없습니다.</div>;
 

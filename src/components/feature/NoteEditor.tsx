@@ -13,7 +13,8 @@ interface Props {
 
 export function NoteEditor({ noteId }: Props) {
   const navigate = useNavigate();
-  const allNotes = useNotesStore((s) => Object.values(s.notes));
+  const notesMap = useNotesStore((s) => s.notes);
+  const allNotes = Object.values(notesMap);
   const upsert = useNotesStore((s) => s.upsert);
   const addXp = useGameStore((s) => s.addXp);
   const existing = useNotesStore((s) => (noteId ? s.notes[noteId] : undefined));

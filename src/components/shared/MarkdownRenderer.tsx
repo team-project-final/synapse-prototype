@@ -11,7 +11,8 @@ interface Props {
 }
 
 export function MarkdownRenderer({ source }: Props) {
-  const allNotes = useNotesStore((s) => Object.values(s.notes));
+  const notesMap = useNotesStore((s) => s.notes);
+  const allNotes = Object.values(notesMap);
   const titleToId = new Map(allNotes.map((n) => [n.title, n.id]));
 
   const processed = source.replace(WIKILINK_RE, (_, target: string) => {
