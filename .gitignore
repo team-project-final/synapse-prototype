@@ -17,3 +17,6 @@ test-results
 playwright-report
 coverage
 .superpowers/
+.omc/
+*.tsbuildinfo
+public/docs-md/
