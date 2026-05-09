@@ -1,4 +1,4 @@
-import { Placeholder } from '../../_Placeholder';
+import { NoteEditor } from '@/components/feature/NoteEditor';
 export default function NoteNew() {
-  return <Placeholder name="노트 신규 작성" />;
+  return <NoteEditor />;
 }

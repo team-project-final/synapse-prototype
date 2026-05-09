@@ -1,6 +1,6 @@
 import { useParams } from 'react-router';
-import { Placeholder } from '../../_Placeholder';
+import { NoteEditor } from '@/components/feature/NoteEditor';
 export default function NoteEdit() {
   const { id } = useParams();
-  return <Placeholder name={`노트 편집: ${id}`} />;
+  return <NoteEditor noteId={id} />;
 }
