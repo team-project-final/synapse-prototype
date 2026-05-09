@@ -19,9 +19,11 @@ import Search from './routes/app/Search';
 import Profile from './routes/app/Profile';
 import Groups from './routes/app/Groups';
 import { Toaster } from './components/ds';
+import { SeedGuard } from './components/SeedGuard';
 
 export default function App() {
   return (
+    <SeedGuard>
     <BrowserRouter basename="/synapse-prototype">
       <Routes>
         <Route path="/" element={<Landing />} />
@@ -47,5 +49,6 @@ export default function App() {
       </Routes>
       <Toaster />
     </BrowserRouter>
+    </SeedGuard>
   );
 }
