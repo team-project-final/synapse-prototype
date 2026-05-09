@@ -9,9 +9,13 @@ import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
 
 export default function Dashboard() {
-  const notes = useNotesStore((s) => Object.values(s.notes));
-  const cards = useDecksCardsStore((s) => Object.values(s.cards));
-  const game = useGameStore();
+  const notesMap = useNotesStore((s) => s.notes);
+  const cardsMap = useDecksCardsStore((s) => s.cards);
+  const xp = useGameStore((s) => s.xp);
+  const streakCurrent = useGameStore((s) => s.streak.current);
+  const weeklyStats = useGameStore((s) => s.weeklyStats);
+  const notes = Object.values(notesMap);
+  const cards = Object.values(cardsMap);
   const recentNotes = [...notes].sort((a, b) => b.updatedAt - a.updatedAt).slice(0, 5);
   const now = Date.now();
   const dueCount = cards.filter((c) => c.srs.due <= now).length;
@@ -41,25 +45,25 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Card>
           <h3 className="text-sm font-medium text-stone-600 mb-3">학습 통계</h3>
-          <XPProgressBar xp={game.xp} />
+          <XPProgressBar xp={xp} />
           <div className="mt-4 grid grid-cols-3 gap-2 text-sm">
             <div>
               <div className="text-stone-500">이번 주 복습</div>
-              <div className="display text-xl">{game.weeklyStats.reviewed}</div>
+              <div className="display text-xl">{weeklyStats.reviewed}</div>
             </div>
             <div>
               <div className="text-stone-500">노트</div>
-              <div className="display text-xl">{game.weeklyStats.notesCreated}</div>
+              <div className="display text-xl">{weeklyStats.notesCreated}</div>
             </div>
             <div>
               <div className="text-stone-500">XP</div>
-              <div className="display text-xl">+{game.weeklyStats.xpGained}</div>
+              <div className="display text-xl">+{weeklyStats.xpGained}</div>
             </div>
           </div>
         </Card>
         <Card>
           <h3 className="text-sm font-medium text-stone-600 mb-3">연속 학습</h3>
-          <StreakFlame days={game.streak.current} />
+          <StreakFlame days={streakCurrent} />
         </Card>
       </div>
 

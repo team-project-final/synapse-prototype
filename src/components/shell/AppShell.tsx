@@ -7,7 +7,7 @@ import { useNotificationsStore } from '@/stores/use-notifications';
 
 export function AppShell({ children }: { children: ReactNode }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const unread = useNotificationsStore((s) => s.unreadCount());
+  const unread = useNotificationsStore((s) => s.items.filter((i) => !i.read).length);
 
   return (
     <div className="min-h-dvh flex flex-col bg-stone-50">

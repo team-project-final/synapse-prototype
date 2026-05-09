@@ -6,8 +6,13 @@ import { useGameStore } from '@/stores/use-game';
 import { BADGES } from '@/lib/xp';
 
 export default function Profile() {
-  const game = useGameStore();
-  const earnedCount = Object.values(game.badges).filter((b) => b.earnedAt).length;
+  const xp = useGameStore((s) => s.xp);
+  const level = useGameStore((s) => s.level);
+  const title = useGameStore((s) => s.title);
+  const streakCurrent = useGameStore((s) => s.streak.current);
+  const badges = useGameStore((s) => s.badges);
+  const weeklyStats = useGameStore((s) => s.weeklyStats);
+  const earnedCount = Object.values(badges).filter((b) => b.earnedAt).length;
 
   return (
     <div className="p-6 max-w-4xl space-y-6">
@@ -16,17 +21,17 @@ export default function Profile() {
       <Card elevated>
         <div className="flex items-start gap-6 flex-wrap">
           <div className="w-20 h-20 rounded-full bg-stone-200 flex items-center justify-center display text-3xl text-[#D97706]">
-            {game.level}
+            {level}
           </div>
           <div className="flex-1 min-w-[240px] space-y-3">
             <div>
               <div className="display text-2xl">개발자 김시냅스</div>
               <div className="text-stone-600">
-                🏅 레벨 {game.level} — {game.title}
+                🏅 레벨 {level} — {title}
               </div>
             </div>
-            <XPProgressBar xp={game.xp} />
-            <StreakFlame days={game.streak.current} />
+            <XPProgressBar xp={xp} />
+            <StreakFlame days={streakCurrent} />
           </div>
         </div>
       </Card>
@@ -41,7 +46,7 @@ export default function Profile() {
               key={b.id}
               id={b.id}
               name={b.name}
-              earned={Boolean(game.badges[b.id]?.earnedAt)}
+              earned={Boolean(badges[b.id]?.earnedAt)}
               size="lg"
             />
           ))}
@@ -53,16 +58,16 @@ export default function Profile() {
         <dl className="grid grid-cols-3 gap-4 text-center">
           <div>
             <dt className="text-xs text-stone-500">복습 카드</dt>
-            <dd className="display text-2xl tabular-nums">{game.weeklyStats.reviewed}</dd>
+            <dd className="display text-2xl tabular-nums">{weeklyStats.reviewed}</dd>
           </div>
           <div>
             <dt className="text-xs text-stone-500">노트</dt>
-            <dd className="display text-2xl tabular-nums">{game.weeklyStats.notesCreated}</dd>
+            <dd className="display text-2xl tabular-nums">{weeklyStats.notesCreated}</dd>
           </div>
           <div>
             <dt className="text-xs text-stone-500">XP 획득</dt>
             <dd className="display text-2xl text-[#D97706] tabular-nums">
-              +{game.weeklyStats.xpGained}
+              +{weeklyStats.xpGained}
             </dd>
           </div>
         </dl>

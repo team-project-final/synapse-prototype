@@ -12,7 +12,10 @@ export default function DeckResult() {
   const navigate = useNavigate();
   const location = useLocation();
   const session = useReviewsStore((s) => (sessionId ? s.sessions[sessionId] : undefined));
-  const game = useGameStore();
+  const xp = useGameStore((s) => s.xp);
+  const level = useGameStore((s) => s.level);
+  const title = useGameStore((s) => s.title);
+  const streakCurrent = useGameStore((s) => s.streak.current);
 
   const [showLevelUp, setShowLevelUp] = useState(false);
 
@@ -55,9 +58,9 @@ export default function DeckResult() {
       <Card>
         <h3 className="text-sm font-medium mb-2">현재 상태</h3>
         <p>
-          레벨 {game.level} · {game.title} · 총 {game.xp.toLocaleString()} XP
+          레벨 {level} · {title} · 총 {xp.toLocaleString()} XP
         </p>
-        <p className="text-xs text-stone-500 mt-1">🔥 {game.streak.current}일 연속 학습</p>
+        <p className="text-xs text-stone-500 mt-1">🔥 {streakCurrent}일 연속 학습</p>
       </Card>
 
       <div className="flex gap-3 justify-center">
@@ -69,8 +72,8 @@ export default function DeckResult() {
 
       <LevelUpModal
         open={showLevelUp}
-        newLevel={game.level}
-        newTitle={game.title}
+        newLevel={level}
+        newTitle={title}
         onClose={() => setShowLevelUp(false)}
       />
     </div>
