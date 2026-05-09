@@ -10,7 +10,11 @@ export function AppBar({ onOpenNotifications, unreadCount }: AppBarProps) {
   return (
     <header className="border-b border-stone-200 bg-stone-50/80 backdrop-blur sticky top-0 z-10">
       <div className="flex items-center justify-between px-4 py-3">
-        <Link to="/app" className="display text-xl text-stone-900">
+        <Link
+          to="/"
+          aria-label="메인 페이지로 돌아가기"
+          className="display text-xl text-stone-900 hover:text-[#D97706]"
+        >
           Synapse
         </Link>
         <div className="flex items-center gap-3">
