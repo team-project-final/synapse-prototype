@@ -5,8 +5,9 @@ import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
 
 export default function Groups() {
-  const myGroups = useGroupsStore((s) => s.myGroups());
-  const exploreGroups = useGroupsStore((s) => s.exploreGroups());
+  const groupsMap = useGroupsStore((s) => s.groups);
+  const myGroups = Object.values(groupsMap).filter((g) => g.joined);
+  const exploreGroups = Object.values(groupsMap).filter((g) => !g.joined);
   const [tab, setTab] = useState<'mine' | 'explore'>('mine');
 
   const groups = tab === 'mine' ? myGroups : exploreGroups;

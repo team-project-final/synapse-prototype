@@ -9,11 +9,8 @@ import { SEED_NOTES, SEED_DECKS, SEED_CARDS, SEED_GAME, SEED_GROUPS } from '@/da
 import { SEED_NOTIFICATIONS } from '@/data/notifications-seed';
 
 export function SeedGuard({ children }: { children: ReactNode }) {
-  const seeded = useDemoStore((s) => s.seeded);
-  const setSeeded = useDemoStore((s) => s.setSeeded);
-
   useEffect(() => {
-    if (seeded) return;
+    if (useDemoStore.getState().seeded) return;
 
     useNotesStore.setState({
       notes: Object.fromEntries(SEED_NOTES.map((n) => [n.id, n])),
@@ -27,8 +24,8 @@ export function SeedGuard({ children }: { children: ReactNode }) {
     useGroupsStore.setState({
       groups: Object.fromEntries(SEED_GROUPS.map((g) => [g.id, g])),
     });
-    setSeeded(true);
-  }, [seeded, setSeeded]);
+    useDemoStore.getState().setSeeded(true);
+  }, []);
 
   return <>{children}</>;
 }
