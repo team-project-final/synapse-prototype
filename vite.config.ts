@@ -1,8 +1,10 @@
-/// <reference types="vitest" />
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   base: '/synapse-prototype/',
@@ -11,9 +13,4 @@ export default defineConfig({
     alias: { '@': path.resolve(__dirname, './src') },
   },
   build: { outDir: 'dist', sourcemap: true },
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: ['./src/test-setup.ts'],
-  },
 });

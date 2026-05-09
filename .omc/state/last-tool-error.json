@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"cd 'D:\\\\workspace\\\\final-project-syn\\\\page\\\\' && npm run lint 2>&1 | tail -3 && echo \\\"---TYPECHECK---\\\" && npm run typecheck 2>&1 | tail -3 && echo \\\"---BUILD---\\\" && npm run build 2>&1 |...",
+  "error": "Exit code 2\n\n✖ 2 problems (2 errors, 0 warnings)\n\n---TYPECHECK---\n> synapse-prototype@0.1.0 typecheck\n> tsc --noEmit\n\n---BUILD---\n\n> synapse-prototype@0.1.0 build\n> tsc -b && vite build && node scripts/post-build.mjs\n\nvite.config.ts(17,3): error TS2769: No overload matches this call.\r\n  The last overload gave the following error.\r\n    Object literal may only specify known properties, and 'test' does not exist in type 'UserConfigExport'.\r\n---DIST---\nls: cannot access 'dist/': No such file or dire...",
+  "timestamp": "2026-05-09T12:45:41.649Z",
+  "retry_count": 3
+}
