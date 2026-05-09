@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { Link } from 'react-router';
 import { Card, Input, Badge } from '@/components/ds';
 import { useNotesStore } from '@/stores/use-notes';
@@ -24,17 +24,29 @@ export default function Search() {
     return ids.map((id) => notes.find((n) => n.id === id)).filter(Boolean) as typeof notes;
   }, [query, notes]);
 
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
+
   const askQA = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
     setStreaming('');
     const matchKey = Object.keys(QA_TEMPLATES).find((k) => query.includes(k));
     const answer = matchKey
       ? QA_TEMPLATES[matchKey]!
       : `"${query}"에 대한 답변: 관련 노트를 검색하면 더 자세히 볼 수 있습니다.`;
     let i = 0;
-    const interval = setInterval(() => {
+    intervalRef.current = setInterval(() => {
       i += 2;
       setStreaming(answer.slice(0, i));
-      if (i >= answer.length) clearInterval(interval);
+      if (i >= answer.length) {
+        if (intervalRef.current) clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
     }, 30);
   };
 

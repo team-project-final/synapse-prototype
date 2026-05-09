@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { ulid } from 'ulid';
 import { Button } from '@/components/ds';
@@ -38,29 +38,45 @@ export default function DeckReview() {
     setInitialized(true);
   }, [cards, initialized, sessionId, deckId, startSession]);
 
-  const handleRate = (rating: Rating) => {
-    if (index >= cards.length) return;
-    const current = cards[index]!;
-    const elapsed = Date.now() - startTime;
-    const nextSrs = applyRating(current.srs, rating);
-    const newStatus =
-      rating === 1 ? 'learning' : nextSrs.repetitions >= 2 ? 'review' : 'learning';
-    updateCardSrs(current.id, nextSrs, newStatus);
-    recordRating(sessionId, current.id, rating, elapsed);
-    const xpResult = addXp(xpForReview());
+  const handleRate = useCallback(
+    (rating: Rating) => {
+      if (index >= cards.length) return;
+      const current = cards[index]!;
+      const elapsed = Date.now() - startTime;
+      const nextSrs = applyRating(current.srs, rating);
+      const newStatus =
+        rating === 1 ? 'learning' : nextSrs.repetitions >= 2 ? 'review' : 'learning';
+      updateCardSrs(current.id, nextSrs, newStatus);
+      recordRating(sessionId, current.id, rating, elapsed);
+      const xpResult = addXp(xpForReview());
 
-    if (index + 1 >= cards.length) {
-      completeSession(sessionId);
-      registerActivity(new Date().toISOString().slice(0, 10));
-      navigate(`/app/decks/${deckId}/review/result?sessionId=${sessionId}`, {
-        state: { leveledUp: xpResult.leveledUp, newLevel: xpResult.newLevel },
-      });
-    } else {
-      advance(sessionId);
-      setIndex(index + 1);
-      setStartTime(Date.now());
-    }
-  };
+      if (index + 1 >= cards.length) {
+        completeSession(sessionId);
+        registerActivity(new Date().toISOString().slice(0, 10));
+        navigate(`/app/decks/${deckId}/review/result?sessionId=${sessionId}`, {
+          state: { leveledUp: xpResult.leveledUp, newLevel: xpResult.newLevel },
+        });
+      } else {
+        advance(sessionId);
+        setIndex(index + 1);
+        setStartTime(Date.now());
+      }
+    },
+    [
+      index,
+      cards,
+      startTime,
+      sessionId,
+      deckId,
+      updateCardSrs,
+      recordRating,
+      addXp,
+      completeSession,
+      registerActivity,
+      advance,
+      navigate,
+    ],
+  );
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -68,8 +84,7 @@ export default function DeckReview() {
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [index, cards]);
+  }, [handleRate]);
 
   if (cards.length === 0) {
     return (

@@ -16,7 +16,7 @@ export function NoteEditor({ noteId }: Props) {
   const allNotes = useNotesStore((s) => Object.values(s.notes));
   const upsert = useNotesStore((s) => s.upsert);
   const addXp = useGameStore((s) => s.addXp);
-  const existing = noteId ? useNotesStore.getState().notes[noteId] : undefined;
+  const existing = useNotesStore((s) => (noteId ? s.notes[noteId] : undefined));
   const [title, setTitle] = useState(existing?.title ?? '');
   const [content, setContent] = useState(existing?.contentMd ?? '');
   const [tags, setTags] = useState<string[]>(existing?.tags ?? []);

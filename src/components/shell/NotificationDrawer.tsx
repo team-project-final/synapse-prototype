@@ -14,6 +14,7 @@ const CATEGORIES: Array<{ id: NotificationCategory | 'all'; label: string }> = [
   { id: 'review', label: '복습' },
   { id: 'community', label: '커뮤니티' },
   { id: 'achievement', label: '성취' },
+  { id: 'system', label: '시스템' },
 ];
 
 export function NotificationDrawer({ open, onClose }: Props) {

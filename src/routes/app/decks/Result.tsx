@@ -4,6 +4,7 @@ import { Button, Card } from '@/components/ds';
 import { LevelUpModal } from '@/components/feature/LevelUpModal';
 import { useReviewsStore } from '@/stores/use-reviews';
 import { useGameStore } from '@/stores/use-game';
+import { xpForReview } from '@/lib/xp';
 
 export default function DeckResult() {
   const [params] = useSearchParams();
@@ -46,7 +47,7 @@ export default function DeckResult() {
           </div>
           <div>
             <dt className="text-xs text-stone-500">XP 획득</dt>
-            <dd className="display text-3xl text-[#D97706] tabular-nums">+{total * 5}</dd>
+            <dd className="display text-3xl text-[#D97706] tabular-nums">+{total * xpForReview()}</dd>
           </div>
         </dl>
       </Card>
