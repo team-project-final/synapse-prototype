@@ -1,4 +1,5 @@
 import { Link } from 'react-router';
+import { DemoModeToggle } from '@/components/shared/DemoModeToggle';
 
 interface AppBarProps {
   onOpenNotifications?: () => void;
@@ -31,6 +32,7 @@ export function AppBar({ onOpenNotifications, unreadCount }: AppBarProps) {
               </span>
             ) : null}
           </button>
+          <DemoModeToggle />
         </div>
       </div>
     </header>
