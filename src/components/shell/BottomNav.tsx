@@ -11,7 +11,7 @@ export function BottomNav() {
   return (
     <nav
       aria-label="모바일 메뉴"
-      className="md:hidden fixed bottom-0 inset-x-0 border-t border-stone-200 bg-stone-50 grid grid-cols-4"
+      className="md:hidden fixed bottom-0 inset-x-0 border-t border-stone-200 bg-stone-50/90 backdrop-blur grid grid-cols-4 pb-[env(safe-area-inset-bottom)]"
     >
       {tabs.map((t) => (
         <NavLink

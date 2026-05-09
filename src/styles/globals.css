@@ -37,19 +37,10 @@
   --radius-xl: 16px;
   --radius-full: 9999px;
 
-  --spacing-2xs: 2px;
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  --spacing-2xl: 48px;
-  --spacing-3xl: 64px;
-
   --breakpoint-mobile: 640px;
   --breakpoint-tablet: 1024px;
 }
 
 html, body { font-family: var(--font-body); }
-h1, h2, h3, .display { font-family: var(--font-display); }
+h1, h2, h3, .display { font-family: var(--font-display); word-break: keep-all; }
 code, pre, .mono { font-family: var(--font-mono); }

@@ -14,7 +14,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <AppBar onOpenNotifications={() => setDrawerOpen(true)} unreadCount={unread} />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar />
-        <main className="flex-1 overflow-auto pb-16 md:pb-0">{children}</main>
+        <main className="flex-1 overflow-auto pb-20 md:pb-0">{children}</main>
       </div>
       <BottomNav />
       <NotificationDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />

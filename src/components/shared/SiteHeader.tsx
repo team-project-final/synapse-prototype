@@ -7,7 +7,7 @@ export function SiteHeader() {
         <Link to="/" className="display text-xl text-stone-900">
           Synapse
         </Link>
-        <nav className="flex items-center gap-4 text-sm">
+        <nav className="hidden sm:flex items-center gap-4 text-sm">
           <Link to="/app" className="text-stone-700 hover:text-[#D97706]">
             데모
           </Link>
@@ -29,6 +29,12 @@ export function SiteHeader() {
             GitHub
           </a>
         </nav>
+        <Link
+          to="/app"
+          className="sm:hidden rounded-md bg-[#D97706] px-3 py-1.5 text-xs font-medium text-white"
+        >
+          데모 →
+        </Link>
       </div>
     </header>
   );
