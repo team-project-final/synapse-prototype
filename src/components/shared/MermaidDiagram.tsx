@@ -3,6 +3,7 @@ import mermaid from 'mermaid';
 
 mermaid.initialize({
   startOnLoad: false,
+  securityLevel: 'strict',
   theme: 'base',
   themeVariables: {
     fontFamily: 'Plus Jakarta Sans, sans-serif',
@@ -28,8 +29,12 @@ export function MermaidDiagram({ source }: { source: string }) {
       .then(({ svg }) => {
         if (target) target.innerHTML = svg;
       })
-      .catch((err) => {
-        if (target) target.innerHTML = `<pre class="text-xs text-[#DC2626]">렌더 실패: ${err.message}</pre>`;
+      .catch((err: Error) => {
+        if (!target) return;
+        const pre = document.createElement('pre');
+        pre.className = 'text-xs text-[#DC2626]';
+        pre.textContent = `렌더 실패: ${err.message}`;
+        target.replaceChildren(pre);
       });
   }, [source]);
   return <div ref={ref} className="my-4 [&>svg]:max-w-full" />;
