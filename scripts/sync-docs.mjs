@@ -65,7 +65,7 @@ async function main() {
 
     const baseEntry = buildManifestEntry(destName, rendered);
 
-    if (shouldSplit({ text: rendered, codeCount: countCodeBlocks(rendered) })) {
+    if (shouldSplit({ text: raw, codeCount: countCodeBlocks(raw) })) {
       const { intro, parts } = splitByH2(rendered);
       if (parts.length > 0) {
         const parentSlug = baseEntry.slug;

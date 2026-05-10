@@ -11,6 +11,12 @@ describe('extractOutline', () => {
       { level: 2, text: 'Second', slug: expect.any(String) },
     ]);
   });
+
+  it('disambiguates duplicate heading slugs', () => {
+    const md = '## Notes\n\n## Notes\n\n### Notes';
+    const out = extractOutline(md);
+    expect(out.map((o) => o.slug)).toEqual(['notes', 'notes-2', 'notes-3']);
+  });
 });
 
 describe('buildManifestEntry', () => {

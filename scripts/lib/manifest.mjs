@@ -14,17 +14,18 @@ function inferGroup(order) {
 
 export function extractOutline(markdown) {
   const out = [];
+  const seen = new Map();
   const re = /^(##{1,2})\s+(.+?)\s*$/gm;
   let m;
   while ((m = re.exec(markdown))) {
     const level = m[1].length;
     if (level !== 2 && level !== 3) continue;
     const text = m[2].trim();
-    out.push({
-      level,
-      text,
-      slug: slugify(text, { lower: true, strict: false, locale: 'ko' }) || 'h',
-    });
+    let slug = slugify(text, { lower: true, strict: false, locale: 'ko' }) || 'h';
+    const count = (seen.get(slug) ?? 0) + 1;
+    seen.set(slug, count);
+    if (count > 1) slug = `${slug}-${count}`;
+    out.push({ level, text, slug });
   }
   return out;
 }
