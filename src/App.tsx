@@ -31,6 +31,7 @@ export default function App() {
         <Route path="/architecture" element={<Architecture />} />
         <Route path="/docs" element={<DocsIndex />} />
         <Route path="/docs/:slug" element={<DocsSlug />} />
+        <Route path="/docs/:slug/:sub" element={<DocsSlug />} />
         <Route path="/app" element={<AppLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="notes" element={<NotesList />} />

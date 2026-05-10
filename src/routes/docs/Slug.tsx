@@ -7,26 +7,34 @@ import { SiteHeader } from '@/components/shared/SiteHeader';
 import { Card, Button } from '@/components/ds';
 import { MermaidDiagram } from '@/components/shared/MermaidDiagram';
 import { loadDoc } from '@/lib/docs-loader';
-import { DOCS } from '@/data/docs-list';
+import { loadManifest, findEntry, type DocMeta } from '@/lib/docs-manifest';
 
 export default function DocsSlug() {
-  const { slug } = useParams();
+  const { slug, sub } = useParams();
+  const effectiveSlug = sub ? `${slug}/${sub}` : slug;
+
   const [content, setContent] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [manifest, setManifest] = useState<DocMeta[] | null>(null);
 
   useEffect(() => {
-    if (!slug) return;
+    loadManifest(import.meta.env.BASE_URL).then(setManifest).catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    if (!effectiveSlug) return;
     setError(null);
     setContent(null);
-    loadDoc(slug)
+    loadDoc(effectiveSlug)
       .then(setContent)
       .catch((e) => setError(e.message));
-  }, [slug]);
+  }, [effectiveSlug]);
 
-  const meta = DOCS.find((d) => d.slug === slug);
-  const idx = DOCS.findIndex((d) => d.slug === slug);
-  const prev = idx > 0 ? DOCS[idx - 1] : null;
-  const next = idx >= 0 && idx < DOCS.length - 1 ? DOCS[idx + 1] : null;
+  const meta = manifest ? findEntry(manifest, effectiveSlug ?? '') : undefined;
+  const topLevelDocs = manifest ? manifest.filter((m) => !m.parent) : [];
+  const idx = topLevelDocs.findIndex((d) => d.slug === (sub ? slug : effectiveSlug));
+  const prev = idx > 0 ? topLevelDocs[idx - 1] : null;
+  const next = idx >= 0 && idx < topLevelDocs.length - 1 ? topLevelDocs[idx + 1] : null;
 
   return (
     <div className="min-h-dvh bg-stone-50">
@@ -35,7 +43,7 @@ export default function DocsSlug() {
         <Link to="/docs" className="text-sm text-stone-500 hover:text-[#D97706]">
           ← 문서 목록
         </Link>
-        <h1 className="display text-3xl mt-2 mb-6">{meta?.title ?? slug}</h1>
+        <h1 className="display text-3xl mt-2 mb-6">{meta?.title ?? effectiveSlug}</h1>
 
         {error && (
           <Card>
