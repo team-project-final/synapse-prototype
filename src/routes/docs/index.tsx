@@ -20,7 +20,7 @@ export default function DocsIndex() {
   return (
     <div className="min-h-dvh bg-stone-50">
       <SiteHeader />
-      <article className="max-w-4xl mx-auto px-6 py-12 space-y-6">
+      <article className="max-w-6xl mx-auto px-6 py-12 space-y-6">
         <header>
           <h1 className="display text-4xl">문서</h1>
           <p className="text-stone-600 mt-2">Synapse 위키</p>

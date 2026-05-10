@@ -6,6 +6,7 @@ import { spawn } from 'node:child_process';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PUPPETEER_CONFIG = join(__dirname, 'puppeteer.config.json');
+const MERMAID_CONFIG = join(__dirname, 'mermaid.config.json');
 
 const MERMAID_FENCE_RE = /^ {0,3}`{3,}mermaid\s*\r?\n([\s\S]*?)^ {0,3}`{3,}\s*$/gm;
 
@@ -33,7 +34,7 @@ async function runMmdc(diagramSource) {
     await new Promise((resolve, reject) => {
       const proc = spawn(
         'npx',
-        ['mmdc', '-i', inputPath, '-o', outputPath, '-b', 'transparent', '-t', 'default', '-p', PUPPETEER_CONFIG],
+        ['mmdc', '-i', inputPath, '-o', outputPath, '-b', 'transparent', '-t', 'default', '-p', PUPPETEER_CONFIG, '-c', MERMAID_CONFIG],
         { stdio: 'pipe', shell: true },
       );
 
@@ -95,10 +96,10 @@ export async function renderMermaidBlocks(markdown) {
     try {
       // Normalize CRLF to LF before passing to mmdc
       const svg = await runMmdc(source.replace(/\r\n/g, '\n').trim());
-      replacement = `<figure class="mermaid-svg">\n${svg}\n</figure>`;
+      replacement = `\n\n<figure class="mermaid-svg">\n${svg}\n</figure>\n\n`;
     } catch (err) {
       const escaped = escapeHtml(err.message || 'render error');
-      replacement = `<pre data-mermaid-error="${escaped}">${escapeHtml(source.trim())}</pre>`;
+      replacement = `\n\n<pre data-mermaid-error="${escaped}">${escapeHtml(source.trim())}</pre>\n\n`;
     }
     // Replace only the first occurrence to avoid double-replacing
     result = result.replace(full, replacement);
