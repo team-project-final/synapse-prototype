@@ -27,6 +27,16 @@
   --color-error: #DC2626;
   --color-info: #0EA5E9;
 
+  --tech-client: #D97706;
+  --tech-gateway: #0EA5E9;
+  --tech-backend-java: #7C3AED;
+  --tech-backend-python: #2563EB;
+  --tech-data: #059669;
+  --tech-aiml: #DB2777;
+  --tech-infra: #475569;
+  --tech-observability: #EA580C;
+  --tech-external: #525252;
+
   --font-display: "Fraunces", Georgia, serif;
   --font-body: "Plus Jakarta Sans", system-ui, sans-serif;
   --font-mono: "Geist Mono", "Courier New", monospace;
