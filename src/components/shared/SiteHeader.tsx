@@ -17,6 +17,9 @@ export function SiteHeader() {
           <Link to="/architecture" className="text-stone-700 hover:text-[#D97706]">
             아키텍처
           </Link>
+          <Link to="/tech" className="text-stone-700 hover:text-[#D97706]">
+            기술 스택
+          </Link>
           <Link to="/docs" className="text-stone-700 hover:text-[#D97706]">
             문서
           </Link>
