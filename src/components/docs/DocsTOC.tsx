@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 interface Outline {
-  level: 2 | 3;
+  level: 2 | 3 | 4;
   text: string;
   slug: string;
 }
@@ -41,7 +41,7 @@ export function DocsTOC({ outline }: Props) {
         {outline.map((o) => {
           const active = activeId === o.slug;
           return (
-            <li key={o.slug} style={{ paddingLeft: o.level === 3 ? '1.5rem' : 0 }}>
+            <li key={o.slug} style={{ paddingLeft: o.level >= 3 ? '1.5rem' : 0 }}>
               <a
                 href={`#${o.slug}`}
                 className={`block py-0.5 transition-colors ${active ? 'text-[#D97706] font-medium' : 'text-stone-600 hover:text-[#D97706]'}`}
