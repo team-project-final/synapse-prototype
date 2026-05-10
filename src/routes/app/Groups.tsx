@@ -1,14 +1,17 @@
 import { useState } from 'react';
-import { Card, Button, Badge, toast } from '@/components/ds';
-import { useGroupsStore } from '@/stores/use-groups';
+import { ulid } from 'ulid';
+import { Card, Button, Badge, Dialog, Input, toast } from '@/components/ds';
+import { useGroupsStore, type Group } from '@/stores/use-groups';
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
 
 export default function Groups() {
   const groupsMap = useGroupsStore((s) => s.groups);
+  const upsert = useGroupsStore((s) => s.upsert);
   const myGroups = Object.values(groupsMap).filter((g) => g.joined);
   const exploreGroups = Object.values(groupsMap).filter((g) => !g.joined);
   const [tab, setTab] = useState<'mine' | 'explore'>('mine');
+  const [createOpen, setCreateOpen] = useState(false);
 
   const groups = tab === 'mine' ? myGroups : exploreGroups;
 
@@ -18,6 +21,24 @@ export default function Groups() {
       tone: 'info',
       duration: 3500,
     });
+  };
+
+  const handleCreate = (input: CreateGroupInput) => {
+    const group: Group = {
+      id: ulid(),
+      name: input.name.trim(),
+      description: input.description.trim(),
+      joinType: input.joinType,
+      memberCount: 1,
+      maxMembers: input.maxMembers,
+      sharedDeckCount: 0,
+      lastActivityAt: Date.now(),
+      joined: true,
+    };
+    upsert(group);
+    setCreateOpen(false);
+    setTab('mine');
+    toast({ message: `"${group.name}" 그룹이 생성되었습니다`, tone: 'success' });
   };
 
   return (
@@ -69,10 +90,131 @@ export default function Groups() {
       </div>
 
       <div className="text-center pt-4">
-        <Button variant="secondary" onClick={enter}>
+        <Button variant="secondary" onClick={() => setCreateOpen(true)}>
           + 새 그룹 만들기
         </Button>
       </div>
+
+      <CreateGroupDialog
+        open={createOpen}
+        onClose={() => setCreateOpen(false)}
+        onCreate={handleCreate}
+      />
     </div>
+  );
+}
+
+interface CreateGroupInput {
+  name: string;
+  description: string;
+  joinType: 'open' | 'approval' | 'invite';
+  maxMembers: number;
+}
+
+function CreateGroupDialog({
+  open,
+  onClose,
+  onCreate,
+}: {
+  open: boolean;
+  onClose: () => void;
+  onCreate: (input: CreateGroupInput) => void;
+}) {
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [joinType, setJoinType] = useState<'open' | 'approval' | 'invite'>('open');
+  const [maxMembers, setMaxMembers] = useState(20);
+  const [touched, setTouched] = useState(false);
+
+  const reset = () => {
+    setName('');
+    setDescription('');
+    setJoinType('open');
+    setMaxMembers(20);
+    setTouched(false);
+  };
+
+  const handleClose = () => {
+    reset();
+    onClose();
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setTouched(true);
+    if (name.trim().length === 0) return;
+    if (maxMembers < 2 || maxMembers > 1000) return;
+    onCreate({ name, description, joinType, maxMembers });
+    reset();
+  };
+
+  const nameError = touched && name.trim().length === 0;
+
+  return (
+    <Dialog open={open} onClose={handleClose} title="새 그룹 만들기">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="space-y-1">
+          <label htmlFor="group-name" className="text-sm text-stone-700">
+            그룹 이름 <span className="text-[#DC2626]">*</span>
+          </label>
+          <Input
+            id="group-name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="예: TypeScript 스터디"
+            aria-invalid={nameError}
+            autoFocus
+          />
+          {nameError && <p className="text-xs text-[#DC2626]">이름을 입력하세요</p>}
+        </div>
+
+        <div className="space-y-1">
+          <label htmlFor="group-desc" className="text-sm text-stone-700">설명</label>
+          <Input
+            id="group-desc"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="이 그룹은 무엇을 하나요?"
+          />
+        </div>
+
+        <fieldset className="space-y-2">
+          <legend className="text-sm text-stone-700">가입 방식</legend>
+          <div className="space-y-1 text-sm">
+            {(['open', 'approval', 'invite'] as const).map((v) => (
+              <label key={v} className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="joinType"
+                  value={v}
+                  checked={joinType === v}
+                  onChange={() => setJoinType(v)}
+                />
+                <span>
+                  {v === 'open' ? '공개 — 누구나 가입' : v === 'approval' ? '승인 필요' : '초대제'}
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <div className="space-y-1">
+          <label htmlFor="group-max" className="text-sm text-stone-700">최대 인원 (2–1000)</label>
+          <Input
+            id="group-max"
+            type="number"
+            min={2}
+            max={1000}
+            value={maxMembers}
+            onChange={(e) => setMaxMembers(Number(e.target.value))}
+          />
+        </div>
+
+        <div className="flex justify-end gap-2 pt-2">
+          <Button type="button" variant="secondary" onClick={handleClose}>취소</Button>
+          <Button type="submit">만들기</Button>
+        </div>
+      </form>
+    </Dialog>
   );
 }
