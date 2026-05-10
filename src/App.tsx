@@ -4,6 +4,8 @@ import About from './routes/about';
 import Architecture from './routes/architecture';
 import DocsIndex from './routes/docs/index';
 import DocsSlug from './routes/docs/Slug';
+import TechHub from './routes/tech/index';
+import TechSlug from './routes/tech/Slug';
 import AppLayout from './routes/app/Layout';
 import Dashboard from './routes/app/Dashboard';
 import NotesList from './routes/app/notes/List';
@@ -29,6 +31,8 @@ export default function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/about" element={<About />} />
         <Route path="/architecture" element={<Architecture />} />
+        <Route path="/tech" element={<TechHub />} />
+        <Route path="/tech/:slug" element={<TechSlug />} />
         <Route path="/docs" element={<DocsIndex />} />
         <Route path="/docs/:slug" element={<DocsSlug />} />
         <Route path="/docs/:slug/:sub" element={<DocsSlug />} />
