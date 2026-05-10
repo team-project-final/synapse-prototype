@@ -54,14 +54,13 @@ async function runMmdc(diagramSource) {
 
     let svg = await readFile(outputPath, 'utf8');
 
-    // Post-process: make SVG fluid width
-    svg = svg
-      .replace(/<svg([^>]*)width="[^"]*"/, '<svg$1width="100%"')
-      .replace(/<svg([^>]*)height="[^"]*"/, '<svg$1height="auto"')
-      .replace(/<svg([^>]*)>/, (match) => {
-        if (match.includes('preserveAspectRatio')) return match;
-        return match.replace('<svg', '<svg preserveAspectRatio="xMidYMin meet"');
-      });
+    // Keep mmdc's natural width/height so large diagrams stay readable.
+    // Wrapper figure uses overflow-x: auto in CSS for horizontal scroll.
+    // preserveAspectRatio is added defensively in case CSS overrides sizing.
+    svg = svg.replace(/<svg([^>]*)>/, (match) => {
+      if (match.includes('preserveAspectRatio')) return match;
+      return match.replace('<svg', '<svg preserveAspectRatio="xMidYMin meet"');
+    });
 
     return svg;
   } finally {

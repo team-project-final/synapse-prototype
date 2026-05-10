@@ -81,5 +81,5 @@ code, pre, .mono { font-family: var(--font-mono); }
 .docs-article th, .docs-article td { padding: 0.5rem 0.75rem; border: 1px solid var(--color-stone-200); }
 .docs-article tbody tr:nth-child(odd) { background: var(--color-stone-50); }
 
-.docs-article figure.mermaid-svg { margin: 1.25rem 0; }
-.docs-article figure.mermaid-svg svg { width: 100%; height: auto; }
+.docs-article figure.mermaid-svg { margin: 1.25rem 0; overflow-x: auto; }
+.docs-article figure.mermaid-svg svg { display: block; max-width: none; height: auto; }
