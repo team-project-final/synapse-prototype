@@ -1,0 +1,5342 @@
+[
+  {
+    "slug": "01_프로젝트_계획서",
+    "title": "1. 프로젝트 계획서",
+    "group": "기획/설계",
+    "order": 1,
+    "outline": [
+      {
+        "level": 2,
+        "text": "1.1 배경 및 문제 정의",
+        "slug": "11-배경-및-문제-정의"
+      },
+      {
+        "level": 3,
+        "text": "현재 시장의 문제점",
+        "slug": "현재-시장의-문제점"
+      },
+      {
+        "level": 3,
+        "text": "핵심 문제",
+        "slug": "핵심-문제"
+      },
+      {
+        "level": 2,
+        "text": "1.2 프로젝트 목표",
+        "slug": "12-프로젝트-목표"
+      },
+      {
+        "level": 3,
+        "text": "핵심 목표 테이블",
+        "slug": "핵심-목표-테이블"
+      },
+      {
+        "level": 2,
+        "text": "1.3 대상 사용자",
+        "slug": "13-대상-사용자"
+      },
+      {
+        "level": 3,
+        "text": "1.3.1 학습자 (Learner) — Primary",
+        "slug": "131-학습자-learner--primary"
+      },
+      {
+        "level": 3,
+        "text": "1.3.2 교육자 (Educator) — Phase 4+",
+        "slug": "132-교육자-educator--phase-4"
+      },
+      {
+        "level": 3,
+        "text": "1.3.3 관리자 (Admin/운영)",
+        "slug": "133-관리자-admin운영"
+      },
+      {
+        "level": 3,
+        "text": "1.3.4 스터디 그룹 멤버 (Study Group Member) — Phase 1",
+        "slug": "134-스터디-그룹-멤버-study-group-member--phase-1"
+      },
+      {
+        "level": 2,
+        "text": "1.4 프로젝트 범위",
+        "slug": "14-프로젝트-범위"
+      },
+      {
+        "level": 3,
+        "text": "포함 (In Scope) — MVP Phase 1 (4주)",
+        "slug": "포함-in-scope--mvp-phase-1-4주"
+      },
+      {
+        "level": 3,
+        "text": "제외 (Out of Scope)",
+        "slug": "제외-out-of-scope"
+      },
+      {
+        "level": 2,
+        "text": "1.5 기술 스택 요약",
+        "slug": "15-기술-스택-요약"
+      },
+      {
+        "level": 2,
+        "text": "1.6 비즈니스 모델",
+        "slug": "16-비즈니스-모델"
+      },
+      {
+        "level": 3,
+        "text": "Freemium 플랜 구조",
+        "slug": "freemium-플랜-구조"
+      },
+      {
+        "level": 3,
+        "text": "수익 모델",
+        "slug": "수익-모델"
+      },
+      {
+        "level": 2,
+        "text": "1.7 성공 지표 (KPI)",
+        "slug": "17-성공-지표-kpi"
+      },
+      {
+        "level": 3,
+        "text": "핵심 지표",
+        "slug": "핵심-지표"
+      },
+      {
+        "level": 3,
+        "text": "보조 지표",
+        "slug": "보조-지표"
+      },
+      {
+        "level": 2,
+        "text": "1.8 일정 계획",
+        "slug": "18-일정-계획"
+      },
+      {
+        "level": 3,
+        "text": "전체 로드맵 (12개월)",
+        "slug": "전체-로드맵-12개월"
+      },
+      {
+        "level": 2,
+        "text": "1.9 리스크 및 대응",
+        "slug": "19-리스크-및-대응"
+      },
+      {
+        "level": 2,
+        "text": "1.10 팀 구성",
+        "slug": "110-팀-구성"
+      },
+      {
+        "level": 3,
+        "text": "개발 방법론",
+        "slug": "개발-방법론"
+      },
+      {
+        "level": 2,
+        "text": "변경 이력",
+        "slug": "변경-이력"
+      }
+    ]
+  },
+  {
+    "slug": "02_ERD_문서",
+    "title": "2. ERD 문서",
+    "group": "기획/설계",
+    "order": 2,
+    "outline": [
+      {
+        "level": 2,
+        "text": "2.1 데이터베이스 설계 원칙",
+        "slug": "21-데이터베이스-설계-원칙"
+      },
+      {
+        "level": 3,
+        "text": "멀티테넌시 전략",
+        "slug": "멀티테넌시-전략"
+      },
+      {
+        "level": 3,
+        "text": "공통 컬럼 규약",
+        "slug": "공통-컬럼-규약"
+      },
+      {
+        "level": 2,
+        "text": "2.2 ERD 다이어그램",
+        "slug": "22-erd-다이어그램"
+      },
+      {
+        "level": 3,
+        "text": "2.2.1 테넌시/빌링 도메인",
+        "slug": "221-테넌시빌링-도메인"
+      },
+      {
+        "level": 3,
+        "text": "2.2.2 인증/사용자 도메인",
+        "slug": "222-인증사용자-도메인"
+      },
+      {
+        "level": 3,
+        "text": "2.2.3 노트 도메인",
+        "slug": "223-노트-도메인"
+      },
+      {
+        "level": 3,
+        "text": "2.2.4 카드/SRS 도메인",
+        "slug": "224-카드srs-도메인"
+      },
+      {
+        "level": 3,
+        "text": "2.2.5 AI/RAG 도메인",
+        "slug": "225-airag-도메인"
+      },
+      {
+        "level": 3,
+        "text": "2.2.6 감사 도메인",
+        "slug": "226-감사-도메인"
+      },
+      {
+        "level": 3,
+        "text": "2.2.7 커뮤니티 도메인",
+        "slug": "227-커뮤니티-도메인"
+      },
+      {
+        "level": 3,
+        "text": "2.2.8 게이미피케이션 도메인",
+        "slug": "228-게이미피케이션-도메인"
+      },
+      {
+        "level": 3,
+        "text": "2.2.9 알림 도메인",
+        "slug": "229-알림-도메인"
+      },
+      {
+        "level": 2,
+        "text": "2.3 인덱스 설계 규칙",
+        "slug": "23-인덱스-설계-규칙"
+      },
+      {
+        "level": 3,
+        "text": "네이밍 컨벤션",
+        "slug": "네이밍-컨벤션"
+      },
+      {
+        "level": 3,
+        "text": "핵심 인덱스",
+        "slug": "핵심-인덱스"
+      },
+      {
+        "level": 3,
+        "text": "파티셔닝 전략",
+        "slug": "파티셔닝-전략"
+      },
+      {
+        "level": 2,
+        "text": "2.4 RLS 정책 예시",
+        "slug": "24-rls-정책-예시"
+      },
+      {
+        "level": 3,
+        "text": "기본 RLS 정책",
+        "slug": "기본-rls-정책"
+      },
+      {
+        "level": 3,
+        "text": "테넌트 컨텍스트 설정",
+        "slug": "테넌트-컨텍스트-설정"
+      },
+      {
+        "level": 3,
+        "text": "커뮤니티 도메인 RLS 정책",
+        "slug": "커뮤니티-도메인-rls-정책"
+      },
+      {
+        "level": 2,
+        "text": "2.5 데이터 흐름 요약",
+        "slug": "25-데이터-흐름-요약"
+      },
+      {
+        "level": 2,
+        "text": "2.6 마이그레이션 전략",
+        "slug": "26-마이그레이션-전략"
+      }
+    ],
+    "children": [
+      "01_2.1",
+      "02_2.2-erd",
+      "03_2.3",
+      "04_2.4-rls",
+      "05_2.5",
+      "06_2.6"
+    ]
+  },
+  {
+    "slug": "02_ERD_문서/01_2.1",
+    "title": "2.1 데이터베이스 설계 원칙",
+    "group": "기획/설계",
+    "order": 2.01,
+    "parent": "02_ERD_문서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "멀티테넌시 전략",
+        "slug": "멀티테넌시-전략"
+      },
+      {
+        "level": 3,
+        "text": "공통 컬럼 규약",
+        "slug": "공통-컬럼-규약"
+      }
+    ]
+  },
+  {
+    "slug": "02_ERD_문서/02_2.2-erd",
+    "title": "2.2 ERD 다이어그램",
+    "group": "기획/설계",
+    "order": 2.02,
+    "parent": "02_ERD_문서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "2.2.1 테넌시/빌링 도메인",
+        "slug": "221-테넌시빌링-도메인"
+      },
+      {
+        "level": 3,
+        "text": "2.2.2 인증/사용자 도메인",
+        "slug": "222-인증사용자-도메인"
+      },
+      {
+        "level": 3,
+        "text": "2.2.3 노트 도메인",
+        "slug": "223-노트-도메인"
+      },
+      {
+        "level": 3,
+        "text": "2.2.4 카드/SRS 도메인",
+        "slug": "224-카드srs-도메인"
+      },
+      {
+        "level": 3,
+        "text": "2.2.5 AI/RAG 도메인",
+        "slug": "225-airag-도메인"
+      },
+      {
+        "level": 3,
+        "text": "2.2.6 감사 도메인",
+        "slug": "226-감사-도메인"
+      },
+      {
+        "level": 3,
+        "text": "2.2.7 커뮤니티 도메인",
+        "slug": "227-커뮤니티-도메인"
+      },
+      {
+        "level": 3,
+        "text": "2.2.8 게이미피케이션 도메인",
+        "slug": "228-게이미피케이션-도메인"
+      },
+      {
+        "level": 3,
+        "text": "2.2.9 알림 도메인",
+        "slug": "229-알림-도메인"
+      }
+    ]
+  },
+  {
+    "slug": "02_ERD_문서/03_2.3",
+    "title": "2.3 인덱스 설계 규칙",
+    "group": "기획/설계",
+    "order": 2.03,
+    "parent": "02_ERD_문서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "네이밍 컨벤션",
+        "slug": "네이밍-컨벤션"
+      },
+      {
+        "level": 3,
+        "text": "핵심 인덱스",
+        "slug": "핵심-인덱스"
+      },
+      {
+        "level": 3,
+        "text": "파티셔닝 전략",
+        "slug": "파티셔닝-전략"
+      }
+    ]
+  },
+  {
+    "slug": "02_ERD_문서/04_2.4-rls",
+    "title": "2.4 RLS 정책 예시",
+    "group": "기획/설계",
+    "order": 2.04,
+    "parent": "02_ERD_문서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "기본 RLS 정책",
+        "slug": "기본-rls-정책"
+      },
+      {
+        "level": 3,
+        "text": "테넌트 컨텍스트 설정",
+        "slug": "테넌트-컨텍스트-설정"
+      },
+      {
+        "level": 3,
+        "text": "커뮤니티 도메인 RLS 정책",
+        "slug": "커뮤니티-도메인-rls-정책"
+      }
+    ]
+  },
+  {
+    "slug": "02_ERD_문서/05_2.5",
+    "title": "2.5 데이터 흐름 요약",
+    "group": "기획/설계",
+    "order": 2.05,
+    "parent": "02_ERD_문서",
+    "outline": []
+  },
+  {
+    "slug": "02_ERD_문서/06_2.6",
+    "title": "2.6 마이그레이션 전략",
+    "group": "기획/설계",
+    "order": 2.06,
+    "parent": "02_ERD_문서",
+    "outline": []
+  },
+  {
+    "slug": "03_프로젝트_아키텍처_정의서",
+    "title": "3. 프로젝트 아키텍처 정의서",
+    "group": "기획/설계",
+    "order": 3,
+    "outline": [
+      {
+        "level": 2,
+        "text": "4-서비스 통합 결정 (ADR-001 / ADR-002)",
+        "slug": "4-서비스-통합-결정-adr-001--adr-002"
+      },
+      {
+        "level": 3,
+        "text": "트랙 ↔ 레포 ↔ Owner 매핑",
+        "slug": "트랙--레포--owner-매핑"
+      },
+      {
+        "level": 2,
+        "text": "3.1 시스템 아키텍처 개요",
+        "slug": "31-시스템-아키텍처-개요"
+      },
+      {
+        "level": 3,
+        "text": "전체 아키텍처 다이어그램",
+        "slug": "전체-아키텍처-다이어그램"
+      },
+      {
+        "level": 2,
+        "text": "3.2 레이어별 상세 설계",
+        "slug": "32-레이어별-상세-설계"
+      },
+      {
+        "level": 3,
+        "text": "3.2.1 Edge Layer (Cloudflare)",
+        "slug": "321-edge-layer-cloudflare"
+      },
+      {
+        "level": 3,
+        "text": "3.2.2 Client Layer (Flutter 3.x)",
+        "slug": "322-client-layer-flutter-3x"
+      },
+      {
+        "level": 3,
+        "text": "3.2.3 Gateway Layer (Spring Cloud Gateway 5)",
+        "slug": "323-gateway-layer-spring-cloud-gateway-5"
+      },
+      {
+        "level": 3,
+        "text": "3.2.4 Core Services (4-서비스 + 내부 모듈)",
+        "slug": "324-core-services-4-서비스--내부-모듈"
+      },
+      {
+        "level": 2,
+        "text": "3.3 멀티테넌시 모델",
+        "slug": "33-멀티테넌시-모델"
+      },
+      {
+        "level": 3,
+        "text": "아키텍처 결정",
+        "slug": "아키텍처-결정"
+      },
+      {
+        "level": 3,
+        "text": "3단계 격리",
+        "slug": "3단계-격리"
+      },
+      {
+        "level": 3,
+        "text": "Tenant Context Propagation",
+        "slug": "tenant-context-propagation"
+      },
+      {
+        "level": 2,
+        "text": "3.4 이벤트 기반 통합 (Event-Driven)",
+        "slug": "34-이벤트-기반-통합-event-driven"
+      },
+      {
+        "level": 3,
+        "text": "Kafka 토픽 설계",
+        "slug": "kafka-토픽-설계"
+      },
+      {
+        "level": 3,
+        "text": "이벤트 스키마 (CloudEvents 호환)",
+        "slug": "이벤트-스키마-cloudevents-호환"
+      },
+      {
+        "level": 3,
+        "text": "신규 토픽 페이로드 스키마",
+        "slug": "신규-토픽-페이로드-스키마"
+      },
+      {
+        "level": 3,
+        "text": "내부 API (서비스 간 통신)",
+        "slug": "내부-api-서비스-간-통신"
+      },
+      {
+        "level": 2,
+        "text": "3.5 데이터 흐름 아키텍처",
+        "slug": "35-데이터-흐름-아키텍처"
+      },
+      {
+        "level": 3,
+        "text": "노트 작성 → 검색 가능까지",
+        "slug": "노트-작성--검색-가능까지"
+      },
+      {
+        "level": 2,
+        "text": "3.6 배포 아키텍처",
+        "slug": "36-배포-아키텍처"
+      },
+      {
+        "level": 3,
+        "text": "AWS EKS + ArgoCD GitOps",
+        "slug": "aws-eks--argocd-gitops"
+      },
+      {
+        "level": 3,
+        "text": "K8s 리소스 구성",
+        "slug": "k8s-리소스-구성"
+      },
+      {
+        "level": 2,
+        "text": "3.7 보안 아키텍처",
+        "slug": "37-보안-아키텍처"
+      },
+      {
+        "level": 3,
+        "text": "인증/인가 흐름",
+        "slug": "인증인가-흐름"
+      },
+      {
+        "level": 3,
+        "text": "보안 설계 원칙",
+        "slug": "보안-설계-원칙"
+      },
+      {
+        "level": 2,
+        "text": "3.8 모니터링 및 관측성",
+        "slug": "38-모니터링-및-관측성"
+      },
+      {
+        "level": 2,
+        "text": "변경 이력",
+        "slug": "변경-이력"
+      }
+    ]
+  },
+  {
+    "slug": "04_API_명세서",
+    "title": "4. API 명세서",
+    "group": "기획/설계",
+    "order": 4,
+    "outline": [
+      {
+        "level": 2,
+        "text": "4.1 공통 규약",
+        "slug": "41-공통-규약"
+      },
+      {
+        "level": 3,
+        "text": "Base URL",
+        "slug": "base-url"
+      },
+      {
+        "level": 3,
+        "text": "인증",
+        "slug": "인증"
+      },
+      {
+        "level": 3,
+        "text": "공통 응답 형식",
+        "slug": "공통-응답-형식"
+      },
+      {
+        "level": 3,
+        "text": "에러 응답",
+        "slug": "에러-응답"
+      },
+      {
+        "level": 3,
+        "text": "HTTP 상태 코드",
+        "slug": "http-상태-코드"
+      },
+      {
+        "level": 3,
+        "text": "페이지네이션",
+        "slug": "페이지네이션"
+      },
+      {
+        "level": 3,
+        "text": "Rate Limiting 헤더",
+        "slug": "rate-limiting-헤더"
+      },
+      {
+        "level": 2,
+        "text": "4.2 Auth 도메인",
+        "slug": "42-auth-도메인"
+      },
+      {
+        "level": 3,
+        "text": "POST /auth/signup",
+        "slug": "post-authsignup"
+      },
+      {
+        "level": 3,
+        "text": "POST /auth/login",
+        "slug": "post-authlogin"
+      },
+      {
+        "level": 3,
+        "text": "POST /auth/oauth/{provider}",
+        "slug": "post-authoauthprovider"
+      },
+      {
+        "level": 3,
+        "text": "POST /auth/oauth/{provider}/callback",
+        "slug": "post-authoauthprovidercallback"
+      },
+      {
+        "level": 3,
+        "text": "POST /auth/mfa/setup",
+        "slug": "post-authmfasetup"
+      },
+      {
+        "level": 3,
+        "text": "POST /auth/mfa/verify",
+        "slug": "post-authmfaverify"
+      },
+      {
+        "level": 3,
+        "text": "POST /auth/refresh",
+        "slug": "post-authrefresh"
+      },
+      {
+        "level": 3,
+        "text": "POST /auth/logout",
+        "slug": "post-authlogout"
+      },
+      {
+        "level": 2,
+        "text": "4.3 Tenant 도메인",
+        "slug": "43-tenant-도메인"
+      },
+      {
+        "level": 3,
+        "text": "GET /tenant/context",
+        "slug": "get-tenantcontext"
+      },
+      {
+        "level": 3,
+        "text": "POST /tenant/switch",
+        "slug": "post-tenantswitch"
+      },
+      {
+        "level": 3,
+        "text": "GET /tenant/usage",
+        "slug": "get-tenantusage"
+      },
+      {
+        "level": 3,
+        "text": "GET /tenant/members",
+        "slug": "get-tenantmembers"
+      },
+      {
+        "level": 3,
+        "text": "POST /tenant/members/invite",
+        "slug": "post-tenantmembersinvite"
+      },
+      {
+        "level": 2,
+        "text": "4.4 Billing 도메인",
+        "slug": "44-billing-도메인"
+      },
+      {
+        "level": 3,
+        "text": "GET /billing/plans",
+        "slug": "get-billingplans"
+      },
+      {
+        "level": 3,
+        "text": "POST /billing/checkout",
+        "slug": "post-billingcheckout"
+      },
+      {
+        "level": 3,
+        "text": "POST /billing/portal",
+        "slug": "post-billingportal"
+      },
+      {
+        "level": 3,
+        "text": "GET /billing/subscription",
+        "slug": "get-billingsubscription"
+      },
+      {
+        "level": 3,
+        "text": "POST /billing/webhooks (Internal)",
+        "slug": "post-billingwebhooks-internal"
+      },
+      {
+        "level": 2,
+        "text": "4.5 사용자 데이터 권리 (GDPR/CCPA)",
+        "slug": "45-사용자-데이터-권리-gdprccpa"
+      },
+      {
+        "level": 3,
+        "text": "POST /me/data-export",
+        "slug": "post-medata-export"
+      },
+      {
+        "level": 3,
+        "text": "GET /me/data-export/{jobId}",
+        "slug": "get-medata-exportjobid"
+      },
+      {
+        "level": 3,
+        "text": "DELETE /me/account",
+        "slug": "delete-meaccount"
+      },
+      {
+        "level": 2,
+        "text": "4.6 Notes 도메인",
+        "slug": "46-notes-도메인"
+      },
+      {
+        "level": 3,
+        "text": "POST /notes",
+        "slug": "post-notes"
+      },
+      {
+        "level": 3,
+        "text": "GET /notes",
+        "slug": "get-notes"
+      },
+      {
+        "level": 3,
+        "text": "GET /notes/{id}",
+        "slug": "get-notesid"
+      },
+      {
+        "level": 3,
+        "text": "PATCH /notes/{id}",
+        "slug": "patch-notesid"
+      },
+      {
+        "level": 3,
+        "text": "DELETE /notes/{id}",
+        "slug": "delete-notesid"
+      },
+      {
+        "level": 3,
+        "text": "GET /notes/{id}/backlinks",
+        "slug": "get-notesidbacklinks"
+      },
+      {
+        "level": 3,
+        "text": "GET /notes/{id}/versions",
+        "slug": "get-notesidversions"
+      },
+      {
+        "level": 3,
+        "text": "POST /notes/{id}/attachments",
+        "slug": "post-notesidattachments"
+      },
+      {
+        "level": 3,
+        "text": "GET /notes/search",
+        "slug": "get-notessearch"
+      },
+      {
+        "level": 2,
+        "text": "4.7 Cards/Decks 도메인",
+        "slug": "47-cardsdecks-도메인"
+      },
+      {
+        "level": 3,
+        "text": "POST /decks",
+        "slug": "post-decks"
+      },
+      {
+        "level": 3,
+        "text": "GET /decks",
+        "slug": "get-decks"
+      },
+      {
+        "level": 3,
+        "text": "PATCH /decks/{id}",
+        "slug": "patch-decksid"
+      },
+      {
+        "level": 3,
+        "text": "DELETE /decks/{id}",
+        "slug": "delete-decksid"
+      },
+      {
+        "level": 3,
+        "text": "POST /decks/{deckId}/cards",
+        "slug": "post-decksdeckidcards"
+      },
+      {
+        "level": 3,
+        "text": "GET /decks/{deckId}/cards",
+        "slug": "get-decksdeckidcards"
+      },
+      {
+        "level": 3,
+        "text": "PATCH /cards/{id}",
+        "slug": "patch-cardsid"
+      },
+      {
+        "level": 3,
+        "text": "DELETE /cards/{id}",
+        "slug": "delete-cardsid"
+      },
+      {
+        "level": 3,
+        "text": "POST /cards/batch",
+        "slug": "post-cardsbatch"
+      },
+      {
+        "level": 2,
+        "text": "4.8 SRS/Reviews 도메인",
+        "slug": "48-srsreviews-도메인"
+      },
+      {
+        "level": 3,
+        "text": "GET /reviews/queue",
+        "slug": "get-reviewsqueue"
+      },
+      {
+        "level": 3,
+        "text": "POST /reviews/sessions",
+        "slug": "post-reviewssessions"
+      },
+      {
+        "level": 3,
+        "text": "POST /reviews/sessions/{sessionId}/submit",
+        "slug": "post-reviewssessionssessionidsubmit"
+      },
+      {
+        "level": 3,
+        "text": "PUT /reviews/sessions/{sessionId}/complete",
+        "slug": "put-reviewssessionssessionidcomplete"
+      },
+      {
+        "level": 2,
+        "text": "4.9 Graph 도메인",
+        "slug": "49-graph-도메인"
+      },
+      {
+        "level": 3,
+        "text": "GET /graph/data",
+        "slug": "get-graphdata"
+      },
+      {
+        "level": 3,
+        "text": "GET /graph/neighbors/{noteId}",
+        "slug": "get-graphneighborsnoteid"
+      },
+      {
+        "level": 3,
+        "text": "GET /graph/clusters",
+        "slug": "get-graphclusters"
+      },
+      {
+        "level": 2,
+        "text": "4.10 AI 도메인",
+        "slug": "410-ai-도메인"
+      },
+      {
+        "level": 3,
+        "text": "POST /ai/cards/generate",
+        "slug": "post-aicardsgenerate"
+      },
+      {
+        "level": 3,
+        "text": "POST /ai/search/semantic",
+        "slug": "post-aisearchsemantic"
+      },
+      {
+        "level": 3,
+        "text": "POST /ai/search/hybrid",
+        "slug": "post-aisearchhybrid"
+      },
+      {
+        "level": 3,
+        "text": "POST /ai/qa",
+        "slug": "post-aiqa"
+      },
+      {
+        "level": 2,
+        "text": "4.11 Stats 도메인",
+        "slug": "411-stats-도메인"
+      },
+      {
+        "level": 3,
+        "text": "GET /stats/overview",
+        "slug": "get-statsoverview"
+      },
+      {
+        "level": 3,
+        "text": "GET /stats/heatmap",
+        "slug": "get-statsheatmap"
+      },
+      {
+        "level": 3,
+        "text": "GET /stats/retention",
+        "slug": "get-statsretention"
+      },
+      {
+        "level": 2,
+        "text": "4.12 Import/Export 도메인",
+        "slug": "412-importexport-도메인"
+      },
+      {
+        "level": 3,
+        "text": "POST /import/markdown",
+        "slug": "post-importmarkdown"
+      },
+      {
+        "level": 3,
+        "text": "POST /import/anki",
+        "slug": "post-importanki"
+      },
+      {
+        "level": 3,
+        "text": "POST /export/markdown",
+        "slug": "post-exportmarkdown"
+      },
+      {
+        "level": 3,
+        "text": "POST /export/anki",
+        "slug": "post-exportanki"
+      },
+      {
+        "level": 2,
+        "text": "4.13 Admin 도메인 (관리자 전용)",
+        "slug": "413-admin-도메인-관리자-전용"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/tenants",
+        "slug": "get-admintenants"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/tenants/{id}/usage",
+        "slug": "get-admintenantsidusage"
+      },
+      {
+        "level": 3,
+        "text": "PUT /admin/tenants/{id}/status",
+        "slug": "put-admintenantsidstatus"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/stats/system",
+        "slug": "get-adminstatssystem"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/audit-logs",
+        "slug": "get-adminaudit-logs"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/reports",
+        "slug": "get-adminreports"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/reports/{id}",
+        "slug": "get-adminreportsid"
+      },
+      {
+        "level": 3,
+        "text": "PUT /admin/reports/{id}/resolve",
+        "slug": "put-adminreportsidresolve"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/shared-content",
+        "slug": "get-adminshared-content"
+      },
+      {
+        "level": 3,
+        "text": "PUT /admin/shared-content/{id}/status",
+        "slug": "put-adminshared-contentidstatus"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/study-groups",
+        "slug": "get-adminstudy-groups"
+      },
+      {
+        "level": 3,
+        "text": "PUT /admin/study-groups/{id}/status",
+        "slug": "put-adminstudy-groupsidstatus"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/gamification/stats",
+        "slug": "get-admingamificationstats"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/gamification/badges",
+        "slug": "get-admingamificationbadges"
+      },
+      {
+        "level": 3,
+        "text": "POST /admin/gamification/badges",
+        "slug": "post-admingamificationbadges"
+      },
+      {
+        "level": 3,
+        "text": "PATCH /admin/gamification/badges/{id}",
+        "slug": "patch-admingamificationbadgesid"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/gamification/levels",
+        "slug": "get-admingamificationlevels"
+      },
+      {
+        "level": 3,
+        "text": "PUT /admin/gamification/levels",
+        "slug": "put-admingamificationlevels"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/gamification/xp-config",
+        "slug": "get-admingamificationxp-config"
+      },
+      {
+        "level": 3,
+        "text": "PUT /admin/gamification/xp-config",
+        "slug": "put-admingamificationxp-config"
+      },
+      {
+        "level": 2,
+        "text": "4.14 Audit 도메인",
+        "slug": "414-audit-도메인"
+      },
+      {
+        "level": 3,
+        "text": "GET /audit/logs",
+        "slug": "get-auditlogs"
+      },
+      {
+        "level": 2,
+        "text": "4.15 Community 도메인",
+        "slug": "415-community-도메인"
+      },
+      {
+        "level": 3,
+        "text": "POST /community/groups",
+        "slug": "post-communitygroups"
+      },
+      {
+        "level": 3,
+        "text": "GET /community/groups",
+        "slug": "get-communitygroups"
+      },
+      {
+        "level": 3,
+        "text": "GET /community/groups/{id}",
+        "slug": "get-communitygroupsid"
+      },
+      {
+        "level": 3,
+        "text": "PATCH /community/groups/{id}",
+        "slug": "patch-communitygroupsid"
+      },
+      {
+        "level": 3,
+        "text": "DELETE /community/groups/{id}",
+        "slug": "delete-communitygroupsid"
+      },
+      {
+        "level": 3,
+        "text": "POST /community/groups/{id}/join",
+        "slug": "post-communitygroupsidjoin"
+      },
+      {
+        "level": 3,
+        "text": "POST /community/groups/{id}/leave",
+        "slug": "post-communitygroupsidleave"
+      },
+      {
+        "level": 3,
+        "text": "GET /community/groups/{id}/members",
+        "slug": "get-communitygroupsidmembers"
+      },
+      {
+        "level": 3,
+        "text": "PATCH /community/groups/{id}/members/{uid}",
+        "slug": "patch-communitygroupsidmembersuid"
+      },
+      {
+        "level": 3,
+        "text": "DELETE /community/groups/{id}/members/{uid}",
+        "slug": "delete-communitygroupsidmembersuid"
+      },
+      {
+        "level": 3,
+        "text": "POST /community/groups/{id}/invite",
+        "slug": "post-communitygroupsidinvite"
+      },
+      {
+        "level": 3,
+        "text": "POST /community/groups/{id}/invite/{token}/accept",
+        "slug": "post-communitygroupsidinvitetokenaccept"
+      },
+      {
+        "level": 3,
+        "text": "POST /community/groups/{id}/invite/{token}/decline",
+        "slug": "post-communitygroupsidinvitetokendecline"
+      },
+      {
+        "level": 3,
+        "text": "GET /community/groups/{id}/join-requests",
+        "slug": "get-communitygroupsidjoin-requests"
+      },
+      {
+        "level": 3,
+        "text": "PATCH /community/groups/{id}/join-requests/{uid}",
+        "slug": "patch-communitygroupsidjoin-requestsuid"
+      },
+      {
+        "level": 3,
+        "text": "POST /community/shared-decks",
+        "slug": "post-communityshared-decks"
+      },
+      {
+        "level": 3,
+        "text": "GET /community/shared-decks",
+        "slug": "get-communityshared-decks"
+      },
+      {
+        "level": 3,
+        "text": "GET /community/shared-decks/{id}",
+        "slug": "get-communityshared-decksid"
+      },
+      {
+        "level": 3,
+        "text": "DELETE /community/shared-decks/{id}",
+        "slug": "delete-communityshared-decksid"
+      },
+      {
+        "level": 3,
+        "text": "POST /community/shared-decks/{id}/copy",
+        "slug": "post-communityshared-decksidcopy"
+      },
+      {
+        "level": 3,
+        "text": "POST /community/shared-decks/{id}/rate",
+        "slug": "post-communityshared-decksidrate"
+      },
+      {
+        "level": 3,
+        "text": "GET /community/shared-decks/{id}/ratings",
+        "slug": "get-communityshared-decksidratings"
+      },
+      {
+        "level": 3,
+        "text": "POST /community/shared-notes",
+        "slug": "post-communityshared-notes"
+      },
+      {
+        "level": 3,
+        "text": "GET /community/shared-notes",
+        "slug": "get-communityshared-notes"
+      },
+      {
+        "level": 3,
+        "text": "GET /community/shared-notes/{id}",
+        "slug": "get-communityshared-notesid"
+      },
+      {
+        "level": 3,
+        "text": "DELETE /community/shared-notes/{id}",
+        "slug": "delete-communityshared-notesid"
+      },
+      {
+        "level": 3,
+        "text": "POST /community/reports",
+        "slug": "post-communityreports"
+      },
+      {
+        "level": 2,
+        "text": "4.16 Gamification 도메인",
+        "slug": "416-gamification-도메인"
+      },
+      {
+        "level": 3,
+        "text": "GET /gamification/profile",
+        "slug": "get-gamificationprofile"
+      },
+      {
+        "level": 3,
+        "text": "GET /gamification/xp/history",
+        "slug": "get-gamificationxphistory"
+      },
+      {
+        "level": 3,
+        "text": "GET /gamification/badges",
+        "slug": "get-gamificationbadges"
+      },
+      {
+        "level": 3,
+        "text": "GET /gamification/badges/{code}",
+        "slug": "get-gamificationbadgescode"
+      },
+      {
+        "level": 3,
+        "text": "GET /gamification/leaderboard",
+        "slug": "get-gamificationleaderboard"
+      },
+      {
+        "level": 3,
+        "text": "GET /gamification/leaderboard/group/{id}",
+        "slug": "get-gamificationleaderboardgroupid"
+      },
+      {
+        "level": 3,
+        "text": "GET /gamification/levels",
+        "slug": "get-gamificationlevels"
+      },
+      {
+        "level": 3,
+        "text": "GET /gamification/streak",
+        "slug": "get-gamificationstreak"
+      },
+      {
+        "level": 2,
+        "text": "4.17 Notification 도메인",
+        "slug": "417-notification-도메인"
+      },
+      {
+        "level": 3,
+        "text": "GET /notifications",
+        "slug": "get-notifications"
+      },
+      {
+        "level": 3,
+        "text": "PATCH /notifications/{id}/read",
+        "slug": "patch-notificationsidread"
+      },
+      {
+        "level": 3,
+        "text": "POST /notifications/read-all",
+        "slug": "post-notificationsread-all"
+      },
+      {
+        "level": 3,
+        "text": "GET /notifications/unread-count",
+        "slug": "get-notificationsunread-count"
+      },
+      {
+        "level": 3,
+        "text": "GET /notifications/preferences",
+        "slug": "get-notificationspreferences"
+      },
+      {
+        "level": 3,
+        "text": "PUT /notifications/preferences",
+        "slug": "put-notificationspreferences"
+      },
+      {
+        "level": 3,
+        "text": "POST /notifications/devices",
+        "slug": "post-notificationsdevices"
+      },
+      {
+        "level": 3,
+        "text": "DELETE /notifications/devices/{id}",
+        "slug": "delete-notificationsdevicesid"
+      },
+      {
+        "level": 2,
+        "text": "변경 이력",
+        "slug": "변경-이력"
+      }
+    ],
+    "children": [
+      "01_4.1",
+      "02_4.2-auth",
+      "03_4.3-tenant",
+      "04_4.4-billing",
+      "05_4.5-(gdprccpa)",
+      "06_4.6-notes",
+      "07_4.7-cardsdecks",
+      "08_4.8-srsreviews",
+      "09_4.9-graph",
+      "10_4.10-ai",
+      "11_4.11-stats",
+      "12_4.12-importexport",
+      "13_4.13-admin-(-)",
+      "14_4.14-audit",
+      "15_4.15-community",
+      "16_4.16-gamification",
+      "17_4.17-notification",
+      "18_section"
+    ]
+  },
+  {
+    "slug": "04_API_명세서/01_4.1",
+    "title": "4.1 공통 규약",
+    "group": "기획/설계",
+    "order": 4.01,
+    "parent": "04_API_명세서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "Base URL",
+        "slug": "base-url"
+      },
+      {
+        "level": 3,
+        "text": "인증",
+        "slug": "인증"
+      },
+      {
+        "level": 3,
+        "text": "공통 응답 형식",
+        "slug": "공통-응답-형식"
+      },
+      {
+        "level": 3,
+        "text": "에러 응답",
+        "slug": "에러-응답"
+      },
+      {
+        "level": 3,
+        "text": "HTTP 상태 코드",
+        "slug": "http-상태-코드"
+      },
+      {
+        "level": 3,
+        "text": "페이지네이션",
+        "slug": "페이지네이션"
+      },
+      {
+        "level": 3,
+        "text": "Rate Limiting 헤더",
+        "slug": "rate-limiting-헤더"
+      }
+    ]
+  },
+  {
+    "slug": "04_API_명세서/02_4.2-auth",
+    "title": "4.2 Auth 도메인",
+    "group": "기획/설계",
+    "order": 4.02,
+    "parent": "04_API_명세서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "POST /auth/signup",
+        "slug": "post-authsignup"
+      },
+      {
+        "level": 3,
+        "text": "POST /auth/login",
+        "slug": "post-authlogin"
+      },
+      {
+        "level": 3,
+        "text": "POST /auth/oauth/{provider}",
+        "slug": "post-authoauthprovider"
+      },
+      {
+        "level": 3,
+        "text": "POST /auth/oauth/{provider}/callback",
+        "slug": "post-authoauthprovidercallback"
+      },
+      {
+        "level": 3,
+        "text": "POST /auth/mfa/setup",
+        "slug": "post-authmfasetup"
+      },
+      {
+        "level": 3,
+        "text": "POST /auth/mfa/verify",
+        "slug": "post-authmfaverify"
+      },
+      {
+        "level": 3,
+        "text": "POST /auth/refresh",
+        "slug": "post-authrefresh"
+      },
+      {
+        "level": 3,
+        "text": "POST /auth/logout",
+        "slug": "post-authlogout"
+      }
+    ]
+  },
+  {
+    "slug": "04_API_명세서/03_4.3-tenant",
+    "title": "4.3 Tenant 도메인",
+    "group": "기획/설계",
+    "order": 4.03,
+    "parent": "04_API_명세서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "GET /tenant/context",
+        "slug": "get-tenantcontext"
+      },
+      {
+        "level": 3,
+        "text": "POST /tenant/switch",
+        "slug": "post-tenantswitch"
+      },
+      {
+        "level": 3,
+        "text": "GET /tenant/usage",
+        "slug": "get-tenantusage"
+      },
+      {
+        "level": 3,
+        "text": "GET /tenant/members",
+        "slug": "get-tenantmembers"
+      },
+      {
+        "level": 3,
+        "text": "POST /tenant/members/invite",
+        "slug": "post-tenantmembersinvite"
+      }
+    ]
+  },
+  {
+    "slug": "04_API_명세서/04_4.4-billing",
+    "title": "4.4 Billing 도메인",
+    "group": "기획/설계",
+    "order": 4.04,
+    "parent": "04_API_명세서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "GET /billing/plans",
+        "slug": "get-billingplans"
+      },
+      {
+        "level": 3,
+        "text": "POST /billing/checkout",
+        "slug": "post-billingcheckout"
+      },
+      {
+        "level": 3,
+        "text": "POST /billing/portal",
+        "slug": "post-billingportal"
+      },
+      {
+        "level": 3,
+        "text": "GET /billing/subscription",
+        "slug": "get-billingsubscription"
+      },
+      {
+        "level": 3,
+        "text": "POST /billing/webhooks (Internal)",
+        "slug": "post-billingwebhooks-internal"
+      }
+    ]
+  },
+  {
+    "slug": "04_API_명세서/05_4.5-(gdprccpa)",
+    "title": "4.5 사용자 데이터 권리 (GDPR/CCPA)",
+    "group": "기획/설계",
+    "order": 4.05,
+    "parent": "04_API_명세서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "POST /me/data-export",
+        "slug": "post-medata-export"
+      },
+      {
+        "level": 3,
+        "text": "GET /me/data-export/{jobId}",
+        "slug": "get-medata-exportjobid"
+      },
+      {
+        "level": 3,
+        "text": "DELETE /me/account",
+        "slug": "delete-meaccount"
+      }
+    ]
+  },
+  {
+    "slug": "04_API_명세서/06_4.6-notes",
+    "title": "4.6 Notes 도메인",
+    "group": "기획/설계",
+    "order": 4.06,
+    "parent": "04_API_명세서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "POST /notes",
+        "slug": "post-notes"
+      },
+      {
+        "level": 3,
+        "text": "GET /notes",
+        "slug": "get-notes"
+      },
+      {
+        "level": 3,
+        "text": "GET /notes/{id}",
+        "slug": "get-notesid"
+      },
+      {
+        "level": 3,
+        "text": "PATCH /notes/{id}",
+        "slug": "patch-notesid"
+      },
+      {
+        "level": 3,
+        "text": "DELETE /notes/{id}",
+        "slug": "delete-notesid"
+      },
+      {
+        "level": 3,
+        "text": "GET /notes/{id}/backlinks",
+        "slug": "get-notesidbacklinks"
+      },
+      {
+        "level": 3,
+        "text": "GET /notes/{id}/versions",
+        "slug": "get-notesidversions"
+      },
+      {
+        "level": 3,
+        "text": "POST /notes/{id}/attachments",
+        "slug": "post-notesidattachments"
+      },
+      {
+        "level": 3,
+        "text": "GET /notes/search",
+        "slug": "get-notessearch"
+      }
+    ]
+  },
+  {
+    "slug": "04_API_명세서/07_4.7-cardsdecks",
+    "title": "4.7 Cards/Decks 도메인",
+    "group": "기획/설계",
+    "order": 4.07,
+    "parent": "04_API_명세서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "POST /decks",
+        "slug": "post-decks"
+      },
+      {
+        "level": 3,
+        "text": "GET /decks",
+        "slug": "get-decks"
+      },
+      {
+        "level": 3,
+        "text": "PATCH /decks/{id}",
+        "slug": "patch-decksid"
+      },
+      {
+        "level": 3,
+        "text": "DELETE /decks/{id}",
+        "slug": "delete-decksid"
+      },
+      {
+        "level": 3,
+        "text": "POST /decks/{deckId}/cards",
+        "slug": "post-decksdeckidcards"
+      },
+      {
+        "level": 3,
+        "text": "GET /decks/{deckId}/cards",
+        "slug": "get-decksdeckidcards"
+      },
+      {
+        "level": 3,
+        "text": "PATCH /cards/{id}",
+        "slug": "patch-cardsid"
+      },
+      {
+        "level": 3,
+        "text": "DELETE /cards/{id}",
+        "slug": "delete-cardsid"
+      },
+      {
+        "level": 3,
+        "text": "POST /cards/batch",
+        "slug": "post-cardsbatch"
+      }
+    ]
+  },
+  {
+    "slug": "04_API_명세서/08_4.8-srsreviews",
+    "title": "4.8 SRS/Reviews 도메인",
+    "group": "기획/설계",
+    "order": 4.08,
+    "parent": "04_API_명세서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "GET /reviews/queue",
+        "slug": "get-reviewsqueue"
+      },
+      {
+        "level": 3,
+        "text": "POST /reviews/sessions",
+        "slug": "post-reviewssessions"
+      },
+      {
+        "level": 3,
+        "text": "POST /reviews/sessions/{sessionId}/submit",
+        "slug": "post-reviewssessionssessionidsubmit"
+      },
+      {
+        "level": 3,
+        "text": "PUT /reviews/sessions/{sessionId}/complete",
+        "slug": "put-reviewssessionssessionidcomplete"
+      }
+    ]
+  },
+  {
+    "slug": "04_API_명세서/09_4.9-graph",
+    "title": "4.9 Graph 도메인",
+    "group": "기획/설계",
+    "order": 4.09,
+    "parent": "04_API_명세서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "GET /graph/data",
+        "slug": "get-graphdata"
+      },
+      {
+        "level": 3,
+        "text": "GET /graph/neighbors/{noteId}",
+        "slug": "get-graphneighborsnoteid"
+      },
+      {
+        "level": 3,
+        "text": "GET /graph/clusters",
+        "slug": "get-graphclusters"
+      }
+    ]
+  },
+  {
+    "slug": "04_API_명세서/10_4.10-ai",
+    "title": "4.10 AI 도메인",
+    "group": "기획/설계",
+    "order": 4.1,
+    "parent": "04_API_명세서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "POST /ai/cards/generate",
+        "slug": "post-aicardsgenerate"
+      },
+      {
+        "level": 3,
+        "text": "POST /ai/search/semantic",
+        "slug": "post-aisearchsemantic"
+      },
+      {
+        "level": 3,
+        "text": "POST /ai/search/hybrid",
+        "slug": "post-aisearchhybrid"
+      },
+      {
+        "level": 3,
+        "text": "POST /ai/qa",
+        "slug": "post-aiqa"
+      }
+    ]
+  },
+  {
+    "slug": "04_API_명세서/11_4.11-stats",
+    "title": "4.11 Stats 도메인",
+    "group": "기획/설계",
+    "order": 4.11,
+    "parent": "04_API_명세서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "GET /stats/overview",
+        "slug": "get-statsoverview"
+      },
+      {
+        "level": 3,
+        "text": "GET /stats/heatmap",
+        "slug": "get-statsheatmap"
+      },
+      {
+        "level": 3,
+        "text": "GET /stats/retention",
+        "slug": "get-statsretention"
+      }
+    ]
+  },
+  {
+    "slug": "04_API_명세서/12_4.12-importexport",
+    "title": "4.12 Import/Export 도메인",
+    "group": "기획/설계",
+    "order": 4.12,
+    "parent": "04_API_명세서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "POST /import/markdown",
+        "slug": "post-importmarkdown"
+      },
+      {
+        "level": 3,
+        "text": "POST /import/anki",
+        "slug": "post-importanki"
+      },
+      {
+        "level": 3,
+        "text": "POST /export/markdown",
+        "slug": "post-exportmarkdown"
+      },
+      {
+        "level": 3,
+        "text": "POST /export/anki",
+        "slug": "post-exportanki"
+      }
+    ]
+  },
+  {
+    "slug": "04_API_명세서/13_4.13-admin-(-)",
+    "title": "4.13 Admin 도메인 (관리자 전용)",
+    "group": "기획/설계",
+    "order": 4.13,
+    "parent": "04_API_명세서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "GET /admin/tenants",
+        "slug": "get-admintenants"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/tenants/{id}/usage",
+        "slug": "get-admintenantsidusage"
+      },
+      {
+        "level": 3,
+        "text": "PUT /admin/tenants/{id}/status",
+        "slug": "put-admintenantsidstatus"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/stats/system",
+        "slug": "get-adminstatssystem"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/audit-logs",
+        "slug": "get-adminaudit-logs"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/reports",
+        "slug": "get-adminreports"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/reports/{id}",
+        "slug": "get-adminreportsid"
+      },
+      {
+        "level": 3,
+        "text": "PUT /admin/reports/{id}/resolve",
+        "slug": "put-adminreportsidresolve"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/shared-content",
+        "slug": "get-adminshared-content"
+      },
+      {
+        "level": 3,
+        "text": "PUT /admin/shared-content/{id}/status",
+        "slug": "put-adminshared-contentidstatus"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/study-groups",
+        "slug": "get-adminstudy-groups"
+      },
+      {
+        "level": 3,
+        "text": "PUT /admin/study-groups/{id}/status",
+        "slug": "put-adminstudy-groupsidstatus"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/gamification/stats",
+        "slug": "get-admingamificationstats"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/gamification/badges",
+        "slug": "get-admingamificationbadges"
+      },
+      {
+        "level": 3,
+        "text": "POST /admin/gamification/badges",
+        "slug": "post-admingamificationbadges"
+      },
+      {
+        "level": 3,
+        "text": "PATCH /admin/gamification/badges/{id}",
+        "slug": "patch-admingamificationbadgesid"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/gamification/levels",
+        "slug": "get-admingamificationlevels"
+      },
+      {
+        "level": 3,
+        "text": "PUT /admin/gamification/levels",
+        "slug": "put-admingamificationlevels"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/gamification/xp-config",
+        "slug": "get-admingamificationxp-config"
+      },
+      {
+        "level": 3,
+        "text": "PUT /admin/gamification/xp-config",
+        "slug": "put-admingamificationxp-config"
+      }
+    ]
+  },
+  {
+    "slug": "04_API_명세서/14_4.14-audit",
+    "title": "4.14 Audit 도메인",
+    "group": "기획/설계",
+    "order": 4.14,
+    "parent": "04_API_명세서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "GET /audit/logs",
+        "slug": "get-auditlogs"
+      }
+    ]
+  },
+  {
+    "slug": "04_API_명세서/15_4.15-community",
+    "title": "4.15 Community 도메인",
+    "group": "기획/설계",
+    "order": 4.15,
+    "parent": "04_API_명세서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "POST /community/groups",
+        "slug": "post-communitygroups"
+      },
+      {
+        "level": 3,
+        "text": "GET /community/groups",
+        "slug": "get-communitygroups"
+      },
+      {
+        "level": 3,
+        "text": "GET /community/groups/{id}",
+        "slug": "get-communitygroupsid"
+      },
+      {
+        "level": 3,
+        "text": "PATCH /community/groups/{id}",
+        "slug": "patch-communitygroupsid"
+      },
+      {
+        "level": 3,
+        "text": "DELETE /community/groups/{id}",
+        "slug": "delete-communitygroupsid"
+      },
+      {
+        "level": 3,
+        "text": "POST /community/groups/{id}/join",
+        "slug": "post-communitygroupsidjoin"
+      },
+      {
+        "level": 3,
+        "text": "POST /community/groups/{id}/leave",
+        "slug": "post-communitygroupsidleave"
+      },
+      {
+        "level": 3,
+        "text": "GET /community/groups/{id}/members",
+        "slug": "get-communitygroupsidmembers"
+      },
+      {
+        "level": 3,
+        "text": "PATCH /community/groups/{id}/members/{uid}",
+        "slug": "patch-communitygroupsidmembersuid"
+      },
+      {
+        "level": 3,
+        "text": "DELETE /community/groups/{id}/members/{uid}",
+        "slug": "delete-communitygroupsidmembersuid"
+      },
+      {
+        "level": 3,
+        "text": "POST /community/groups/{id}/invite",
+        "slug": "post-communitygroupsidinvite"
+      },
+      {
+        "level": 3,
+        "text": "POST /community/groups/{id}/invite/{token}/accept",
+        "slug": "post-communitygroupsidinvitetokenaccept"
+      },
+      {
+        "level": 3,
+        "text": "POST /community/groups/{id}/invite/{token}/decline",
+        "slug": "post-communitygroupsidinvitetokendecline"
+      },
+      {
+        "level": 3,
+        "text": "GET /community/groups/{id}/join-requests",
+        "slug": "get-communitygroupsidjoin-requests"
+      },
+      {
+        "level": 3,
+        "text": "PATCH /community/groups/{id}/join-requests/{uid}",
+        "slug": "patch-communitygroupsidjoin-requestsuid"
+      },
+      {
+        "level": 3,
+        "text": "POST /community/shared-decks",
+        "slug": "post-communityshared-decks"
+      },
+      {
+        "level": 3,
+        "text": "GET /community/shared-decks",
+        "slug": "get-communityshared-decks"
+      },
+      {
+        "level": 3,
+        "text": "GET /community/shared-decks/{id}",
+        "slug": "get-communityshared-decksid"
+      },
+      {
+        "level": 3,
+        "text": "DELETE /community/shared-decks/{id}",
+        "slug": "delete-communityshared-decksid"
+      },
+      {
+        "level": 3,
+        "text": "POST /community/shared-decks/{id}/copy",
+        "slug": "post-communityshared-decksidcopy"
+      },
+      {
+        "level": 3,
+        "text": "POST /community/shared-decks/{id}/rate",
+        "slug": "post-communityshared-decksidrate"
+      },
+      {
+        "level": 3,
+        "text": "GET /community/shared-decks/{id}/ratings",
+        "slug": "get-communityshared-decksidratings"
+      },
+      {
+        "level": 3,
+        "text": "POST /community/shared-notes",
+        "slug": "post-communityshared-notes"
+      },
+      {
+        "level": 3,
+        "text": "GET /community/shared-notes",
+        "slug": "get-communityshared-notes"
+      },
+      {
+        "level": 3,
+        "text": "GET /community/shared-notes/{id}",
+        "slug": "get-communityshared-notesid"
+      },
+      {
+        "level": 3,
+        "text": "DELETE /community/shared-notes/{id}",
+        "slug": "delete-communityshared-notesid"
+      },
+      {
+        "level": 3,
+        "text": "POST /community/reports",
+        "slug": "post-communityreports"
+      }
+    ]
+  },
+  {
+    "slug": "04_API_명세서/16_4.16-gamification",
+    "title": "4.16 Gamification 도메인",
+    "group": "기획/설계",
+    "order": 4.16,
+    "parent": "04_API_명세서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "GET /gamification/profile",
+        "slug": "get-gamificationprofile"
+      },
+      {
+        "level": 3,
+        "text": "GET /gamification/xp/history",
+        "slug": "get-gamificationxphistory"
+      },
+      {
+        "level": 3,
+        "text": "GET /gamification/badges",
+        "slug": "get-gamificationbadges"
+      },
+      {
+        "level": 3,
+        "text": "GET /gamification/badges/{code}",
+        "slug": "get-gamificationbadgescode"
+      },
+      {
+        "level": 3,
+        "text": "GET /gamification/leaderboard",
+        "slug": "get-gamificationleaderboard"
+      },
+      {
+        "level": 3,
+        "text": "GET /gamification/leaderboard/group/{id}",
+        "slug": "get-gamificationleaderboardgroupid"
+      },
+      {
+        "level": 3,
+        "text": "GET /gamification/levels",
+        "slug": "get-gamificationlevels"
+      },
+      {
+        "level": 3,
+        "text": "GET /gamification/streak",
+        "slug": "get-gamificationstreak"
+      }
+    ]
+  },
+  {
+    "slug": "04_API_명세서/17_4.17-notification",
+    "title": "4.17 Notification 도메인",
+    "group": "기획/설계",
+    "order": 4.17,
+    "parent": "04_API_명세서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "GET /notifications",
+        "slug": "get-notifications"
+      },
+      {
+        "level": 3,
+        "text": "PATCH /notifications/{id}/read",
+        "slug": "patch-notificationsidread"
+      },
+      {
+        "level": 3,
+        "text": "POST /notifications/read-all",
+        "slug": "post-notificationsread-all"
+      },
+      {
+        "level": 3,
+        "text": "GET /notifications/unread-count",
+        "slug": "get-notificationsunread-count"
+      },
+      {
+        "level": 3,
+        "text": "GET /notifications/preferences",
+        "slug": "get-notificationspreferences"
+      },
+      {
+        "level": 3,
+        "text": "PUT /notifications/preferences",
+        "slug": "put-notificationspreferences"
+      },
+      {
+        "level": 3,
+        "text": "POST /notifications/devices",
+        "slug": "post-notificationsdevices"
+      },
+      {
+        "level": 3,
+        "text": "DELETE /notifications/devices/{id}",
+        "slug": "delete-notificationsdevicesid"
+      }
+    ]
+  },
+  {
+    "slug": "04_API_명세서/18_section",
+    "title": "변경 이력",
+    "group": "기획/설계",
+    "order": 4.18,
+    "parent": "04_API_명세서",
+    "outline": []
+  },
+  {
+    "slug": "05_화면_흐름_시퀀스_다이어그램",
+    "title": "5. 화면 흐름 시퀀스 다이어그램",
+    "group": "기획/설계",
+    "order": 5,
+    "outline": [
+      {
+        "level": 2,
+        "text": "5.1 회원가입 + Tenant 생성",
+        "slug": "51-회원가입--tenant-생성"
+      },
+      {
+        "level": 2,
+        "text": "5.2 OAuth 로그인 + MFA 검증",
+        "slug": "52-oauth-로그인--mfa-검증"
+      },
+      {
+        "level": 2,
+        "text": "5.3 노트 작성 + 위키링크 + 백링크 갱신",
+        "slug": "53-노트-작성--위키링크--백링크-갱신"
+      },
+      {
+        "level": 2,
+        "text": "5.4 AI 카드 자동 생성 (LLM + Cache)",
+        "slug": "54-ai-카드-자동-생성-llm--cache"
+      },
+      {
+        "level": 2,
+        "text": "5.5 복습 세션 (SRS 스케줄링)",
+        "slug": "55-복습-세션-srs-스케줄링"
+      },
+      {
+        "level": 2,
+        "text": "5.6 시맨틱 검색 (Hybrid Retrieval)",
+        "slug": "56-시맨틱-검색-hybrid-retrieval"
+      },
+      {
+        "level": 2,
+        "text": "5.7 Stripe 결제 (Checkout + Webhook)",
+        "slug": "57-stripe-결제-checkout--webhook"
+      },
+      {
+        "level": 2,
+        "text": "5.8 데이터 내보내기 (GDPR)",
+        "slug": "58-데이터-내보내기-gdpr"
+      },
+      {
+        "level": 2,
+        "text": "5.9 덱 공유 + 복사",
+        "slug": "59-덱-공유--복사"
+      },
+      {
+        "level": 2,
+        "text": "5.10 스터디 그룹 생성 + 가입",
+        "slug": "510-스터디-그룹-생성--가입"
+      },
+      {
+        "level": 2,
+        "text": "5.11 XP 적립 + 레벨업",
+        "slug": "511-xp-적립--레벨업"
+      },
+      {
+        "level": 2,
+        "text": "5.12 알림 발송 (복습 리마인더)",
+        "slug": "512-알림-발송-복습-리마인더"
+      },
+      {
+        "level": 2,
+        "text": "5.13 흐름 요약 매트릭스",
+        "slug": "513-흐름-요약-매트릭스"
+      }
+    ]
+  },
+  {
+    "slug": "06_화면_기능_정의서",
+    "title": "6. 화면 기능 정의서",
+    "group": "기획/설계",
+    "order": 6,
+    "outline": [
+      {
+        "level": 2,
+        "text": "6.1 화면 ID 체계",
+        "slug": "61-화면-id-체계"
+      },
+      {
+        "level": 3,
+        "text": "네이밍 규칙",
+        "slug": "네이밍-규칙"
+      },
+      {
+        "level": 3,
+        "text": "예시",
+        "slug": "예시"
+      },
+      {
+        "level": 2,
+        "text": "6.2 화면 인벤토리",
+        "slug": "62-화면-인벤토리"
+      },
+      {
+        "level": 3,
+        "text": "AUTH 영역",
+        "slug": "auth-영역"
+      },
+      {
+        "level": 3,
+        "text": "DASH 영역",
+        "slug": "dash-영역"
+      },
+      {
+        "level": 3,
+        "text": "NOTE 영역",
+        "slug": "note-영역"
+      },
+      {
+        "level": 3,
+        "text": "CARD 영역",
+        "slug": "card-영역"
+      },
+      {
+        "level": 3,
+        "text": "GRAPH 영역",
+        "slug": "graph-영역"
+      },
+      {
+        "level": 3,
+        "text": "SEARCH 영역",
+        "slug": "search-영역"
+      },
+      {
+        "level": 3,
+        "text": "BILLING 영역",
+        "slug": "billing-영역"
+      },
+      {
+        "level": 3,
+        "text": "SETTINGS 영역",
+        "slug": "settings-영역"
+      },
+      {
+        "level": 3,
+        "text": "ADMIN 영역",
+        "slug": "admin-영역"
+      },
+      {
+        "level": 3,
+        "text": "COMMUNITY 영역",
+        "slug": "community-영역"
+      },
+      {
+        "level": 3,
+        "text": "GAMIFICATION 영역",
+        "slug": "gamification-영역"
+      },
+      {
+        "level": 3,
+        "text": "NOTIFICATION 영역",
+        "slug": "notification-영역"
+      },
+      {
+        "level": 3,
+        "text": "ADMIN 확장",
+        "slug": "admin-확장"
+      },
+      {
+        "level": 2,
+        "text": "6.3 주요 화면 상세 및 목업",
+        "slug": "63-주요-화면-상세-및-목업"
+      },
+      {
+        "level": 3,
+        "text": "SCR-W-DASH-001: 메인 대시보드",
+        "slug": "scr-w-dash-001-메인-대시보드"
+      },
+      {
+        "level": 3,
+        "text": "SCR-W-NOTE-002: 노트 에디터 (위키링크)",
+        "slug": "scr-w-note-002-노트-에디터-위키링크"
+      },
+      {
+        "level": 3,
+        "text": "SCR-W-CARD-005: 복습 화면 (스와이프 카드)",
+        "slug": "scr-w-card-005-복습-화면-스와이프-카드"
+      },
+      {
+        "level": 3,
+        "text": "SCR-W-GRAPH-001: 그래프 뷰",
+        "slug": "scr-w-graph-001-그래프-뷰"
+      },
+      {
+        "level": 3,
+        "text": "SCR-W-COMM-001: 스터디 그룹 목록",
+        "slug": "scr-w-comm-001-스터디-그룹-목록"
+      },
+      {
+        "level": 3,
+        "text": "SCR-W-GAME-001: 게이미피케이션 프로필",
+        "slug": "scr-w-game-001-게이미피케이션-프로필"
+      },
+      {
+        "level": 3,
+        "text": "SCR-W-NOTI-001: 알림 센터",
+        "slug": "scr-w-noti-001-알림-센터"
+      },
+      {
+        "level": 2,
+        "text": "6.4 화면 전환 맵",
+        "slug": "64-화면-전환-맵"
+      },
+      {
+        "level": 2,
+        "text": "6.5 반응형 브레이크포인트",
+        "slug": "65-반응형-브레이크포인트"
+      },
+      {
+        "level": 2,
+        "text": "6.6 공통 UI 컴포넌트",
+        "slug": "66-공통-ui-컴포넌트"
+      },
+      {
+        "level": 2,
+        "text": "6.7 접근성 요구사항",
+        "slug": "67-접근성-요구사항"
+      },
+      {
+        "level": 2,
+        "text": "6.8 성능 요구사항",
+        "slug": "68-성능-요구사항"
+      }
+    ],
+    "children": [
+      "01_6.1-id",
+      "02_6.2",
+      "03_6.3",
+      "04_6.4",
+      "05_6.5",
+      "06_6.6-ui",
+      "07_6.7",
+      "08_6.8"
+    ]
+  },
+  {
+    "slug": "06_화면_기능_정의서/01_6.1-id",
+    "title": "6.1 화면 ID 체계",
+    "group": "기획/설계",
+    "order": 6.01,
+    "parent": "06_화면_기능_정의서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "네이밍 규칙",
+        "slug": "네이밍-규칙"
+      },
+      {
+        "level": 3,
+        "text": "예시",
+        "slug": "예시"
+      }
+    ]
+  },
+  {
+    "slug": "06_화면_기능_정의서/02_6.2",
+    "title": "6.2 화면 인벤토리",
+    "group": "기획/설계",
+    "order": 6.02,
+    "parent": "06_화면_기능_정의서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "AUTH 영역",
+        "slug": "auth-영역"
+      },
+      {
+        "level": 3,
+        "text": "DASH 영역",
+        "slug": "dash-영역"
+      },
+      {
+        "level": 3,
+        "text": "NOTE 영역",
+        "slug": "note-영역"
+      },
+      {
+        "level": 3,
+        "text": "CARD 영역",
+        "slug": "card-영역"
+      },
+      {
+        "level": 3,
+        "text": "GRAPH 영역",
+        "slug": "graph-영역"
+      },
+      {
+        "level": 3,
+        "text": "SEARCH 영역",
+        "slug": "search-영역"
+      },
+      {
+        "level": 3,
+        "text": "BILLING 영역",
+        "slug": "billing-영역"
+      },
+      {
+        "level": 3,
+        "text": "SETTINGS 영역",
+        "slug": "settings-영역"
+      },
+      {
+        "level": 3,
+        "text": "ADMIN 영역",
+        "slug": "admin-영역"
+      },
+      {
+        "level": 3,
+        "text": "COMMUNITY 영역",
+        "slug": "community-영역"
+      },
+      {
+        "level": 3,
+        "text": "GAMIFICATION 영역",
+        "slug": "gamification-영역"
+      },
+      {
+        "level": 3,
+        "text": "NOTIFICATION 영역",
+        "slug": "notification-영역"
+      },
+      {
+        "level": 3,
+        "text": "ADMIN 확장",
+        "slug": "admin-확장"
+      }
+    ]
+  },
+  {
+    "slug": "06_화면_기능_정의서/03_6.3",
+    "title": "6.3 주요 화면 상세 및 목업",
+    "group": "기획/설계",
+    "order": 6.03,
+    "parent": "06_화면_기능_정의서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "SCR-W-DASH-001: 메인 대시보드",
+        "slug": "scr-w-dash-001-메인-대시보드"
+      },
+      {
+        "level": 3,
+        "text": "SCR-W-NOTE-002: 노트 에디터 (위키링크)",
+        "slug": "scr-w-note-002-노트-에디터-위키링크"
+      },
+      {
+        "level": 3,
+        "text": "SCR-W-CARD-005: 복습 화면 (스와이프 카드)",
+        "slug": "scr-w-card-005-복습-화면-스와이프-카드"
+      },
+      {
+        "level": 3,
+        "text": "SCR-W-GRAPH-001: 그래프 뷰",
+        "slug": "scr-w-graph-001-그래프-뷰"
+      },
+      {
+        "level": 3,
+        "text": "SCR-W-COMM-001: 스터디 그룹 목록",
+        "slug": "scr-w-comm-001-스터디-그룹-목록"
+      },
+      {
+        "level": 3,
+        "text": "SCR-W-GAME-001: 게이미피케이션 프로필",
+        "slug": "scr-w-game-001-게이미피케이션-프로필"
+      },
+      {
+        "level": 3,
+        "text": "SCR-W-NOTI-001: 알림 센터",
+        "slug": "scr-w-noti-001-알림-센터"
+      }
+    ]
+  },
+  {
+    "slug": "06_화면_기능_정의서/04_6.4",
+    "title": "6.4 화면 전환 맵",
+    "group": "기획/설계",
+    "order": 6.04,
+    "parent": "06_화면_기능_정의서",
+    "outline": []
+  },
+  {
+    "slug": "06_화면_기능_정의서/05_6.5",
+    "title": "6.5 반응형 브레이크포인트",
+    "group": "기획/설계",
+    "order": 6.05,
+    "parent": "06_화면_기능_정의서",
+    "outline": []
+  },
+  {
+    "slug": "06_화면_기능_정의서/06_6.6-ui",
+    "title": "6.6 공통 UI 컴포넌트",
+    "group": "기획/설계",
+    "order": 6.06,
+    "parent": "06_화면_기능_정의서",
+    "outline": []
+  },
+  {
+    "slug": "06_화면_기능_정의서/07_6.7",
+    "title": "6.7 접근성 요구사항",
+    "group": "기획/설계",
+    "order": 6.07,
+    "parent": "06_화면_기능_정의서",
+    "outline": []
+  },
+  {
+    "slug": "06_화면_기능_정의서/08_6.8",
+    "title": "6.8 성능 요구사항",
+    "group": "기획/설계",
+    "order": 6.08,
+    "parent": "06_화면_기능_정의서",
+    "outline": []
+  },
+  {
+    "slug": "07_요구사항_정의서",
+    "title": "7. 요구사항 정의서",
+    "group": "기획/설계",
+    "order": 7,
+    "outline": [
+      {
+        "level": 2,
+        "text": "1. 개요",
+        "slug": "1-개요"
+      },
+      {
+        "level": 3,
+        "text": "ID 체계",
+        "slug": "id-체계"
+      },
+      {
+        "level": 3,
+        "text": "우선순위 정의",
+        "slug": "우선순위-정의"
+      },
+      {
+        "level": 2,
+        "text": "2. 기능적 요구사항 (Functional Requirements)",
+        "slug": "2-기능적-요구사항-functional-requirements"
+      },
+      {
+        "level": 3,
+        "text": "2.1 인증/인가 (AUTH)",
+        "slug": "21-인증인가-auth"
+      },
+      {
+        "level": 3,
+        "text": "2.2 노트 (NOTE)",
+        "slug": "22-노트-note"
+      },
+      {
+        "level": 3,
+        "text": "2.3 카드 (CARD)",
+        "slug": "23-카드-card"
+      },
+      {
+        "level": 3,
+        "text": "2.4 SRS (간격반복)",
+        "slug": "24-srs-간격반복"
+      },
+      {
+        "level": 3,
+        "text": "2.5 그래프 (GRAPH)",
+        "slug": "25-그래프-graph"
+      },
+      {
+        "level": 3,
+        "text": "2.6 AI/RAG",
+        "slug": "26-airag"
+      },
+      {
+        "level": 3,
+        "text": "2.7 빌링 (BILLING)",
+        "slug": "27-빌링-billing"
+      },
+      {
+        "level": 3,
+        "text": "2.8 내보내기 (EXPORT)",
+        "slug": "28-내보내기-export"
+      },
+      {
+        "level": 3,
+        "text": "2.9 커뮤니티 (COMM)",
+        "slug": "29-커뮤니티-comm"
+      },
+      {
+        "level": 3,
+        "text": "2.10 게이미피케이션 (GAME)",
+        "slug": "210-게이미피케이션-game"
+      },
+      {
+        "level": 3,
+        "text": "2.11 알림 (NOTI)",
+        "slug": "211-알림-noti"
+      },
+      {
+        "level": 3,
+        "text": "2.12 관리자 확장 (ADMIN)",
+        "slug": "212-관리자-확장-admin"
+      },
+      {
+        "level": 2,
+        "text": "3. 비기능적 요구사항 (Non-Functional Requirements)",
+        "slug": "3-비기능적-요구사항-non-functional-requirements"
+      },
+      {
+        "level": 3,
+        "text": "3.1 성능 (PERF)",
+        "slug": "31-성능-perf"
+      },
+      {
+        "level": 3,
+        "text": "3.2 보안 (SEC)",
+        "slug": "32-보안-sec"
+      },
+      {
+        "level": 3,
+        "text": "3.3 가용성 (AVAIL)",
+        "slug": "33-가용성-avail"
+      },
+      {
+        "level": 3,
+        "text": "3.4 확장성 (SCALE)",
+        "slug": "34-확장성-scale"
+      },
+      {
+        "level": 3,
+        "text": "3.5 사용성 (UX)",
+        "slug": "35-사용성-ux"
+      },
+      {
+        "level": 2,
+        "text": "4. 요구사항 추적 매트릭스 (RTM)",
+        "slug": "4-요구사항-추적-매트릭스-rtm"
+      },
+      {
+        "level": 2,
+        "text": "5. 변경 이력",
+        "slug": "5-변경-이력"
+      }
+    ]
+  },
+  {
+    "slug": "08_스토리_보드",
+    "title": "8. 스토리 보드",
+    "group": "기획/설계",
+    "order": 8,
+    "outline": [
+      {
+        "level": 2,
+        "text": "1. 페르소나 (Personas)",
+        "slug": "1-페르소나-personas"
+      },
+      {
+        "level": 3,
+        "text": "P1. 개발자 김시냅스 (28세, 주니어 개발자)",
+        "slug": "p1-개발자-김시냅스-28세-주니어-개발자"
+      },
+      {
+        "level": 3,
+        "text": "P2. 대학원생 이연구 (26세, 석사과정)",
+        "slug": "p2-대학원생-이연구-26세-석사과정"
+      },
+      {
+        "level": 3,
+        "text": "P3. 자격증 준비자 박합격 (32세, 직장인)",
+        "slug": "p3-자격증-준비자-박합격-32세-직장인"
+      },
+      {
+        "level": 3,
+        "text": "P4. 관리자 최운영 (35세, Synapse 운영팀)",
+        "slug": "p4-관리자-최운영-35세-synapse-운영팀"
+      },
+      {
+        "level": 2,
+        "text": "2. Epic & User Story",
+        "slug": "2-epic--user-story"
+      },
+      {
+        "level": 3,
+        "text": "Epic 1: 사용자 인증 및 계정 관리",
+        "slug": "epic-1-사용자-인증-및-계정-관리"
+      },
+      {
+        "level": 3,
+        "text": "Epic 2: 노트 관리 (PKM)",
+        "slug": "epic-2-노트-관리-pkm"
+      },
+      {
+        "level": 3,
+        "text": "Epic 3: 카드 학습 (SRS)",
+        "slug": "epic-3-카드-학습-srs"
+      },
+      {
+        "level": 3,
+        "text": "Epic 4: AI 기능",
+        "slug": "epic-4-ai-기능"
+      },
+      {
+        "level": 3,
+        "text": "Epic 5: 지식 그래프",
+        "slug": "epic-5-지식-그래프"
+      },
+      {
+        "level": 3,
+        "text": "Epic 6: 빌링 및 구독",
+        "slug": "epic-6-빌링-및-구독"
+      },
+      {
+        "level": 3,
+        "text": "Epic 7: 관리자 기능",
+        "slug": "epic-7-관리자-기능"
+      },
+      {
+        "level": 3,
+        "text": "Epic 8: 커뮤니티 (스터디 그룹 + 공유)",
+        "slug": "epic-8-커뮤니티-스터디-그룹--공유"
+      },
+      {
+        "level": 3,
+        "text": "Epic 9: 게이미피케이션",
+        "slug": "epic-9-게이미피케이션"
+      },
+      {
+        "level": 3,
+        "text": "Epic 10: 알림",
+        "slug": "epic-10-알림"
+      },
+      {
+        "level": 3,
+        "text": "Epic 11: 관리자 모더레이션",
+        "slug": "epic-11-관리자-모더레이션"
+      },
+      {
+        "level": 2,
+        "text": "3. 사용자 여정 맵 (User Journey)",
+        "slug": "3-사용자-여정-맵-user-journey"
+      },
+      {
+        "level": 3,
+        "text": "P3. 박합격 — 첫 사용부터 구독까지",
+        "slug": "p3-박합격--첫-사용부터-구독까지"
+      },
+      {
+        "level": 3,
+        "text": "핵심 전환 포인트",
+        "slug": "핵심-전환-포인트"
+      },
+      {
+        "level": 2,
+        "text": "4. 변경 이력",
+        "slug": "4-변경-이력"
+      }
+    ]
+  },
+  {
+    "slug": "09_Git_규칙_정의서",
+    "title": "9. Git 규칙 정의서",
+    "group": "개발 규칙",
+    "order": 9,
+    "outline": [
+      {
+        "level": 2,
+        "text": "0. 전제",
+        "slug": "0-전제"
+      },
+      {
+        "level": 3,
+        "text": "0.1 ADR 요지",
+        "slug": "01-adr-요지"
+      },
+      {
+        "level": 3,
+        "text": "0.2 Phase 요지",
+        "slug": "02-phase-요지"
+      },
+      {
+        "level": 3,
+        "text": "0.3 트랙 ↔ 레포 ↔ Owner 매핑",
+        "slug": "03-트랙--레포--owner-매핑"
+      },
+      {
+        "level": 3,
+        "text": "0.4 이 문서의 위치 안내",
+        "slug": "04-이-문서의-위치-안내"
+      },
+      {
+        "level": 2,
+        "text": "Part A — 한 레포 안의 규칙",
+        "slug": "part-a--한-레포-안의-규칙"
+      },
+      {
+        "level": 3,
+        "text": "A1. 브랜치 전략",
+        "slug": "a1-브랜치-전략"
+      },
+      {
+        "level": 3,
+        "text": "A2. 커밋 메시지",
+        "slug": "a2-커밋-메시지"
+      },
+      {
+        "level": 3,
+        "text": "A3. Pull Request 규칙",
+        "slug": "a3-pull-request-규칙"
+      },
+      {
+        "level": 2,
+        "text": "변경 사항",
+        "slug": "변경-사항"
+      },
+      {
+        "level": 2,
+        "text": "변경 유형",
+        "slug": "변경-유형"
+      },
+      {
+        "level": 2,
+        "text": "관련 이슈",
+        "slug": "관련-이슈"
+      },
+      {
+        "level": 2,
+        "text": "테스트 방법",
+        "slug": "테스트-방법"
+      },
+      {
+        "level": 2,
+        "text": "스크린샷 (UI 변경 시)",
+        "slug": "스크린샷-ui-변경-시"
+      },
+      {
+        "level": 2,
+        "text": "체크리스트",
+        "slug": "체크리스트"
+      },
+      {
+        "level": 2,
+        "text": "영향 받는 다른 서비스",
+        "slug": "영향-받는-다른-서비스"
+      },
+      {
+        "level": 2,
+        "text": "이벤트/스키마 변경 여부",
+        "slug": "이벤트스키마-변경-여부"
+      },
+      {
+        "level": 2,
+        "text": "호환성 검증",
+        "slug": "호환성-검증"
+      },
+      {
+        "level": 2,
+        "text": "미러링/GitOps 영향",
+        "slug": "미러링gitops-영향"
+      },
+      {
+        "level": 3,
+        "text": "A4. CODEOWNERS",
+        "slug": "a4-codeowners"
+      },
+      {
+        "level": 3,
+        "text": "A5. 릴리즈 / 태깅 (서비스별 SemVer)",
+        "slug": "a5-릴리즈--태깅-서비스별-semver"
+      },
+      {
+        "level": 2,
+        "text": "[1.1.0] - 2026-06-15",
+        "slug": "110---2026-06-15"
+      },
+      {
+        "level": 3,
+        "text": "Added",
+        "slug": "added"
+      },
+      {
+        "level": 3,
+        "text": "Fixed",
+        "slug": "fixed"
+      },
+      {
+        "level": 3,
+        "text": "Changed",
+        "slug": "changed"
+      },
+      {
+        "level": 3,
+        "text": "A6. .gitignore / Git Hooks",
+        "slug": "a6-gitignore--git-hooks"
+      },
+      {
+        "level": 2,
+        "text": "Part B — 레포 간의 규칙",
+        "slug": "part-b--레포-간의-규칙"
+      },
+      {
+        "level": 3,
+        "text": "B1. 레포 구조 3-Tier",
+        "slug": "b1-레포-구조-3-tier"
+      },
+      {
+        "level": 3,
+        "text": "B2. 미러링 자동화 (synapse-mirror)",
+        "slug": "b2-미러링-자동화-synapse-mirror"
+      },
+      {
+        "level": 3,
+        "text": "B3. GitOps 갱신 (synapse-gitops)",
+        "slug": "b3-gitops-갱신-synapse-gitops"
+      },
+      {
+        "level": 3,
+        "text": "B4. Schema Registry (synapse-shared)",
+        "slug": "b4-schema-registry-synapse-shared"
+      },
+      {
+        "level": 3,
+        "text": "B5. 통합 배포 태그 (synapse-gitops/v{날짜})",
+        "slug": "b5-통합-배포-태그-synapse-gitopsv날짜"
+      },
+      {
+        "level": 3,
+        "text": "B6. PAT (Personal Access Token) 정책",
+        "slug": "b6-pat-personal-access-token-정책"
+      },
+      {
+        "level": 2,
+        "text": "Part C — 운영",
+        "slug": "part-c--운영"
+      },
+      {
+        "level": 3,
+        "text": "C1. Day 1 셋업 체크리스트",
+        "slug": "c1-day-1-셋업-체크리스트"
+      },
+      {
+        "level": 3,
+        "text": "C2. 흔한 트랩 10가지",
+        "slug": "c2-흔한-트랩-10가지"
+      },
+      {
+        "level": 3,
+        "text": "C3. FAQ",
+        "slug": "c3-faq"
+      },
+      {
+        "level": 3,
+        "text": "C4. 시리즈·위키 문서 매핑",
+        "slug": "c4-시리즈위키-문서-매핑"
+      },
+      {
+        "level": 2,
+        "text": "부록",
+        "slug": "부록"
+      },
+      {
+        "level": 3,
+        "text": "Appendix A. ADR-001 — 10개 서비스를 4개로 통합",
+        "slug": "appendix-a-adr-001--10개-서비스를-4개로-통합"
+      },
+      {
+        "level": 3,
+        "text": "Appendix B. ADR-002 — AI Service를 learning-svc에 통합",
+        "slug": "appendix-b-adr-002--ai-service를-learning-svc에-통합"
+      },
+      {
+        "level": 3,
+        "text": "Appendix C. v1.x → v2.0 절 매핑표",
+        "slug": "appendix-c-v1x--v20-절-매핑표"
+      },
+      {
+        "level": 2,
+        "text": "변경 이력",
+        "slug": "변경-이력"
+      }
+    ],
+    "children": [
+      "01_0.",
+      "02_part-a",
+      "03_section",
+      "04_section",
+      "05_section",
+      "06_section",
+      "07_(ui-)",
+      "08_section",
+      "09_section",
+      "10_section",
+      "11_section",
+      "12_gitops",
+      "13_1.1.0-2026-06-15",
+      "14_part-b",
+      "15_part-c",
+      "16_section",
+      "17_section"
+    ]
+  },
+  {
+    "slug": "09_Git_규칙_정의서/01_0.",
+    "title": "0. 전제",
+    "group": "개발 규칙",
+    "order": 9.01,
+    "parent": "09_Git_규칙_정의서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "0.1 ADR 요지",
+        "slug": "01-adr-요지"
+      },
+      {
+        "level": 3,
+        "text": "0.2 Phase 요지",
+        "slug": "02-phase-요지"
+      },
+      {
+        "level": 3,
+        "text": "0.3 트랙 ↔ 레포 ↔ Owner 매핑",
+        "slug": "03-트랙--레포--owner-매핑"
+      },
+      {
+        "level": 3,
+        "text": "0.4 이 문서의 위치 안내",
+        "slug": "04-이-문서의-위치-안내"
+      }
+    ]
+  },
+  {
+    "slug": "09_Git_규칙_정의서/02_part-a",
+    "title": "Part A — 한 레포 안의 규칙",
+    "group": "개발 규칙",
+    "order": 9.02,
+    "parent": "09_Git_규칙_정의서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "A1. 브랜치 전략",
+        "slug": "a1-브랜치-전략"
+      },
+      {
+        "level": 3,
+        "text": "A2. 커밋 메시지",
+        "slug": "a2-커밋-메시지"
+      },
+      {
+        "level": 3,
+        "text": "A3. Pull Request 규칙",
+        "slug": "a3-pull-request-규칙"
+      }
+    ]
+  },
+  {
+    "slug": "09_Git_규칙_정의서/03_section",
+    "title": "변경 사항",
+    "group": "개발 규칙",
+    "order": 9.03,
+    "parent": "09_Git_규칙_정의서",
+    "outline": []
+  },
+  {
+    "slug": "09_Git_규칙_정의서/04_section",
+    "title": "변경 유형",
+    "group": "개발 규칙",
+    "order": 9.04,
+    "parent": "09_Git_규칙_정의서",
+    "outline": []
+  },
+  {
+    "slug": "09_Git_규칙_정의서/05_section",
+    "title": "관련 이슈",
+    "group": "개발 규칙",
+    "order": 9.05,
+    "parent": "09_Git_규칙_정의서",
+    "outline": []
+  },
+  {
+    "slug": "09_Git_규칙_정의서/06_section",
+    "title": "테스트 방법",
+    "group": "개발 규칙",
+    "order": 9.06,
+    "parent": "09_Git_규칙_정의서",
+    "outline": []
+  },
+  {
+    "slug": "09_Git_규칙_정의서/07_(ui-)",
+    "title": "스크린샷 (UI 변경 시)",
+    "group": "개발 규칙",
+    "order": 9.07,
+    "parent": "09_Git_규칙_정의서",
+    "outline": []
+  },
+  {
+    "slug": "09_Git_규칙_정의서/08_section",
+    "title": "체크리스트",
+    "group": "개발 규칙",
+    "order": 9.08,
+    "parent": "09_Git_규칙_정의서",
+    "outline": []
+  },
+  {
+    "slug": "09_Git_규칙_정의서/09_section",
+    "title": "영향 받는 다른 서비스",
+    "group": "개발 규칙",
+    "order": 9.09,
+    "parent": "09_Git_규칙_정의서",
+    "outline": []
+  },
+  {
+    "slug": "09_Git_규칙_정의서/10_section",
+    "title": "이벤트/스키마 변경 여부",
+    "group": "개발 규칙",
+    "order": 9.1,
+    "parent": "09_Git_규칙_정의서",
+    "outline": []
+  },
+  {
+    "slug": "09_Git_규칙_정의서/11_section",
+    "title": "호환성 검증",
+    "group": "개발 규칙",
+    "order": 9.11,
+    "parent": "09_Git_규칙_정의서",
+    "outline": []
+  },
+  {
+    "slug": "09_Git_규칙_정의서/12_gitops",
+    "title": "미러링/GitOps 영향",
+    "group": "개발 규칙",
+    "order": 9.12,
+    "parent": "09_Git_규칙_정의서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "A4. CODEOWNERS",
+        "slug": "a4-codeowners"
+      },
+      {
+        "level": 3,
+        "text": "A5. 릴리즈 / 태깅 (서비스별 SemVer)",
+        "slug": "a5-릴리즈--태깅-서비스별-semver"
+      }
+    ]
+  },
+  {
+    "slug": "09_Git_규칙_정의서/13_1.1.0-2026-06-15",
+    "title": "[1.1.0] - 2026-06-15",
+    "group": "개발 규칙",
+    "order": 9.13,
+    "parent": "09_Git_규칙_정의서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "Added",
+        "slug": "added"
+      },
+      {
+        "level": 3,
+        "text": "Fixed",
+        "slug": "fixed"
+      },
+      {
+        "level": 3,
+        "text": "Changed",
+        "slug": "changed"
+      },
+      {
+        "level": 3,
+        "text": "A6. .gitignore / Git Hooks",
+        "slug": "a6-gitignore--git-hooks"
+      }
+    ]
+  },
+  {
+    "slug": "09_Git_규칙_정의서/14_part-b",
+    "title": "Part B — 레포 간의 규칙",
+    "group": "개발 규칙",
+    "order": 9.14,
+    "parent": "09_Git_규칙_정의서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "B1. 레포 구조 3-Tier",
+        "slug": "b1-레포-구조-3-tier"
+      },
+      {
+        "level": 3,
+        "text": "B2. 미러링 자동화 (synapse-mirror)",
+        "slug": "b2-미러링-자동화-synapse-mirror"
+      },
+      {
+        "level": 3,
+        "text": "B3. GitOps 갱신 (synapse-gitops)",
+        "slug": "b3-gitops-갱신-synapse-gitops"
+      },
+      {
+        "level": 3,
+        "text": "B4. Schema Registry (synapse-shared)",
+        "slug": "b4-schema-registry-synapse-shared"
+      },
+      {
+        "level": 3,
+        "text": "B5. 통합 배포 태그 (synapse-gitops/v{날짜})",
+        "slug": "b5-통합-배포-태그-synapse-gitopsv날짜"
+      },
+      {
+        "level": 3,
+        "text": "B6. PAT (Personal Access Token) 정책",
+        "slug": "b6-pat-personal-access-token-정책"
+      }
+    ]
+  },
+  {
+    "slug": "09_Git_규칙_정의서/15_part-c",
+    "title": "Part C — 운영",
+    "group": "개발 규칙",
+    "order": 9.15,
+    "parent": "09_Git_규칙_정의서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "C1. Day 1 셋업 체크리스트",
+        "slug": "c1-day-1-셋업-체크리스트"
+      },
+      {
+        "level": 3,
+        "text": "C2. 흔한 트랩 10가지",
+        "slug": "c2-흔한-트랩-10가지"
+      },
+      {
+        "level": 3,
+        "text": "C3. FAQ",
+        "slug": "c3-faq"
+      },
+      {
+        "level": 3,
+        "text": "C4. 시리즈·위키 문서 매핑",
+        "slug": "c4-시리즈위키-문서-매핑"
+      }
+    ]
+  },
+  {
+    "slug": "09_Git_규칙_정의서/16_section",
+    "title": "부록",
+    "group": "개발 규칙",
+    "order": 9.16,
+    "parent": "09_Git_규칙_정의서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "Appendix A. ADR-001 — 10개 서비스를 4개로 통합",
+        "slug": "appendix-a-adr-001--10개-서비스를-4개로-통합"
+      },
+      {
+        "level": 3,
+        "text": "Appendix B. ADR-002 — AI Service를 learning-svc에 통합",
+        "slug": "appendix-b-adr-002--ai-service를-learning-svc에-통합"
+      },
+      {
+        "level": 3,
+        "text": "Appendix C. v1.x → v2.0 절 매핑표",
+        "slug": "appendix-c-v1x--v20-절-매핑표"
+      }
+    ]
+  },
+  {
+    "slug": "09_Git_규칙_정의서/17_section",
+    "title": "변경 이력",
+    "group": "개발 규칙",
+    "order": 9.17,
+    "parent": "09_Git_규칙_정의서",
+    "outline": []
+  },
+  {
+    "slug": "10_환경_설정_템플릿",
+    "title": "10. 환경 설정 템플릿",
+    "group": "개발 규칙",
+    "order": 10,
+    "outline": [
+      {
+        "level": 2,
+        "text": "1. 환경 매트릭스",
+        "slug": "1-환경-매트릭스"
+      },
+      {
+        "level": 2,
+        "text": "2. 환경 변수 템플릿 (.env)",
+        "slug": "2-환경-변수-템플릿-env"
+      },
+      {
+        "level": 2,
+        "text": "3. Docker Compose (로컬 개발)",
+        "slug": "3-docker-compose-로컬-개발"
+      },
+      {
+        "level": 2,
+        "text": "4. 초기화 SQL (PostgreSQL)",
+        "slug": "4-초기화-sql-postgresql"
+      },
+      {
+        "level": 2,
+        "text": "5. IDE 설정",
+        "slug": "5-ide-설정"
+      },
+      {
+        "level": 3,
+        "text": "5.1 .editorconfig",
+        "slug": "51-editorconfig"
+      },
+      {
+        "level": 3,
+        "text": "5.2 권장 VS Code 확장",
+        "slug": "52-권장-vs-code-확장"
+      },
+      {
+        "level": 3,
+        "text": "5.3 권장 IntelliJ 설정",
+        "slug": "53-권장-intellij-설정"
+      },
+      {
+        "level": 2,
+        "text": "6. 환경별 시작 명령어",
+        "slug": "6-환경별-시작-명령어"
+      },
+      {
+        "level": 2,
+        "text": "7. 데모 데이터 시드",
+        "slug": "7-데모-데이터-시드"
+      },
+      {
+        "level": 3,
+        "text": "실행 방법",
+        "slug": "실행-방법"
+      },
+      {
+        "level": 3,
+        "text": "시드 데이터 구성",
+        "slug": "시드-데이터-구성"
+      },
+      {
+        "level": 2,
+        "text": "8. 변경 이력",
+        "slug": "8-변경-이력"
+      }
+    ]
+  },
+  {
+    "slug": "11_테스트_전략서",
+    "title": "11. 테스트 전략서",
+    "group": "개발 규칙",
+    "order": 11,
+    "outline": [
+      {
+        "level": 2,
+        "text": "1. 테스트 피라미드",
+        "slug": "1-테스트-피라미드"
+      },
+      {
+        "level": 2,
+        "text": "2. 커버리지 목표",
+        "slug": "2-커버리지-목표"
+      },
+      {
+        "level": 3,
+        "text": "커버리지 게이트",
+        "slug": "커버리지-게이트"
+      },
+      {
+        "level": 2,
+        "text": "3. 단위 테스트 (Unit Test)",
+        "slug": "3-단위-테스트-unit-test"
+      },
+      {
+        "level": 3,
+        "text": "3.1 Backend — Spring Boot (JUnit 5 + Mockito)",
+        "slug": "31-backend--spring-boot-junit-5--mockito"
+      },
+      {
+        "level": 3,
+        "text": "3.2 AI Service — FastAPI (pytest)",
+        "slug": "32-ai-service--fastapi-pytest"
+      },
+      {
+        "level": 3,
+        "text": "3.3 Frontend — Flutter (flutter_test)",
+        "slug": "33-frontend--flutter-flutter_test"
+      },
+      {
+        "level": 2,
+        "text": "4. 통합 테스트 (Integration Test)",
+        "slug": "4-통합-테스트-integration-test"
+      },
+      {
+        "level": 3,
+        "text": "4.1 Testcontainers 설정",
+        "slug": "41-testcontainers-설정"
+      },
+      {
+        "level": 3,
+        "text": "4.2 API 통합 테스트 (WebTestClient)",
+        "slug": "42-api-통합-테스트-webtestclient"
+      },
+      {
+        "level": 3,
+        "text": "4.3 RLS 격리 테스트",
+        "slug": "43-rls-격리-테스트"
+      },
+      {
+        "level": 2,
+        "text": "5. E2E 테스트",
+        "slug": "5-e2e-테스트"
+      },
+      {
+        "level": 3,
+        "text": "5.1 Playwright (Web)",
+        "slug": "51-playwright-web"
+      },
+      {
+        "level": 3,
+        "text": "5.2 Flutter Integration Test",
+        "slug": "52-flutter-integration-test"
+      },
+      {
+        "level": 2,
+        "text": "6. 특수 테스트",
+        "slug": "6-특수-테스트"
+      },
+      {
+        "level": 3,
+        "text": "6.1 SRS 알고리즘 검증",
+        "slug": "61-srs-알고리즘-검증"
+      },
+      {
+        "level": 3,
+        "text": "6.2 LLM Mock 테스트",
+        "slug": "62-llm-mock-테스트"
+      },
+      {
+        "level": 3,
+        "text": "6.3 RLS 격리 침투 테스트",
+        "slug": "63-rls-격리-침투-테스트"
+      },
+      {
+        "level": 2,
+        "text": "7. CI 통합",
+        "slug": "7-ci-통합"
+      },
+      {
+        "level": 3,
+        "text": "7.1 GitHub Actions 테스트 파이프라인",
+        "slug": "71-github-actions-테스트-파이프라인"
+      },
+      {
+        "level": 3,
+        "text": "7.2 테스트 실행 순서",
+        "slug": "72-테스트-실행-순서"
+      },
+      {
+        "level": 2,
+        "text": "7.5 신규 서비스 테스트 범위",
+        "slug": "75-신규-서비스-테스트-범위"
+      },
+      {
+        "level": 3,
+        "text": "Community Service 테스트",
+        "slug": "community-service-테스트"
+      },
+      {
+        "level": 3,
+        "text": "Gamification Service 테스트",
+        "slug": "gamification-service-테스트"
+      },
+      {
+        "level": 3,
+        "text": "Notification Service 테스트",
+        "slug": "notification-service-테스트"
+      },
+      {
+        "level": 2,
+        "text": "8. 테스트 데이터 관리",
+        "slug": "8-테스트-데이터-관리"
+      },
+      {
+        "level": 2,
+        "text": "9. 변경 이력",
+        "slug": "9-변경-이력"
+      }
+    ]
+  },
+  {
+    "slug": "12_코드_리뷰_규칙",
+    "title": "12. 코드 리뷰 규칙",
+    "group": "개발 규칙",
+    "order": 12,
+    "outline": [
+      {
+        "level": 2,
+        "text": "1. 역할 정의",
+        "slug": "1-역할-정의"
+      },
+      {
+        "level": 3,
+        "text": "리뷰어 지정 기준",
+        "slug": "리뷰어-지정-기준"
+      },
+      {
+        "level": 2,
+        "text": "2. 리뷰 프로세스",
+        "slug": "2-리뷰-프로세스"
+      },
+      {
+        "level": 3,
+        "text": "프로세스 상세",
+        "slug": "프로세스-상세"
+      },
+      {
+        "level": 2,
+        "text": "3. 리뷰 체크리스트",
+        "slug": "3-리뷰-체크리스트"
+      },
+      {
+        "level": 3,
+        "text": "3.1 기능 정확성 (Functionality)",
+        "slug": "31-기능-정확성-functionality"
+      },
+      {
+        "level": 3,
+        "text": "3.2 보안 (Security)",
+        "slug": "32-보안-security"
+      },
+      {
+        "level": 3,
+        "text": "3.3 테넌트 격리 (Tenant Isolation)",
+        "slug": "33-테넌트-격리-tenant-isolation"
+      },
+      {
+        "level": 3,
+        "text": "3.4 성능 (Performance)",
+        "slug": "34-성능-performance"
+      },
+      {
+        "level": 3,
+        "text": "3.5 가독성 (Readability)",
+        "slug": "35-가독성-readability"
+      },
+      {
+        "level": 3,
+        "text": "3.6 테스트 (Testing)",
+        "slug": "36-테스트-testing"
+      },
+      {
+        "level": 3,
+        "text": "3.7 커뮤니티 콘텐츠 보안 (Community Content Security)",
+        "slug": "37-커뮤니티-콘텐츠-보안-community-content-security"
+      },
+      {
+        "level": 2,
+        "text": "4. 피드백 작성 규칙",
+        "slug": "4-피드백-작성-규칙"
+      },
+      {
+        "level": 3,
+        "text": "4.1 피드백 분류 접두사",
+        "slug": "41-피드백-분류-접두사"
+      },
+      {
+        "level": 3,
+        "text": "4.2 피드백 예시",
+        "slug": "42-피드백-예시"
+      },
+      {
+        "level": 3,
+        "text": "4.3 금지 사항",
+        "slug": "43-금지-사항"
+      },
+      {
+        "level": 2,
+        "text": "5. 응답 시간 SLA",
+        "slug": "5-응답-시간-sla"
+      },
+      {
+        "level": 3,
+        "text": "지연 시 대응",
+        "slug": "지연-시-대응"
+      },
+      {
+        "level": 2,
+        "text": "6. 에티켓 규칙",
+        "slug": "6-에티켓-규칙"
+      },
+      {
+        "level": 3,
+        "text": "6.1 Author의 에티켓",
+        "slug": "61-author의-에티켓"
+      },
+      {
+        "level": 3,
+        "text": "6.2 Reviewer의 에티켓",
+        "slug": "62-reviewer의-에티켓"
+      },
+      {
+        "level": 2,
+        "text": "7. 자동 리뷰 도구",
+        "slug": "7-자동-리뷰-도구"
+      },
+      {
+        "level": 3,
+        "text": "7.1 SonarQube",
+        "slug": "71-sonarqube"
+      },
+      {
+        "level": 3,
+        "text": "7.2 Snyk (보안 의존성)",
+        "slug": "72-snyk-보안-의존성"
+      },
+      {
+        "level": 3,
+        "text": "7.3 자동 리뷰 봇 설정",
+        "slug": "73-자동-리뷰-봇-설정"
+      },
+      {
+        "level": 3,
+        "text": "7.4 추가 자동화",
+        "slug": "74-추가-자동화"
+      },
+      {
+        "level": 2,
+        "text": "8. 특수 상황 가이드",
+        "slug": "8-특수-상황-가이드"
+      },
+      {
+        "level": 3,
+        "text": "8.1 1인 개발 시 리뷰 전략",
+        "slug": "81-1인-개발-시-리뷰-전략"
+      },
+      {
+        "level": 3,
+        "text": "8.2 외주 협업 시",
+        "slug": "82-외주-협업-시"
+      },
+      {
+        "level": 3,
+        "text": "8.3 Hotfix (긴급 수정)",
+        "slug": "83-hotfix-긴급-수정"
+      },
+      {
+        "level": 2,
+        "text": "9. 변경 이력",
+        "slug": "9-변경-이력"
+      }
+    ]
+  },
+  {
+    "slug": "13_테스트_보고서",
+    "title": "13. 테스트 보고서",
+    "group": "운영/배포",
+    "order": 13,
+    "outline": [
+      {
+        "level": 2,
+        "text": "1. 문서 메타",
+        "slug": "1-문서-메타"
+      },
+      {
+        "level": 2,
+        "text": "2. 요약 대시보드",
+        "slug": "2-요약-대시보드"
+      },
+      {
+        "level": 3,
+        "text": "상태 요약",
+        "slug": "상태-요약"
+      },
+      {
+        "level": 2,
+        "text": "3. 레이어별 결과",
+        "slug": "3-레이어별-결과"
+      },
+      {
+        "level": 3,
+        "text": "3.1 단위 테스트 (Unit Test)",
+        "slug": "31-단위-테스트-unit-test"
+      },
+      {
+        "level": 3,
+        "text": "3.2 통합 테스트 (Integration Test)",
+        "slug": "32-통합-테스트-integration-test"
+      },
+      {
+        "level": 3,
+        "text": "3.3 E2E 테스트 (End-to-End)",
+        "slug": "33-e2e-테스트-end-to-end"
+      },
+      {
+        "level": 3,
+        "text": "3.4 Community Service 테스트 결과",
+        "slug": "34-community-service-테스트-결과"
+      },
+      {
+        "level": 3,
+        "text": "3.5 Gamification Service 테스트 결과",
+        "slug": "35-gamification-service-테스트-결과"
+      },
+      {
+        "level": 3,
+        "text": "3.6 Notification Service 테스트 결과",
+        "slug": "36-notification-service-테스트-결과"
+      },
+      {
+        "level": 2,
+        "text": "4. 커버리지 현황",
+        "slug": "4-커버리지-현황"
+      },
+      {
+        "level": 3,
+        "text": "4.1 전체 커버리지",
+        "slug": "41-전체-커버리지"
+      },
+      {
+        "level": 3,
+        "text": "4.2 모듈별 커버리지",
+        "slug": "42-모듈별-커버리지"
+      },
+      {
+        "level": 3,
+        "text": "4.3 커버리지 미달 영역",
+        "slug": "43-커버리지-미달-영역"
+      },
+      {
+        "level": 2,
+        "text": "5. 주요 결함 목록",
+        "slug": "5-주요-결함-목록"
+      },
+      {
+        "level": 2,
+        "text": "6. 리스크 평가",
+        "slug": "6-리스크-평가"
+      },
+      {
+        "level": 2,
+        "text": "7. 릴리즈 판정",
+        "slug": "7-릴리즈-판정"
+      },
+      {
+        "level": 3,
+        "text": "판정 기준",
+        "slug": "판정-기준"
+      },
+      {
+        "level": 3,
+        "text": "최종 판정: **NO-GO (조건부)**",
+        "slug": "최종-판정-no-go-조건부"
+      },
+      {
+        "level": 2,
+        "text": "8. 부록",
+        "slug": "8-부록"
+      },
+      {
+        "level": 3,
+        "text": "8.1 테스트 환경 구성",
+        "slug": "81-테스트-환경-구성"
+      },
+      {
+        "level": 3,
+        "text": "8.2 테스트 자동화 도구",
+        "slug": "82-테스트-자동화-도구"
+      },
+      {
+        "level": 3,
+        "text": "8.3 다음 단계",
+        "slug": "83-다음-단계"
+      },
+      {
+        "level": 2,
+        "text": "9. 변경 이력",
+        "slug": "9-변경-이력"
+      }
+    ]
+  },
+  {
+    "slug": "14_배포_가이드",
+    "title": "14. 배포 가이드",
+    "group": "운영/배포",
+    "order": 14,
+    "outline": [
+      {
+        "level": 2,
+        "text": "1. CI/CD 파이프라인 개요",
+        "slug": "1-cicd-파이프라인-개요"
+      },
+      {
+        "level": 2,
+        "text": "2. 환경 구성",
+        "slug": "2-환경-구성"
+      },
+      {
+        "level": 3,
+        "text": "2.1 환경별 사양",
+        "slug": "21-환경별-사양"
+      },
+      {
+        "level": 3,
+        "text": "2.2 Local 환경 (Docker Compose)",
+        "slug": "22-local-환경-docker-compose"
+      },
+      {
+        "level": 2,
+        "text": "3. 사전 요구사항",
+        "slug": "3-사전-요구사항"
+      },
+      {
+        "level": 3,
+        "text": "3.1 도구",
+        "slug": "31-도구"
+      },
+      {
+        "level": 3,
+        "text": "3.2 권한",
+        "slug": "32-권한"
+      },
+      {
+        "level": 2,
+        "text": "4. 배포 전략",
+        "slug": "4-배포-전략"
+      },
+      {
+        "level": 3,
+        "text": "4.1 Blue/Green + Canary",
+        "slug": "41-bluegreen--canary"
+      },
+      {
+        "level": 3,
+        "text": "4.2 Canary 판정 기준",
+        "slug": "42-canary-판정-기준"
+      },
+      {
+        "level": 3,
+        "text": "4.3 Rollback 절차",
+        "slug": "43-rollback-절차"
+      },
+      {
+        "level": 2,
+        "text": "5. DB 마이그레이션 (Flyway)",
+        "slug": "5-db-마이그레이션-flyway"
+      },
+      {
+        "level": 3,
+        "text": "5.1 Zero-Downtime 패턴",
+        "slug": "51-zero-downtime-패턴"
+      },
+      {
+        "level": 3,
+        "text": "5.2 마이그레이션 실행",
+        "slug": "52-마이그레이션-실행"
+      },
+      {
+        "level": 3,
+        "text": "5.3 마이그레이션 규칙",
+        "slug": "53-마이그레이션-규칙"
+      },
+      {
+        "level": 2,
+        "text": "6. Health Check",
+        "slug": "6-health-check"
+      },
+      {
+        "level": 3,
+        "text": "6.1 엔드포인트",
+        "slug": "61-엔드포인트"
+      },
+      {
+        "level": 3,
+        "text": "6.2 Kubernetes Probe 설정",
+        "slug": "62-kubernetes-probe-설정"
+      },
+      {
+        "level": 2,
+        "text": "7. Post-Deploy 검증",
+        "slug": "7-post-deploy-검증"
+      },
+      {
+        "level": 3,
+        "text": "7.1 Smoke Test",
+        "slug": "71-smoke-test"
+      },
+      {
+        "level": 3,
+        "text": "7.2 Canary 모니터링 대시보드",
+        "slug": "72-canary-모니터링-대시보드"
+      },
+      {
+        "level": 2,
+        "text": "8. Secrets 관리",
+        "slug": "8-secrets-관리"
+      },
+      {
+        "level": 3,
+        "text": "8.1 AWS Secrets Manager 구조",
+        "slug": "81-aws-secrets-manager-구조"
+      },
+      {
+        "level": 3,
+        "text": "8.2 Secret 주입 방식",
+        "slug": "82-secret-주입-방식"
+      },
+      {
+        "level": 3,
+        "text": "8.3 Secret 교체 절차",
+        "slug": "83-secret-교체-절차"
+      },
+      {
+        "level": 2,
+        "text": "9. 배포 체크리스트",
+        "slug": "9-배포-체크리스트"
+      },
+      {
+        "level": 3,
+        "text": "Production 배포 전",
+        "slug": "production-배포-전"
+      },
+      {
+        "level": 3,
+        "text": "Production 배포 후",
+        "slug": "production-배포-후"
+      },
+      {
+        "level": 2,
+        "text": "10. 신규 모듈 추가 절차 (4-서비스 통합 후)",
+        "slug": "10-신규-모듈-추가-절차-4-서비스-통합-후"
+      },
+      {
+        "level": 3,
+        "text": "10.4 FCM/APNs 인증서 관리 절차",
+        "slug": "104-fcmapns-인증서-관리-절차"
+      },
+      {
+        "level": 2,
+        "text": "11. 긴급 배포 (Hotfix)",
+        "slug": "11-긴급-배포-hotfix"
+      },
+      {
+        "level": 2,
+        "text": "12. 변경 이력",
+        "slug": "12-변경-이력"
+      }
+    ]
+  },
+  {
+    "slug": "15_사용자_메뉴얼",
+    "title": "15. 사용자 메뉴얼",
+    "group": "운영/배포",
+    "order": 15,
+    "outline": [
+      {
+        "level": 2,
+        "text": "1. 시작하기",
+        "slug": "1-시작하기"
+      },
+      {
+        "level": 3,
+        "text": "1.1 회원가입",
+        "slug": "11-회원가입"
+      },
+      {
+        "level": 3,
+        "text": "1.2 첫 로그인",
+        "slug": "12-첫-로그인"
+      },
+      {
+        "level": 3,
+        "text": "1.3 튜토리얼",
+        "slug": "13-튜토리얼"
+      },
+      {
+        "level": 2,
+        "text": "2. 학습자 기능",
+        "slug": "2-학습자-기능"
+      },
+      {
+        "level": 3,
+        "text": "2.1 노트 작성",
+        "slug": "21-노트-작성"
+      },
+      {
+        "level": 3,
+        "text": "2.2 위키링크로 노트 연결하기",
+        "slug": "22-위키링크로-노트-연결하기"
+      },
+      {
+        "level": 3,
+        "text": "2.3 AI 카드 생성",
+        "slug": "23-ai-카드-생성"
+      },
+      {
+        "level": 3,
+        "text": "2.4 복습 세션",
+        "slug": "24-복습-세션"
+      },
+      {
+        "level": 3,
+        "text": "2.5 그래프 뷰",
+        "slug": "25-그래프-뷰"
+      },
+      {
+        "level": 3,
+        "text": "2.6 검색",
+        "slug": "26-검색"
+      },
+      {
+        "level": 3,
+        "text": "2.7 데이터 내보내기",
+        "slug": "27-데이터-내보내기"
+      },
+      {
+        "level": 2,
+        "text": "3. 커뮤니티 기능",
+        "slug": "3-커뮤니티-기능"
+      },
+      {
+        "level": 3,
+        "text": "3.1 스터디 그룹",
+        "slug": "31-스터디-그룹"
+      },
+      {
+        "level": 3,
+        "text": "3.2 덱/노트 공유",
+        "slug": "32-덱노트-공유"
+      },
+      {
+        "level": 3,
+        "text": "3.3 게이미피케이션",
+        "slug": "33-게이미피케이션"
+      },
+      {
+        "level": 3,
+        "text": "3.4 알림 설정",
+        "slug": "34-알림-설정"
+      },
+      {
+        "level": 3,
+        "text": "3.5 콘텐츠 신고",
+        "slug": "35-콘텐츠-신고"
+      },
+      {
+        "level": 2,
+        "text": "4. 설정",
+        "slug": "4-설정"
+      },
+      {
+        "level": 3,
+        "text": "4.1 프로필 설정",
+        "slug": "41-프로필-설정"
+      },
+      {
+        "level": 3,
+        "text": "4.2 알림 설정",
+        "slug": "42-알림-설정"
+      },
+      {
+        "level": 3,
+        "text": "4.3 테마 설정",
+        "slug": "43-테마-설정"
+      },
+      {
+        "level": 3,
+        "text": "4.4 SRS(복습) 설정",
+        "slug": "44-srs복습-설정"
+      },
+      {
+        "level": 2,
+        "text": "5. 결제",
+        "slug": "5-결제"
+      },
+      {
+        "level": 3,
+        "text": "5.1 플랜 비교",
+        "slug": "51-플랜-비교"
+      },
+      {
+        "level": 3,
+        "text": "5.2 업그레이드",
+        "slug": "52-업그레이드"
+      },
+      {
+        "level": 3,
+        "text": "5.3 구독 취소",
+        "slug": "53-구독-취소"
+      },
+      {
+        "level": 2,
+        "text": "6. 자주 묻는 질문 (FAQ)",
+        "slug": "6-자주-묻는-질문-faq"
+      },
+      {
+        "level": 3,
+        "text": "일반",
+        "slug": "일반"
+      },
+      {
+        "level": 3,
+        "text": "노트/카드",
+        "slug": "노트카드"
+      },
+      {
+        "level": 3,
+        "text": "결제",
+        "slug": "결제"
+      },
+      {
+        "level": 2,
+        "text": "7. 문제 해결",
+        "slug": "7-문제-해결"
+      },
+      {
+        "level": 3,
+        "text": "로그인이 안 됩니다",
+        "slug": "로그인이-안-됩니다"
+      },
+      {
+        "level": 3,
+        "text": "동기화가 안 됩니다",
+        "slug": "동기화가-안-됩니다"
+      },
+      {
+        "level": 3,
+        "text": "AI 카드 생성이 안 됩니다",
+        "slug": "ai-카드-생성이-안-됩니다"
+      },
+      {
+        "level": 3,
+        "text": "검색 결과가 이상합니다",
+        "slug": "검색-결과가-이상합니다"
+      },
+      {
+        "level": 3,
+        "text": "앱이 느립니다",
+        "slug": "앱이-느립니다"
+      },
+      {
+        "level": 2,
+        "text": "8. 고객 지원",
+        "slug": "8-고객-지원"
+      },
+      {
+        "level": 2,
+        "text": "9. 변경 이력",
+        "slug": "9-변경-이력"
+      }
+    ]
+  },
+  {
+    "slug": "16_운영_메뉴얼",
+    "title": "16. 운영 메뉴얼",
+    "group": "운영/배포",
+    "order": 16,
+    "outline": [
+      {
+        "level": 2,
+        "text": "1. 모니터링 스택",
+        "slug": "1-모니터링-스택"
+      },
+      {
+        "level": 3,
+        "text": "1.1 구성 요소",
+        "slug": "11-구성-요소"
+      },
+      {
+        "level": 3,
+        "text": "1.2 Grafana 대시보드",
+        "slug": "12-grafana-대시보드"
+      },
+      {
+        "level": 3,
+        "text": "1.3 로그 관리 (Loki)",
+        "slug": "13-로그-관리-loki"
+      },
+      {
+        "level": 3,
+        "text": "1.4 분산 트레이싱 (OpenTelemetry + Tempo)",
+        "slug": "14-분산-트레이싱-opentelemetry--tempo"
+      },
+      {
+        "level": 3,
+        "text": "1.5 LLM 관측성 (LangSmith)",
+        "slug": "15-llm-관측성-langsmith"
+      },
+      {
+        "level": 2,
+        "text": "2. 알림 정책",
+        "slug": "2-알림-정책"
+      },
+      {
+        "level": 3,
+        "text": "2.1 심각도 정의",
+        "slug": "21-심각도-정의"
+      },
+      {
+        "level": 3,
+        "text": "2.2 알림 규칙",
+        "slug": "22-알림-규칙"
+      },
+      {
+        "level": 2,
+        "text": "3. 인시던트 대응 플레이북",
+        "slug": "3-인시던트-대응-플레이북"
+      },
+      {
+        "level": 3,
+        "text": "3.1 DB 장애 (PostgreSQL Down)",
+        "slug": "31-db-장애-postgresql-down"
+      },
+      {
+        "level": 3,
+        "text": "3.2 LLM 비용 급증",
+        "slug": "32-llm-비용-급증"
+      },
+      {
+        "level": 3,
+        "text": "3.3 테넌트 격리 위반",
+        "slug": "33-테넌트-격리-위반"
+      },
+      {
+        "level": 3,
+        "text": "3.4 Stripe Webhook 실패",
+        "slug": "34-stripe-webhook-실패"
+      },
+      {
+        "level": 3,
+        "text": "3.5 Redis 장애/페일오버",
+        "slug": "35-redis-장애페일오버"
+      },
+      {
+        "level": 2,
+        "text": "4. 보안 운영",
+        "slug": "4-보안-운영"
+      },
+      {
+        "level": 3,
+        "text": "4.1 인증서 갱신",
+        "slug": "41-인증서-갱신"
+      },
+      {
+        "level": 3,
+        "text": "4.2 시크릿 교체 일정",
+        "slug": "42-시크릿-교체-일정"
+      },
+      {
+        "level": 3,
+        "text": "4.3 감사 로그 검토",
+        "slug": "43-감사-로그-검토"
+      },
+      {
+        "level": 2,
+        "text": "5. 백업/복구",
+        "slug": "5-백업복구"
+      },
+      {
+        "level": 3,
+        "text": "5.1 백업 정책",
+        "slug": "51-백업-정책"
+      },
+      {
+        "level": 3,
+        "text": "5.2 복구 절차 (PostgreSQL)",
+        "slug": "52-복구-절차-postgresql"
+      },
+      {
+        "level": 3,
+        "text": "5.3 복구 훈련",
+        "slug": "53-복구-훈련"
+      },
+      {
+        "level": 2,
+        "text": "6. 스케일링 가이드",
+        "slug": "6-스케일링-가이드"
+      },
+      {
+        "level": 3,
+        "text": "6.1 HPA(Horizontal Pod Autoscaler) 정책",
+        "slug": "61-hpahorizontal-pod-autoscaler-정책"
+      },
+      {
+        "level": 3,
+        "text": "6.2 스케일링 판단 기준",
+        "slug": "62-스케일링-판단-기준"
+      },
+      {
+        "level": 3,
+        "text": "6.3 수동 스케일링",
+        "slug": "63-수동-스케일링"
+      },
+      {
+        "level": 2,
+        "text": "7. 온콜 로테이션 (Phase 4+)",
+        "slug": "7-온콜-로테이션-phase-4"
+      },
+      {
+        "level": 3,
+        "text": "7.1 온콜 체계",
+        "slug": "71-온콜-체계"
+      },
+      {
+        "level": 3,
+        "text": "7.2 온콜 도구",
+        "slug": "72-온콜-도구"
+      },
+      {
+        "level": 3,
+        "text": "7.3 인시던트 종료 후",
+        "slug": "73-인시던트-종료-후"
+      },
+      {
+        "level": 2,
+        "text": "8. 커뮤니티 서비스 운영",
+        "slug": "8-커뮤니티-서비스-운영"
+      },
+      {
+        "level": 3,
+        "text": "8.1 커뮤니티 모더레이션 절차",
+        "slug": "81-커뮤니티-모더레이션-절차"
+      },
+      {
+        "level": 3,
+        "text": "8.2 스터디 그룹 관리",
+        "slug": "82-스터디-그룹-관리"
+      },
+      {
+        "level": 3,
+        "text": "8.3 알림 서비스 모니터링",
+        "slug": "83-알림-서비스-모니터링"
+      },
+      {
+        "level": 3,
+        "text": "8.4 게이미피케이션 서비스 모니터링",
+        "slug": "84-게이미피케이션-서비스-모니터링"
+      },
+      {
+        "level": 2,
+        "text": "9. 일상 운영 체크리스트",
+        "slug": "9-일상-운영-체크리스트"
+      },
+      {
+        "level": 3,
+        "text": "매일",
+        "slug": "매일"
+      },
+      {
+        "level": 3,
+        "text": "매주",
+        "slug": "매주"
+      },
+      {
+        "level": 3,
+        "text": "매월",
+        "slug": "매월"
+      },
+      {
+        "level": 2,
+        "text": "10. 변경 이력",
+        "slug": "10-변경-이력"
+      }
+    ]
+  },
+  {
+    "slug": "17_스케줄",
+    "title": "17. 스케줄",
+    "group": "운영/배포",
+    "order": 17,
+    "outline": [
+      {
+        "level": 2,
+        "text": "1. 프로젝트 로드맵",
+        "slug": "1-프로젝트-로드맵"
+      },
+      {
+        "level": 3,
+        "text": "전체 일정 (4주 팀 프로젝트)",
+        "slug": "전체-일정-4주-팀-프로젝트"
+      },
+      {
+        "level": 2,
+        "text": "2. 마일스톤 상세",
+        "slug": "2-마일스톤-상세"
+      },
+      {
+        "level": 3,
+        "text": "W1: 인프라 + 핵심 CRUD (Week 1)",
+        "slug": "w1-인프라--핵심-crud-week-1"
+      },
+      {
+        "level": 3,
+        "text": "W2: 핵심 기능 완성 (Week 2)",
+        "slug": "w2-핵심-기능-완성-week-2"
+      },
+      {
+        "level": 3,
+        "text": "W3: 부가 기능 + Kafka 통합 (Week 3)",
+        "slug": "w3-부가-기능--kafka-통합-week-3"
+      },
+      {
+        "level": 3,
+        "text": "W4: 통합 테스트 + 마무리 (Week 4)",
+        "slug": "w4-통합-테스트--마무리-week-4"
+      },
+      {
+        "level": 2,
+        "text": "3. 팀 분업 및 서비스 매핑",
+        "slug": "3-팀-분업-및-서비스-매핑"
+      },
+      {
+        "level": 2,
+        "text": "4. 완료 정의 (Definition of Done)",
+        "slug": "4-완료-정의-definition-of-done"
+      },
+      {
+        "level": 2,
+        "text": "5. 장기 로드맵 안내 (Phase 1~4)",
+        "slug": "5-장기-로드맵-안내-phase-14"
+      },
+      {
+        "level": 2,
+        "text": "변경 이력",
+        "slug": "변경-이력"
+      }
+    ]
+  },
+  {
+    "slug": "18_기술_스택_정의서",
+    "title": "18. 기술 스택 정의서",
+    "group": "운영/배포",
+    "order": 18,
+    "outline": [
+      {
+        "level": 2,
+        "text": "1. 개요",
+        "slug": "1-개요"
+      },
+      {
+        "level": 3,
+        "text": "1.1 문서 목적",
+        "slug": "11-문서-목적"
+      },
+      {
+        "level": 3,
+        "text": "1.2 전체 시스템 아키텍처",
+        "slug": "12-전체-시스템-아키텍처"
+      },
+      {
+        "level": 3,
+        "text": "1.3 기술 선택 기준",
+        "slug": "13-기술-선택-기준"
+      },
+      {
+        "level": 3,
+        "text": "1.4 기술 스택 전체 목록",
+        "slug": "14-기술-스택-전체-목록"
+      },
+      {
+        "level": 2,
+        "text": "2. Client Layer",
+        "slug": "2-client-layer"
+      },
+      {
+        "level": 3,
+        "text": "2.1 Flutter 3.x",
+        "slug": "21-flutter-3x"
+      },
+      {
+        "level": 3,
+        "text": "2.2 Dart 3.x",
+        "slug": "22-dart-3x"
+      },
+      {
+        "level": 3,
+        "text": "2.3 Riverpod (flutter_riverpod)",
+        "slug": "23-riverpod-flutter_riverpod"
+      },
+      {
+        "level": 3,
+        "text": "2.4 GoRouter (go_router)",
+        "slug": "24-gorouter-go_router"
+      },
+      {
+        "level": 3,
+        "text": "2.5 Sliver 기반 리스트 아키텍처",
+        "slug": "25-sliver-기반-리스트-아키텍처"
+      },
+      {
+        "level": 3,
+        "text": "2.4 google_fonts",
+        "slug": "24-google_fonts"
+      },
+      {
+        "level": 3,
+        "text": "2.5 CanvasKit (Flutter Web Renderer)",
+        "slug": "25-canvaskit-flutter-web-renderer"
+      },
+      {
+        "level": 3,
+        "text": "2.6 D3.js / force_directed (지식 그래프 시각화)",
+        "slug": "26-d3js--force_directed-지식-그래프-시각화"
+      },
+      {
+        "level": 3,
+        "text": "2.7 flutter_test + integration_test",
+        "slug": "27-flutter_test--integration_test"
+      },
+      {
+        "level": 2,
+        "text": "3. Gateway Layer",
+        "slug": "3-gateway-layer"
+      },
+      {
+        "level": 3,
+        "text": "3.1 Spring Cloud Gateway 5",
+        "slug": "31-spring-cloud-gateway-5"
+      },
+      {
+        "level": 3,
+        "text": "3.2 Resilience4j",
+        "slug": "32-resilience4j"
+      },
+      {
+        "level": 3,
+        "text": "3.3 Redis Token Bucket (Rate Limiting)",
+        "slug": "33-redis-token-bucket-rate-limiting"
+      },
+      {
+        "level": 2,
+        "text": "4. Backend Services Layer",
+        "slug": "4-backend-services-layer"
+      },
+      {
+        "level": 3,
+        "text": "4.1 Java/Spring Ecosystem",
+        "slug": "41-javaspring-ecosystem"
+      },
+      {
+        "level": 3,
+        "text": "4.1.1 Java 21 (LTS)",
+        "slug": "411-java-21-lts"
+      },
+      {
+        "level": 3,
+        "text": "4.1.2 Spring Boot 4",
+        "slug": "412-spring-boot-4"
+      },
+      {
+        "level": 3,
+        "text": "4.1.3 Spring Security 7",
+        "slug": "413-spring-security-7"
+      },
+      {
+        "level": 3,
+        "text": "4.1.4 Spring Data JPA + Hibernate 7",
+        "slug": "414-spring-data-jpa--hibernate-7"
+      },
+      {
+        "level": 3,
+        "text": "4.1.5 Flyway 10.x",
+        "slug": "415-flyway-10x"
+      },
+      {
+        "level": 3,
+        "text": "4.1.6 Spring WebFlux",
+        "slug": "416-spring-webflux"
+      },
+      {
+        "level": 3,
+        "text": "4.1.7 Testcontainers",
+        "slug": "417-testcontainers"
+      },
+      {
+        "level": 3,
+        "text": "4.1.8 Spring Modulith 1.x",
+        "slug": "418-spring-modulith-1x"
+      },
+      {
+        "level": 3,
+        "text": "4.2 Python/FastAPI Ecosystem",
+        "slug": "42-pythonfastapi-ecosystem"
+      },
+      {
+        "level": 3,
+        "text": "4.2.1 Python 3.12",
+        "slug": "421-python-312"
+      },
+      {
+        "level": 3,
+        "text": "4.2.2 FastAPI",
+        "slug": "422-fastapi"
+      },
+      {
+        "level": 3,
+        "text": "4.2.3 uvicorn",
+        "slug": "423-uvicorn"
+      },
+      {
+        "level": 3,
+        "text": "4.2.4 LangChain",
+        "slug": "424-langchain"
+      },
+      {
+        "level": 3,
+        "text": "4.2.5 httpx",
+        "slug": "425-httpx"
+      },
+      {
+        "level": 3,
+        "text": "4.2.6 pytest",
+        "slug": "426-pytest"
+      },
+      {
+        "level": 2,
+        "text": "5. Data Layer",
+        "slug": "5-data-layer"
+      },
+      {
+        "level": 3,
+        "text": "5.1 PostgreSQL 16 + pgvector",
+        "slug": "51-postgresql-16--pgvector"
+      },
+      {
+        "level": 3,
+        "text": "5.1.1 PostgreSQL 16",
+        "slug": "511-postgresql-16"
+      },
+      {
+        "level": 3,
+        "text": "5.1.2 pgvector",
+        "slug": "512-pgvector"
+      },
+      {
+        "level": 3,
+        "text": "5.2 Redis 7 Cluster",
+        "slug": "52-redis-7-cluster"
+      },
+      {
+        "level": 3,
+        "text": "5.3 Elasticsearch 8 + nori Analyzer",
+        "slug": "53-elasticsearch-8--nori-analyzer"
+      },
+      {
+        "level": 3,
+        "text": "5.3.1 Elasticsearch 8",
+        "slug": "531-elasticsearch-8"
+      },
+      {
+        "level": 3,
+        "text": "5.4 Apache Kafka 3.x",
+        "slug": "54-apache-kafka-3x"
+      },
+      {
+        "level": 3,
+        "text": "5.5 Confluent Schema Registry 7.x",
+        "slug": "55-confluent-schema-registry-7x"
+      },
+      {
+        "level": 3,
+        "text": "5.6 Apache Avro 1.11.x",
+        "slug": "56-apache-avro-111x"
+      },
+      {
+        "level": 3,
+        "text": "5.7 AWS S3",
+        "slug": "57-aws-s3"
+      },
+      {
+        "level": 2,
+        "text": "6. AI/ML 레이어",
+        "slug": "6-aiml-레이어"
+      },
+      {
+        "level": 3,
+        "text": "6.1 Anthropic Claude API",
+        "slug": "61-anthropic-claude-api"
+      },
+      {
+        "level": 3,
+        "text": "6.2 OpenAI Embeddings (text-embedding-3-small)",
+        "slug": "62-openai-embeddings-text-embedding-3-small"
+      },
+      {
+        "level": 3,
+        "text": "6.3 RAG (Retrieval Augmented Generation) 파이프라인",
+        "slug": "63-rag-retrieval-augmented-generation-파이프라인"
+      },
+      {
+        "level": 3,
+        "text": "6.4 시맨틱 캐시 (Semantic Cache)",
+        "slug": "64-시맨틱-캐시-semantic-cache"
+      },
+      {
+        "level": 2,
+        "text": "7. 인프라 레이어",
+        "slug": "7-인프라-레이어"
+      },
+      {
+        "level": 3,
+        "text": "7.1 Docker + Docker Compose",
+        "slug": "71-docker--docker-compose"
+      },
+      {
+        "level": 3,
+        "text": "7.2 AWS EKS (Kubernetes)",
+        "slug": "72-aws-eks-kubernetes"
+      },
+      {
+        "level": 3,
+        "text": "7.3 ArgoCD",
+        "slug": "73-argocd"
+      },
+      {
+        "level": 3,
+        "text": "7.4 GitHub Actions",
+        "slug": "74-github-actions"
+      },
+      {
+        "level": 3,
+        "text": "7.5 Cloudflare",
+        "slug": "75-cloudflare"
+      },
+      {
+        "level": 3,
+        "text": "7.6 Istio (서비스 메시)",
+        "slug": "76-istio-서비스-메시"
+      },
+      {
+        "level": 3,
+        "text": "7.7 AWS ECR (Elastic Container Registry)",
+        "slug": "77-aws-ecr-elastic-container-registry"
+      },
+      {
+        "level": 2,
+        "text": "8. 모니터링 & 관측성 레이어",
+        "slug": "8-모니터링--관측성-레이어"
+      },
+      {
+        "level": 3,
+        "text": "8.1 Prometheus + Grafana",
+        "slug": "81-prometheus--grafana"
+      },
+      {
+        "level": 3,
+        "text": "8.2 Fluent Bit + CloudWatch / Loki",
+        "slug": "82-fluent-bit--cloudwatch--loki"
+      },
+      {
+        "level": 3,
+        "text": "8.3 OpenTelemetry + Jaeger",
+        "slug": "83-opentelemetry--jaeger"
+      },
+      {
+        "level": 3,
+        "text": "8.4 Sentry",
+        "slug": "84-sentry"
+      },
+      {
+        "level": 3,
+        "text": "8.5 AlertManager + Slack",
+        "slug": "85-alertmanager--slack"
+      },
+      {
+        "level": 2,
+        "text": "9. 외부 서비스 레이어",
+        "slug": "9-외부-서비스-레이어"
+      },
+      {
+        "level": 3,
+        "text": "9.1 Stripe",
+        "slug": "91-stripe"
+      },
+      {
+        "level": 3,
+        "text": "9.2 OAuth 제공자 (Google / GitHub / Apple / Microsoft)",
+        "slug": "92-oauth-제공자-google--github--apple--microsoft"
+      },
+      {
+        "level": 3,
+        "text": "9.3 FCM / APNs",
+        "slug": "93-fcm--apns"
+      },
+      {
+        "level": 3,
+        "text": "9.4 AWS SES (Simple Email Service)",
+        "slug": "94-aws-ses-simple-email-service"
+      },
+      {
+        "level": 3,
+        "text": "9.5 AWS Secrets Manager",
+        "slug": "95-aws-secrets-manager"
+      },
+      {
+        "level": 2,
+        "text": "10. 기술 선택 요약 매트릭스",
+        "slug": "10-기술-선택-요약-매트릭스"
+      },
+      {
+        "level": 3,
+        "text": "10.1 전체 기술 스택 요약표",
+        "slug": "101-전체-기술-스택-요약표"
+      },
+      {
+        "level": 3,
+        "text": "10.2 기술 의존성 다이어그램",
+        "slug": "102-기술-의존성-다이어그램"
+      },
+      {
+        "level": 3,
+        "text": "10.3 버전 관리 정책",
+        "slug": "103-버전-관리-정책"
+      },
+      {
+        "level": 2,
+        "text": "12. 버전 호환성 감사 보고서",
+        "slug": "12-버전-호환성-감사-보고서"
+      },
+      {
+        "level": 3,
+        "text": "12.1 Spring Boot 4 생태계 버전 매핑",
+        "slug": "121-spring-boot-4-생태계-버전-매핑"
+      },
+      {
+        "level": 3,
+        "text": "12.2 Flutter 생태계 버전 매핑",
+        "slug": "122-flutter-생태계-버전-매핑"
+      },
+      {
+        "level": 3,
+        "text": "12.3 Python AI 생태계 버전 매핑",
+        "slug": "123-python-ai-생태계-버전-매핑"
+      },
+      {
+        "level": 3,
+        "text": "12.4 인프라 버전 요구사항",
+        "slug": "124-인프라-버전-요구사항"
+      },
+      {
+        "level": 3,
+        "text": "12.5 주요 충돌 및 대안",
+        "slug": "125-주요-충돌-및-대안"
+      },
+      {
+        "level": 2,
+        "text": "11. 변경 이력",
+        "slug": "11-변경-이력"
+      }
+    ],
+    "children": [
+      "01_1.",
+      "02_2.-client-layer",
+      "03_3.-gateway-layer",
+      "04_4.-backend-services-layer",
+      "05_5.-data-layer",
+      "06_6.-aiml",
+      "07_7.",
+      "08_8.-and",
+      "09_9.",
+      "10_10.",
+      "11_12.",
+      "12_11."
+    ]
+  },
+  {
+    "slug": "18_기술_스택_정의서/01_1.",
+    "title": "1. 개요",
+    "group": "운영/배포",
+    "order": 18.01,
+    "parent": "18_기술_스택_정의서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "1.1 문서 목적",
+        "slug": "11-문서-목적"
+      },
+      {
+        "level": 3,
+        "text": "1.2 전체 시스템 아키텍처",
+        "slug": "12-전체-시스템-아키텍처"
+      },
+      {
+        "level": 3,
+        "text": "1.3 기술 선택 기준",
+        "slug": "13-기술-선택-기준"
+      },
+      {
+        "level": 3,
+        "text": "1.4 기술 스택 전체 목록",
+        "slug": "14-기술-스택-전체-목록"
+      }
+    ]
+  },
+  {
+    "slug": "18_기술_스택_정의서/02_2.-client-layer",
+    "title": "2. Client Layer",
+    "group": "운영/배포",
+    "order": 18.02,
+    "parent": "18_기술_스택_정의서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "2.1 Flutter 3.x",
+        "slug": "21-flutter-3x"
+      },
+      {
+        "level": 3,
+        "text": "2.2 Dart 3.x",
+        "slug": "22-dart-3x"
+      },
+      {
+        "level": 3,
+        "text": "2.3 Riverpod (flutter_riverpod)",
+        "slug": "23-riverpod-flutter_riverpod"
+      },
+      {
+        "level": 3,
+        "text": "2.4 GoRouter (go_router)",
+        "slug": "24-gorouter-go_router"
+      },
+      {
+        "level": 3,
+        "text": "2.5 Sliver 기반 리스트 아키텍처",
+        "slug": "25-sliver-기반-리스트-아키텍처"
+      },
+      {
+        "level": 3,
+        "text": "2.4 google_fonts",
+        "slug": "24-google_fonts"
+      },
+      {
+        "level": 3,
+        "text": "2.5 CanvasKit (Flutter Web Renderer)",
+        "slug": "25-canvaskit-flutter-web-renderer"
+      },
+      {
+        "level": 3,
+        "text": "2.6 D3.js / force_directed (지식 그래프 시각화)",
+        "slug": "26-d3js--force_directed-지식-그래프-시각화"
+      },
+      {
+        "level": 3,
+        "text": "2.7 flutter_test + integration_test",
+        "slug": "27-flutter_test--integration_test"
+      }
+    ]
+  },
+  {
+    "slug": "18_기술_스택_정의서/03_3.-gateway-layer",
+    "title": "3. Gateway Layer",
+    "group": "운영/배포",
+    "order": 18.03,
+    "parent": "18_기술_스택_정의서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "3.1 Spring Cloud Gateway 5",
+        "slug": "31-spring-cloud-gateway-5"
+      },
+      {
+        "level": 3,
+        "text": "3.2 Resilience4j",
+        "slug": "32-resilience4j"
+      },
+      {
+        "level": 3,
+        "text": "3.3 Redis Token Bucket (Rate Limiting)",
+        "slug": "33-redis-token-bucket-rate-limiting"
+      }
+    ]
+  },
+  {
+    "slug": "18_기술_스택_정의서/04_4.-backend-services-layer",
+    "title": "4. Backend Services Layer",
+    "group": "운영/배포",
+    "order": 18.04,
+    "parent": "18_기술_스택_정의서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "4.1 Java/Spring Ecosystem",
+        "slug": "41-javaspring-ecosystem"
+      },
+      {
+        "level": 3,
+        "text": "4.1.1 Java 21 (LTS)",
+        "slug": "411-java-21-lts"
+      },
+      {
+        "level": 3,
+        "text": "4.1.2 Spring Boot 4",
+        "slug": "412-spring-boot-4"
+      },
+      {
+        "level": 3,
+        "text": "4.1.3 Spring Security 7",
+        "slug": "413-spring-security-7"
+      },
+      {
+        "level": 3,
+        "text": "4.1.4 Spring Data JPA + Hibernate 7",
+        "slug": "414-spring-data-jpa--hibernate-7"
+      },
+      {
+        "level": 3,
+        "text": "4.1.5 Flyway 10.x",
+        "slug": "415-flyway-10x"
+      },
+      {
+        "level": 3,
+        "text": "4.1.6 Spring WebFlux",
+        "slug": "416-spring-webflux"
+      },
+      {
+        "level": 3,
+        "text": "4.1.7 Testcontainers",
+        "slug": "417-testcontainers"
+      },
+      {
+        "level": 3,
+        "text": "4.1.8 Spring Modulith 1.x",
+        "slug": "418-spring-modulith-1x"
+      },
+      {
+        "level": 3,
+        "text": "4.2 Python/FastAPI Ecosystem",
+        "slug": "42-pythonfastapi-ecosystem"
+      },
+      {
+        "level": 3,
+        "text": "4.2.1 Python 3.12",
+        "slug": "421-python-312"
+      },
+      {
+        "level": 3,
+        "text": "4.2.2 FastAPI",
+        "slug": "422-fastapi"
+      },
+      {
+        "level": 3,
+        "text": "4.2.3 uvicorn",
+        "slug": "423-uvicorn"
+      },
+      {
+        "level": 3,
+        "text": "4.2.4 LangChain",
+        "slug": "424-langchain"
+      },
+      {
+        "level": 3,
+        "text": "4.2.5 httpx",
+        "slug": "425-httpx"
+      },
+      {
+        "level": 3,
+        "text": "4.2.6 pytest",
+        "slug": "426-pytest"
+      }
+    ]
+  },
+  {
+    "slug": "18_기술_스택_정의서/05_5.-data-layer",
+    "title": "5. Data Layer",
+    "group": "운영/배포",
+    "order": 18.05,
+    "parent": "18_기술_스택_정의서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "5.1 PostgreSQL 16 + pgvector",
+        "slug": "51-postgresql-16--pgvector"
+      },
+      {
+        "level": 3,
+        "text": "5.1.1 PostgreSQL 16",
+        "slug": "511-postgresql-16"
+      },
+      {
+        "level": 3,
+        "text": "5.1.2 pgvector",
+        "slug": "512-pgvector"
+      },
+      {
+        "level": 3,
+        "text": "5.2 Redis 7 Cluster",
+        "slug": "52-redis-7-cluster"
+      },
+      {
+        "level": 3,
+        "text": "5.3 Elasticsearch 8 + nori Analyzer",
+        "slug": "53-elasticsearch-8--nori-analyzer"
+      },
+      {
+        "level": 3,
+        "text": "5.3.1 Elasticsearch 8",
+        "slug": "531-elasticsearch-8"
+      },
+      {
+        "level": 3,
+        "text": "5.4 Apache Kafka 3.x",
+        "slug": "54-apache-kafka-3x"
+      },
+      {
+        "level": 3,
+        "text": "5.5 Confluent Schema Registry 7.x",
+        "slug": "55-confluent-schema-registry-7x"
+      },
+      {
+        "level": 3,
+        "text": "5.6 Apache Avro 1.11.x",
+        "slug": "56-apache-avro-111x"
+      },
+      {
+        "level": 3,
+        "text": "5.7 AWS S3",
+        "slug": "57-aws-s3"
+      }
+    ]
+  },
+  {
+    "slug": "18_기술_스택_정의서/06_6.-aiml",
+    "title": "6. AI/ML 레이어",
+    "group": "운영/배포",
+    "order": 18.06,
+    "parent": "18_기술_스택_정의서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "6.1 Anthropic Claude API",
+        "slug": "61-anthropic-claude-api"
+      },
+      {
+        "level": 3,
+        "text": "6.2 OpenAI Embeddings (text-embedding-3-small)",
+        "slug": "62-openai-embeddings-text-embedding-3-small"
+      },
+      {
+        "level": 3,
+        "text": "6.3 RAG (Retrieval Augmented Generation) 파이프라인",
+        "slug": "63-rag-retrieval-augmented-generation-파이프라인"
+      },
+      {
+        "level": 3,
+        "text": "6.4 시맨틱 캐시 (Semantic Cache)",
+        "slug": "64-시맨틱-캐시-semantic-cache"
+      }
+    ]
+  },
+  {
+    "slug": "18_기술_스택_정의서/07_7.",
+    "title": "7. 인프라 레이어",
+    "group": "운영/배포",
+    "order": 18.07,
+    "parent": "18_기술_스택_정의서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "7.1 Docker + Docker Compose",
+        "slug": "71-docker--docker-compose"
+      },
+      {
+        "level": 3,
+        "text": "7.2 AWS EKS (Kubernetes)",
+        "slug": "72-aws-eks-kubernetes"
+      },
+      {
+        "level": 3,
+        "text": "7.3 ArgoCD",
+        "slug": "73-argocd"
+      },
+      {
+        "level": 3,
+        "text": "7.4 GitHub Actions",
+        "slug": "74-github-actions"
+      },
+      {
+        "level": 3,
+        "text": "7.5 Cloudflare",
+        "slug": "75-cloudflare"
+      },
+      {
+        "level": 3,
+        "text": "7.6 Istio (서비스 메시)",
+        "slug": "76-istio-서비스-메시"
+      },
+      {
+        "level": 3,
+        "text": "7.7 AWS ECR (Elastic Container Registry)",
+        "slug": "77-aws-ecr-elastic-container-registry"
+      }
+    ]
+  },
+  {
+    "slug": "18_기술_스택_정의서/08_8.-and",
+    "title": "8. 모니터링 & 관측성 레이어",
+    "group": "운영/배포",
+    "order": 18.08,
+    "parent": "18_기술_스택_정의서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "8.1 Prometheus + Grafana",
+        "slug": "81-prometheus--grafana"
+      },
+      {
+        "level": 3,
+        "text": "8.2 Fluent Bit + CloudWatch / Loki",
+        "slug": "82-fluent-bit--cloudwatch--loki"
+      },
+      {
+        "level": 3,
+        "text": "8.3 OpenTelemetry + Jaeger",
+        "slug": "83-opentelemetry--jaeger"
+      },
+      {
+        "level": 3,
+        "text": "8.4 Sentry",
+        "slug": "84-sentry"
+      },
+      {
+        "level": 3,
+        "text": "8.5 AlertManager + Slack",
+        "slug": "85-alertmanager--slack"
+      }
+    ]
+  },
+  {
+    "slug": "18_기술_스택_정의서/09_9.",
+    "title": "9. 외부 서비스 레이어",
+    "group": "운영/배포",
+    "order": 18.09,
+    "parent": "18_기술_스택_정의서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "9.1 Stripe",
+        "slug": "91-stripe"
+      },
+      {
+        "level": 3,
+        "text": "9.2 OAuth 제공자 (Google / GitHub / Apple / Microsoft)",
+        "slug": "92-oauth-제공자-google--github--apple--microsoft"
+      },
+      {
+        "level": 3,
+        "text": "9.3 FCM / APNs",
+        "slug": "93-fcm--apns"
+      },
+      {
+        "level": 3,
+        "text": "9.4 AWS SES (Simple Email Service)",
+        "slug": "94-aws-ses-simple-email-service"
+      },
+      {
+        "level": 3,
+        "text": "9.5 AWS Secrets Manager",
+        "slug": "95-aws-secrets-manager"
+      }
+    ]
+  },
+  {
+    "slug": "18_기술_스택_정의서/10_10.",
+    "title": "10. 기술 선택 요약 매트릭스",
+    "group": "운영/배포",
+    "order": 18.1,
+    "parent": "18_기술_스택_정의서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "10.1 전체 기술 스택 요약표",
+        "slug": "101-전체-기술-스택-요약표"
+      },
+      {
+        "level": 3,
+        "text": "10.2 기술 의존성 다이어그램",
+        "slug": "102-기술-의존성-다이어그램"
+      },
+      {
+        "level": 3,
+        "text": "10.3 버전 관리 정책",
+        "slug": "103-버전-관리-정책"
+      }
+    ]
+  },
+  {
+    "slug": "18_기술_스택_정의서/11_12.",
+    "title": "12. 버전 호환성 감사 보고서",
+    "group": "운영/배포",
+    "order": 18.11,
+    "parent": "18_기술_스택_정의서",
+    "outline": [
+      {
+        "level": 3,
+        "text": "12.1 Spring Boot 4 생태계 버전 매핑",
+        "slug": "121-spring-boot-4-생태계-버전-매핑"
+      },
+      {
+        "level": 3,
+        "text": "12.2 Flutter 생태계 버전 매핑",
+        "slug": "122-flutter-생태계-버전-매핑"
+      },
+      {
+        "level": 3,
+        "text": "12.3 Python AI 생태계 버전 매핑",
+        "slug": "123-python-ai-생태계-버전-매핑"
+      },
+      {
+        "level": 3,
+        "text": "12.4 인프라 버전 요구사항",
+        "slug": "124-인프라-버전-요구사항"
+      },
+      {
+        "level": 3,
+        "text": "12.5 주요 충돌 및 대안",
+        "slug": "125-주요-충돌-및-대안"
+      }
+    ]
+  },
+  {
+    "slug": "18_기술_스택_정의서/12_11.",
+    "title": "11. 변경 이력",
+    "group": "운영/배포",
+    "order": 18.12,
+    "parent": "18_기술_스택_정의서",
+    "outline": []
+  }
+]
