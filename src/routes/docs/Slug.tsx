@@ -4,7 +4,8 @@ import { SiteHeader } from '@/components/shared/SiteHeader';
 import { DocsShell } from '@/components/docs/DocsShell';
 import { DocsSidebar } from '@/components/docs/DocsSidebar';
 import { DocsDrawer } from '@/components/docs/DocsDrawer';
-import { loadManifest, findEntry, type DocMeta } from '@/lib/docs-manifest';
+import { DocsArticle } from '@/components/docs/DocsArticle';
+import { loadManifest, type DocMeta } from '@/lib/docs-manifest';
 import { loadDoc } from '@/lib/docs-loader';
 
 export default function DocsSlug() {
@@ -23,8 +24,6 @@ export default function DocsSlug() {
     setError(null);
     loadDoc(fullSlug).then(setContent).catch((e: Error) => setError(e.message));
   }, [fullSlug]);
-
-  const meta = manifest ? findEntry(manifest, fullSlug) : undefined;
 
   return (
     <div>
@@ -45,12 +44,9 @@ export default function DocsSlug() {
           </DocsDrawer>
         }
       >
-        <h1 className="display text-3xl mb-6">{meta?.title ?? fullSlug}</h1>
         {error && <p className="text-[#DC2626]">{error}</p>}
         {!content && !error && <p className="text-stone-500">불러오는 중…</p>}
-        {content && (
-          <pre className="text-xs whitespace-pre-wrap">{content.slice(0, 800)}…</pre>
-        )}
+        {content && <DocsArticle source={content} />}
       </DocsShell>
     </div>
   );
