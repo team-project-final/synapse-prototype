@@ -79,7 +79,8 @@ export function GraphCanvas({ graph, highlight, onNodeClick }: Props) {
       .attr('dx', 12)
       .attr('dy', 4);
 
-    node.on('click', (_, d) => onNodeClick?.(d.id));
+    let dragStartX = 0;
+    let dragStartY = 0;
     node.call(
       d3
         .drag<SVGGElement, SimNode>()
@@ -87,6 +88,8 @@ export function GraphCanvas({ graph, highlight, onNodeClick }: Props) {
           if (!event.active) sim.alphaTarget(0.3).restart();
           d.fx = d.x;
           d.fy = d.y;
+          dragStartX = event.x;
+          dragStartY = event.y;
         })
         .on('drag', (event, d) => {
           d.fx = event.x;
@@ -96,6 +99,9 @@ export function GraphCanvas({ graph, highlight, onNodeClick }: Props) {
           if (!event.active) sim.alphaTarget(0);
           d.fx = null;
           d.fy = null;
+          const dx = event.x - dragStartX;
+          const dy = event.y - dragStartY;
+          if (dx * dx + dy * dy < 9) onNodeClick?.(d.id);
         }),
     );
 
