@@ -1,5 +1,8 @@
-import { mkdtemp, rm, mkdir, copyFile, readdir, stat, writeFile, readFile } from 'node:fs/promises';
+import { mkdtemp, rm, mkdir, readdir, stat, writeFile, readFile } from 'node:fs/promises';
+import { mkdir as mkdirP } from 'node:fs/promises';
 import { renderMermaidBlocks } from './lib/mermaid-render.mjs';
+import { shouldSplit, countCodeBlocks, splitByH2 } from './lib/split-doc.mjs';
+import { buildManifestEntry, extractOutline } from './lib/manifest.mjs';
 import { tmpdir } from 'node:os';
 import { spawn } from 'node:child_process';
 import { join, dirname } from 'node:path';
@@ -39,7 +42,9 @@ async function main() {
   await mkdir(PUBLIC_DOCS_DIR, { recursive: true });
 
   const entries = await readdir(tmp);
+  const manifest = [];
   let copied = 0;
+
   for (const entry of entries) {
     if (!entry.endsWith('.md')) continue;
     if (entry.startsWith('_')) continue;
@@ -47,13 +52,79 @@ async function main() {
     const s = await stat(src);
     if (!s.isFile()) continue;
     const destName = entry === 'Home.md' ? 'index.md' : entry;
+
     const raw = await readFile(src, 'utf8');
     const rendered = await renderMermaidBlocks(raw);
+
+    // Skip manifest entry for index.md (home/landing)
+    if (destName === 'index.md') {
+      await writeFile(join(PUBLIC_DOCS_DIR, destName), rendered, 'utf8');
+      copied++;
+      continue;
+    }
+
+    const baseEntry = buildManifestEntry(destName, rendered);
+
+    if (shouldSplit({ text: rendered, codeCount: countCodeBlocks(rendered) })) {
+      const { intro, parts } = splitByH2(rendered);
+      if (parts.length > 0) {
+        const parentSlug = baseEntry.slug;
+        const parentDir = join(PUBLIC_DOCS_DIR, parentSlug);
+        await mkdirP(parentDir, { recursive: true });
+
+        const childSlugs = [];
+        const subWrites = [];
+
+        parts.forEach((p, idx) => {
+          const i = String(idx + 1).padStart(2, '0');
+          const subSlug = `${i}_${p.slug}`;
+          childSlugs.push(subSlug);
+          const subContent = `# ${p.title}\n\n${p.body.trim()}\n`;
+          manifest.push({
+            slug: `${parentSlug}/${subSlug}`,
+            title: p.title,
+            group: baseEntry.group,
+            order: baseEntry.order + (idx + 1) / 100,
+            parent: parentSlug,
+            outline: extractOutline(subContent),
+          });
+          subWrites.push(writeFile(join(parentDir, `${subSlug}.md`), subContent, 'utf8'));
+        });
+
+        await Promise.all(subWrites);
+
+        // Build parent index page with TOC
+        const indexLines = [intro, '', '## 목차', ''];
+        parts.forEach((p, idx) => {
+          const i = String(idx + 1).padStart(2, '0');
+          const subSlug = `${i}_${p.slug}`;
+          indexLines.push(`- [${p.title}](/synapse-prototype/docs/${parentSlug}/${subSlug})`);
+        });
+        await writeFile(join(PUBLIC_DOCS_DIR, destName), indexLines.join('\n'), 'utf8');
+
+        manifest.push({ ...baseEntry, children: childSlugs });
+        copied++;
+        console.log(`[sync-docs] split ${destName} → ${parts.length} sub-pages`);
+        continue;
+      }
+    }
+
+    // Not split — write as-is
     await writeFile(join(PUBLIC_DOCS_DIR, destName), rendered, 'utf8');
+    manifest.push(baseEntry);
     copied++;
   }
 
+  // Write manifest.json sorted by order
+  manifest.sort((a, b) => a.order - b.order);
+  await writeFile(
+    join(PUBLIC_DOCS_DIR, 'manifest.json'),
+    JSON.stringify(manifest, null, 2),
+    'utf8'
+  );
+
   console.log(`[sync-docs] copied ${copied} markdown files to public/docs-md/`);
+  console.log(`[sync-docs] manifest: ${manifest.length} entries`);
   await rm(tmp, { recursive: true, force: true });
 }
 
