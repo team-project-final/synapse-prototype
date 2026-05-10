@@ -27,8 +27,13 @@ export function extractOutline(markdown) {
 }
 
 export function buildManifestEntry(filename, content) {
-  const m = /^(\d{2})_(.+)\.md$/.exec(filename);
-  const order = m ? parseInt(m[1], 10) : 99;
+  const m = /^(\d{2})([a-z]?)_(.+)\.md$/.exec(filename);
+  let order = 99;
+  if (m) {
+    const base = parseInt(m[1], 10);
+    const sub = m[2];
+    order = sub ? base + (sub.charCodeAt(0) - 96) / 100 : base;
+  }
   const slug = filename.replace(/\.md$/, '');
   const titleMatch = /^#\s+(.+?)\s*$/m.exec(content);
   const title = titleMatch ? titleMatch[1].trim() : slug.replace(/_/g, ' ');

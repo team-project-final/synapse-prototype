@@ -26,4 +26,11 @@ describe('buildManifestEntry', () => {
     expect(e.order).toBe(1);
     expect(e.title).toContain('프로젝트 계획서');
   });
+  it('handles alphabetic suffix like 09a (orders just after 9, before 10)', () => {
+    const e = buildManifestEntry('09a_Git_워크플로우_가이드.md', '# 9a. Git 워크플로우 가이드\n');
+    expect(e.slug).toBe('09a_Git_워크플로우_가이드');
+    expect(e.order).toBeGreaterThan(9);
+    expect(e.order).toBeLessThan(10);
+    expect(e.group).toBe('개발 규칙');
+  });
 });
