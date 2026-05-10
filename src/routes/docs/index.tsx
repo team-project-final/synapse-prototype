@@ -21,9 +21,13 @@ export default function DocsIndex() {
     <div className="min-h-dvh bg-stone-50">
       <SiteHeader />
       <article className="max-w-6xl mx-auto px-6 py-12 space-y-6">
-        <header>
+        <header className="space-y-2">
           <h1 className="display text-4xl">문서</h1>
-          <p className="text-stone-600 mt-2">Synapse 위키</p>
+          <p className="text-stone-600">Synapse 위키</p>
+          <p className="text-sm text-stone-500">
+            기술 스택은{' '}
+            <Link to="/tech" className="text-[#D97706] underline">별도 페이지</Link>에서 봅니다.
+          </p>
         </header>
         {groupManifest(manifest).map((g) => (
           <section key={g.group}>
