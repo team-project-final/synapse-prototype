@@ -1,0 +1,3029 @@
+{
+  "overview": {
+    "intro": "본 문서는 Synapse 프로젝트에서 사용하는 **모든 기술 스택**을 백과사전 형식으로 정의한다. 각 기술의 선택 근거, 기술적 이점, 설정 가이드, 트러블슈팅을 포함하여 신규 팀원 온보딩 및 기술 의사결정의 단일 참고 문서로 활용한다.",
+    "diagramHtml": "",
+    "principles": [],
+    "tableMd": "| 레이어 | 기술 | 버전 | 용도 |\n|--------|------|------|------|\n| Client | Flutter | 3.x | 크로스플랫폼 UI |\n| Client | Dart | 3.x | 클라이언트 언어 |\n| Client | flutter_riverpod | 3.0.x | 상태 관리 |\n| Client | google_fonts | 6.x | 타이포그래피 |\n| Client | CanvasKit | - | 웹 렌더러 |\n| Client | D3.js | 7.x | 지식 그래프 시각화 |\n| Client | flutter_test / integration_test | - | 클라이언트 테스트 |\n| Gateway | Spring Cloud Gateway | 5.x | API 게이트웨이 |\n| Gateway | Resilience4j | 2.x | 서킷 브레이커 |\n| Gateway | Redis Token Bucket | - | Rate Limiting |\n| Backend | Java | 21 LTS | 백엔드 언어 |\n| Backend | Spring Boot | 4.x | 마이크로서비스 프레임워크 |\n| Backend | Spring Security | 7.x | 인증/인가 |\n| Backend | Spring Data JPA + Hibernate | 7.x | ORM (Jakarta EE 11 기반) |\n| Backend | Flyway | 10.x | DB 마이그레이션 |\n| Backend | Spring WebFlux | Spring Framework 7 내장 | 리액티브 |\n| Backend | Testcontainers | 2.x | 통합 테스트 |\n| Backend | Python | 3.12 | AI 서비스 언어 |\n| Backend | FastAPI | 0.136.x | AI/RAG API |\n| Backend | uvicorn | 0.46.x | ASGI 서버 |\n| Backend | LangChain | 1.x | LLM 오케스트레이션 |\n| Backend | httpx | 0.28.x | 비동기 HTTP 클라이언트 |\n| Backend | pytest | 9.x | Python 테스트 |\n| Data | PostgreSQL | 16 | 주 RDBMS |\n| Data | pgvector | 0.8.x | 벡터 유사도 검색 |\n| Data | Redis | 7 | 인메모리 캐시/큐 |\n| Data | Elasticsearch | 8.x | 전문 검색 |\n| Data | Apache Kafka | 3.x | 이벤트 스트리밍 |\n| Data | AWS S3 | - | 오브젝트 스토리지 |\n| Backend | Spring Modulith | 1.x | 모듈 경계 강제 + ArchUnit 통합 검증 |\n| Data | Confluent Schema Registry | 7.x | Avro 스키마 진화 호환성 검증 |\n| Data | Apache Avro | 1.11.x | 이벤트 직렬화 / 스키마 정의 |\n| Infra | ArgoCD ApplicationSet | 2.x | 매트릭스 제너레이터 (5×3 환경) |"
+  },
+  "techs": [
+    {
+      "slug": "flutter-3-x",
+      "title": "Flutter",
+      "version": "3.x",
+      "layer": "Client Layer",
+      "layerSlug": "client",
+      "layerOrder": 1,
+      "techOrder": 1,
+      "summary": "",
+      "originalSection": "2.1",
+      "chunkAnchor": "21-flutter-3x",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "dart-3-x",
+      "title": "Dart",
+      "version": "3.x",
+      "layer": "Client Layer",
+      "layerSlug": "client",
+      "layerOrder": 1,
+      "techOrder": 2,
+      "summary": "",
+      "originalSection": "2.2",
+      "chunkAnchor": "22-dart-3x",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "riverpod-flutter_riverpod",
+      "title": "Riverpod (flutter_riverpod)",
+      "version": null,
+      "layer": "Client Layer",
+      "layerSlug": "client",
+      "layerOrder": 1,
+      "techOrder": 3,
+      "summary": "",
+      "originalSection": "2.3",
+      "chunkAnchor": "23-riverpod-flutter_riverpod",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "gorouter-go_router",
+      "title": "GoRouter (go_router)",
+      "version": null,
+      "layer": "Client Layer",
+      "layerSlug": "client",
+      "layerOrder": 1,
+      "techOrder": 4,
+      "summary": "",
+      "originalSection": "2.4",
+      "chunkAnchor": "24-gorouter-go_router",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "sliver-기반-리스트-아키텍처",
+      "title": "Sliver 기반 리스트 아키텍처",
+      "version": null,
+      "layer": "Client Layer",
+      "layerSlug": "client",
+      "layerOrder": 1,
+      "techOrder": 5,
+      "summary": "",
+      "originalSection": "2.5",
+      "chunkAnchor": "25-sliver-기반-리스트-아키텍처",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치 (전체 리스트 화면)",
+          "slug": "프로젝트-내-사용-위치-전체-리스트-화면"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "google_fonts",
+      "title": "google_fonts",
+      "version": null,
+      "layer": "Client Layer",
+      "layerSlug": "client",
+      "layerOrder": 1,
+      "techOrder": 6,
+      "summary": "",
+      "originalSection": "2.4",
+      "chunkAnchor": "24-google_fonts",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "canvaskit-flutter-web-renderer",
+      "title": "CanvasKit (Flutter Web Renderer)",
+      "version": null,
+      "layer": "Client Layer",
+      "layerSlug": "client",
+      "layerOrder": 1,
+      "techOrder": 7,
+      "summary": "",
+      "originalSection": "2.5",
+      "chunkAnchor": "25-canvaskit-flutter-web-renderer",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "d3-js--force_directed-지식-그래프-시각화",
+      "title": "D3.js / force_directed (지식 그래프 시각화)",
+      "version": null,
+      "layer": "Client Layer",
+      "layerSlug": "client",
+      "layerOrder": 1,
+      "techOrder": 8,
+      "summary": "",
+      "originalSection": "2.6",
+      "chunkAnchor": "26-d3js--force_directed-지식-그래프-시각화",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "flutter_test--integration_test",
+      "title": "flutter_test + integration_test",
+      "version": null,
+      "layer": "Client Layer",
+      "layerSlug": "client",
+      "layerOrder": 1,
+      "techOrder": 9,
+      "summary": "",
+      "originalSection": "2.7",
+      "chunkAnchor": "27-flutter_test--integration_test",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "spring-cloud-gateway-5",
+      "title": "Spring Cloud Gateway",
+      "version": "5",
+      "layer": "Gateway Layer",
+      "layerSlug": "gateway",
+      "layerOrder": 2,
+      "techOrder": 1,
+      "summary": "",
+      "originalSection": "3.1",
+      "chunkAnchor": "31-spring-cloud-gateway-5",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "resilience4j",
+      "title": "Resilience4j",
+      "version": null,
+      "layer": "Gateway Layer",
+      "layerSlug": "gateway",
+      "layerOrder": 2,
+      "techOrder": 2,
+      "summary": "",
+      "originalSection": "3.2",
+      "chunkAnchor": "32-resilience4j",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "redis-token-bucket-rate-limiting",
+      "title": "Redis Token Bucket (Rate Limiting)",
+      "version": null,
+      "layer": "Gateway Layer",
+      "layerSlug": "gateway",
+      "layerOrder": 2,
+      "techOrder": 3,
+      "summary": "",
+      "originalSection": "3.3",
+      "chunkAnchor": "33-redis-token-bucket-rate-limiting",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "java-21-lts",
+      "title": "Java",
+      "version": "21 LTS",
+      "layer": "Backend / Java·Spring",
+      "layerSlug": "backend-java",
+      "layerOrder": 3,
+      "techOrder": 1,
+      "summary": "",
+      "originalSection": "4.1.1",
+      "chunkAnchor": "411-java-21-lts",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "spring-boot-4",
+      "title": "Spring Boot",
+      "version": "4",
+      "layer": "Backend / Java·Spring",
+      "layerSlug": "backend-java",
+      "layerOrder": 3,
+      "techOrder": 2,
+      "summary": "",
+      "originalSection": "4.1.2",
+      "chunkAnchor": "412-spring-boot-4",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "spring-security-7",
+      "title": "Spring Security",
+      "version": "7",
+      "layer": "Backend / Java·Spring",
+      "layerSlug": "backend-java",
+      "layerOrder": 3,
+      "techOrder": 3,
+      "summary": "",
+      "originalSection": "4.1.3",
+      "chunkAnchor": "413-spring-security-7",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "spring-data-jpa--hibernate-7",
+      "title": "Spring Data JPA + Hibernate",
+      "version": "7",
+      "layer": "Backend / Java·Spring",
+      "layerSlug": "backend-java",
+      "layerOrder": 3,
+      "techOrder": 4,
+      "summary": "",
+      "originalSection": "4.1.4",
+      "chunkAnchor": "414-spring-data-jpa--hibernate-7",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "flyway-10-x",
+      "title": "Flyway",
+      "version": "10.x",
+      "layer": "Backend / Java·Spring",
+      "layerSlug": "backend-java",
+      "layerOrder": 3,
+      "techOrder": 5,
+      "summary": "",
+      "originalSection": "4.1.5",
+      "chunkAnchor": "415-flyway-10x",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "spring-webflux",
+      "title": "Spring WebFlux",
+      "version": null,
+      "layer": "Backend / Java·Spring",
+      "layerSlug": "backend-java",
+      "layerOrder": 3,
+      "techOrder": 6,
+      "summary": "",
+      "originalSection": "4.1.6",
+      "chunkAnchor": "416-spring-webflux",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "testcontainers",
+      "title": "Testcontainers",
+      "version": null,
+      "layer": "Backend / Java·Spring",
+      "layerSlug": "backend-java",
+      "layerOrder": 3,
+      "techOrder": 7,
+      "summary": "",
+      "originalSection": "4.1.7",
+      "chunkAnchor": "417-testcontainers",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "spring-modulith-1-x",
+      "title": "Spring Modulith",
+      "version": "1.x",
+      "layer": "Backend / Java·Spring",
+      "layerSlug": "backend-java",
+      "layerOrder": 3,
+      "techOrder": 8,
+      "summary": "",
+      "originalSection": "4.1.8",
+      "chunkAnchor": "418-spring-modulith-1x",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "공식 문서",
+          "slug": "공식-문서"
+        }
+      ]
+    },
+    {
+      "slug": "python-3-12",
+      "title": "Python",
+      "version": "3.12",
+      "layer": "Backend / Python·FastAPI",
+      "layerSlug": "backend-python",
+      "layerOrder": 3,
+      "techOrder": 1,
+      "summary": "",
+      "originalSection": "4.2.1",
+      "chunkAnchor": "421-python-312",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "fastapi",
+      "title": "FastAPI",
+      "version": null,
+      "layer": "Backend / Python·FastAPI",
+      "layerSlug": "backend-python",
+      "layerOrder": 3,
+      "techOrder": 2,
+      "summary": "",
+      "originalSection": "4.2.2",
+      "chunkAnchor": "422-fastapi",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "uvicorn",
+      "title": "uvicorn",
+      "version": null,
+      "layer": "Backend / Python·FastAPI",
+      "layerSlug": "backend-python",
+      "layerOrder": 3,
+      "techOrder": 3,
+      "summary": "",
+      "originalSection": "4.2.3",
+      "chunkAnchor": "423-uvicorn",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "langchain",
+      "title": "LangChain",
+      "version": null,
+      "layer": "Backend / Python·FastAPI",
+      "layerSlug": "backend-python",
+      "layerOrder": 3,
+      "techOrder": 4,
+      "summary": "",
+      "originalSection": "4.2.4",
+      "chunkAnchor": "424-langchain",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "httpx",
+      "title": "httpx",
+      "version": null,
+      "layer": "Backend / Python·FastAPI",
+      "layerSlug": "backend-python",
+      "layerOrder": 3,
+      "techOrder": 5,
+      "summary": "",
+      "originalSection": "4.2.5",
+      "chunkAnchor": "425-httpx",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "pytest",
+      "title": "pytest",
+      "version": null,
+      "layer": "Backend / Python·FastAPI",
+      "layerSlug": "backend-python",
+      "layerOrder": 3,
+      "techOrder": 6,
+      "summary": "",
+      "originalSection": "4.2.6",
+      "chunkAnchor": "426-pytest",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "postgresql-16",
+      "title": "PostgreSQL",
+      "version": "16",
+      "layer": "5. Data Layer",
+      "layerSlug": "infra",
+      "layerOrder": 4,
+      "techOrder": 1,
+      "summary": "",
+      "originalSection": "5.1.1",
+      "chunkAnchor": "511-postgresql-16",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "pgvector",
+      "title": "pgvector",
+      "version": null,
+      "layer": "5. Data Layer",
+      "layerSlug": "infra",
+      "layerOrder": 4,
+      "techOrder": 2,
+      "summary": "",
+      "originalSection": "5.1.2",
+      "chunkAnchor": "512-pgvector",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "elasticsearch-8",
+      "title": "Elasticsearch",
+      "version": "8",
+      "layer": "5. Data Layer",
+      "layerSlug": "infra",
+      "layerOrder": 4,
+      "techOrder": 1,
+      "summary": "",
+      "originalSection": "5.3.1",
+      "chunkAnchor": "531-elasticsearch-8",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할",
+          "slug": "역할"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "anthropic-claude-api",
+      "title": "Anthropic Claude API",
+      "version": null,
+      "layer": "AI/ML 레이어",
+      "layerSlug": "aiml",
+      "layerOrder": 5,
+      "techOrder": 1,
+      "summary": "",
+      "originalSection": "6.1",
+      "chunkAnchor": "61-anthropic-claude-api",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할 (Synapse 프로젝트 내)",
+          "slug": "역할-synapse-프로젝트-내"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "openai-embeddings-text-embedding-3-small",
+      "title": "OpenAI Embeddings (text-embedding-3-small)",
+      "version": null,
+      "layer": "AI/ML 레이어",
+      "layerSlug": "aiml",
+      "layerOrder": 5,
+      "techOrder": 2,
+      "summary": "",
+      "originalSection": "6.2",
+      "chunkAnchor": "62-openai-embeddings-text-embedding-3-small",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할 (Synapse 프로젝트 내)",
+          "slug": "역할-synapse-프로젝트-내"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "rag-retrieval-augmented-generation-파이프라인",
+      "title": "RAG (Retrieval Augmented Generation) 파이프라인",
+      "version": null,
+      "layer": "AI/ML 레이어",
+      "layerSlug": "aiml",
+      "layerOrder": 5,
+      "techOrder": 3,
+      "summary": "",
+      "originalSection": "6.3",
+      "chunkAnchor": "63-rag-retrieval-augmented-generation-파이프라인",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할 (Synapse 프로젝트 내)",
+          "slug": "역할-synapse-프로젝트-내"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능 및 아키텍처",
+          "slug": "핵심-기능-및-아키텍처"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "시맨틱-캐시-semantic-cache",
+      "title": "시맨틱 캐시 (Semantic Cache)",
+      "version": null,
+      "layer": "AI/ML 레이어",
+      "layerSlug": "aiml",
+      "layerOrder": 5,
+      "techOrder": 4,
+      "summary": "",
+      "originalSection": "6.4",
+      "chunkAnchor": "64-시맨틱-캐시-semantic-cache",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할 (Synapse 프로젝트 내)",
+          "slug": "역할-synapse-프로젝트-내"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "docker--docker-compose",
+      "title": "Docker + Docker Compose",
+      "version": null,
+      "layer": "인프라 레이어",
+      "layerSlug": "infra",
+      "layerOrder": 6,
+      "techOrder": 1,
+      "summary": "",
+      "originalSection": "7.1",
+      "chunkAnchor": "71-docker--docker-compose",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할 (Synapse 프로젝트 내)",
+          "slug": "역할-synapse-프로젝트-내"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "aws-eks-kubernetes",
+      "title": "AWS EKS (Kubernetes)",
+      "version": null,
+      "layer": "인프라 레이어",
+      "layerSlug": "infra",
+      "layerOrder": 6,
+      "techOrder": 2,
+      "summary": "",
+      "originalSection": "7.2",
+      "chunkAnchor": "72-aws-eks-kubernetes",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할 (Synapse 프로젝트 내)",
+          "slug": "역할-synapse-프로젝트-내"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능 — K8s 리소스 구성",
+          "slug": "핵심-기능--k8s-리소스-구성"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "argocd",
+      "title": "ArgoCD",
+      "version": null,
+      "layer": "인프라 레이어",
+      "layerSlug": "infra",
+      "layerOrder": 6,
+      "techOrder": 3,
+      "summary": "",
+      "originalSection": "7.3",
+      "chunkAnchor": "73-argocd",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할 (Synapse 프로젝트 내)",
+          "slug": "역할-synapse-프로젝트-내"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "ApplicationSet (Synapse 적용)",
+          "slug": "applicationset-synapse-적용"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "github-actions",
+      "title": "GitHub Actions",
+      "version": null,
+      "layer": "인프라 레이어",
+      "layerSlug": "infra",
+      "layerOrder": 6,
+      "techOrder": 4,
+      "summary": "",
+      "originalSection": "7.4",
+      "chunkAnchor": "74-github-actions",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할 (Synapse 프로젝트 내)",
+          "slug": "역할-synapse-프로젝트-내"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "Synapse 폴리레포 워크플로",
+          "slug": "synapse-폴리레포-워크플로"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "cloudflare",
+      "title": "Cloudflare",
+      "version": null,
+      "layer": "인프라 레이어",
+      "layerSlug": "infra",
+      "layerOrder": 6,
+      "techOrder": 5,
+      "summary": "",
+      "originalSection": "7.5",
+      "chunkAnchor": "75-cloudflare",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할 (Synapse 프로젝트 내)",
+          "slug": "역할-synapse-프로젝트-내"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "istio-서비스-메시",
+      "title": "Istio (서비스 메시)",
+      "version": null,
+      "layer": "인프라 레이어",
+      "layerSlug": "infra",
+      "layerOrder": 6,
+      "techOrder": 6,
+      "summary": "",
+      "originalSection": "7.6",
+      "chunkAnchor": "76-istio-서비스-메시",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할 (Synapse 프로젝트 내)",
+          "slug": "역할-synapse-프로젝트-내"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "aws-ecr-elastic-container-registry",
+      "title": "AWS ECR (Elastic Container Registry)",
+      "version": null,
+      "layer": "인프라 레이어",
+      "layerSlug": "infra",
+      "layerOrder": 6,
+      "techOrder": 7,
+      "summary": "",
+      "originalSection": "7.7",
+      "chunkAnchor": "77-aws-ecr-elastic-container-registry",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할 (Synapse 프로젝트 내)",
+          "slug": "역할-synapse-프로젝트-내"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "prometheus--grafana",
+      "title": "Prometheus + Grafana",
+      "version": null,
+      "layer": "모니터링 & 관측성 레이어",
+      "layerSlug": "observability",
+      "layerOrder": 7,
+      "techOrder": 1,
+      "summary": "",
+      "originalSection": "8.1",
+      "chunkAnchor": "81-prometheus--grafana",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할 (Synapse 프로젝트 내)",
+          "slug": "역할-synapse-프로젝트-내"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "핵심 기능",
+          "slug": "핵심-기능"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "fluent-bit--cloudwatch--loki",
+      "title": "Fluent Bit + CloudWatch / Loki",
+      "version": null,
+      "layer": "모니터링 & 관측성 레이어",
+      "layerSlug": "observability",
+      "layerOrder": 7,
+      "techOrder": 2,
+      "summary": "",
+      "originalSection": "8.2",
+      "chunkAnchor": "82-fluent-bit--cloudwatch--loki",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할 (Synapse 프로젝트 내)",
+          "slug": "역할-synapse-프로젝트-내"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "프로젝트 내 사용 위치",
+          "slug": "프로젝트-내-사용-위치"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "opentelemetry--jaeger",
+      "title": "OpenTelemetry + Jaeger",
+      "version": null,
+      "layer": "모니터링 & 관측성 레이어",
+      "layerSlug": "observability",
+      "layerOrder": 7,
+      "techOrder": 3,
+      "summary": "",
+      "originalSection": "8.3",
+      "chunkAnchor": "83-opentelemetry--jaeger",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할 (Synapse 프로젝트 내)",
+          "slug": "역할-synapse-프로젝트-내"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "sentry",
+      "title": "Sentry",
+      "version": null,
+      "layer": "모니터링 & 관측성 레이어",
+      "layerSlug": "observability",
+      "layerOrder": 7,
+      "techOrder": 4,
+      "summary": "",
+      "originalSection": "8.4",
+      "chunkAnchor": "84-sentry",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할 (Synapse 프로젝트 내)",
+          "slug": "역할-synapse-프로젝트-내"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "alertmanager--slack",
+      "title": "AlertManager + Slack",
+      "version": null,
+      "layer": "모니터링 & 관측성 레이어",
+      "layerSlug": "observability",
+      "layerOrder": 7,
+      "techOrder": 5,
+      "summary": "",
+      "originalSection": "8.5",
+      "chunkAnchor": "85-alertmanager--slack",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할 (Synapse 프로젝트 내)",
+          "slug": "역할-synapse-프로젝트-내"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "stripe",
+      "title": "Stripe",
+      "version": null,
+      "layer": "외부 서비스 레이어",
+      "layerSlug": "external",
+      "layerOrder": 8,
+      "techOrder": 1,
+      "summary": "",
+      "originalSection": "9.1",
+      "chunkAnchor": "91-stripe",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할 (Synapse 프로젝트 내)",
+          "slug": "역할-synapse-프로젝트-내"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "기술적 이점",
+          "slug": "기술적-이점"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "oauth-제공자-google--github--apple--microsoft",
+      "title": "OAuth 제공자 (Google / GitHub / Apple / Microsoft)",
+      "version": null,
+      "layer": "외부 서비스 레이어",
+      "layerSlug": "external",
+      "layerOrder": 8,
+      "techOrder": 2,
+      "summary": "",
+      "originalSection": "9.2",
+      "chunkAnchor": "92-oauth-제공자-google--github--apple--microsoft",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할 (Synapse 프로젝트 내)",
+          "slug": "역할-synapse-프로젝트-내"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "fcm--apns",
+      "title": "FCM / APNs",
+      "version": null,
+      "layer": "외부 서비스 레이어",
+      "layerSlug": "external",
+      "layerOrder": 8,
+      "techOrder": 3,
+      "summary": "",
+      "originalSection": "9.3",
+      "chunkAnchor": "93-fcm--apns",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할 (Synapse 프로젝트 내)",
+          "slug": "역할-synapse-프로젝트-내"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "aws-ses-simple-email-service",
+      "title": "AWS SES (Simple Email Service)",
+      "version": null,
+      "layer": "외부 서비스 레이어",
+      "layerSlug": "external",
+      "layerOrder": 8,
+      "techOrder": 4,
+      "summary": "",
+      "originalSection": "9.4",
+      "chunkAnchor": "94-aws-ses-simple-email-service",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할 (Synapse 프로젝트 내)",
+          "slug": "역할-synapse-프로젝트-내"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    },
+    {
+      "slug": "aws-secrets-manager",
+      "title": "AWS Secrets Manager",
+      "version": null,
+      "layer": "외부 서비스 레이어",
+      "layerSlug": "external",
+      "layerOrder": 8,
+      "techOrder": 5,
+      "summary": "",
+      "originalSection": "9.5",
+      "chunkAnchor": "95-aws-secrets-manager",
+      "outline": [
+        {
+          "level": 4,
+          "text": "개요",
+          "slug": "개요"
+        },
+        {
+          "level": 4,
+          "text": "역할 (Synapse 프로젝트 내)",
+          "slug": "역할-synapse-프로젝트-내"
+        },
+        {
+          "level": 4,
+          "text": "선택 이유",
+          "slug": "선택-이유"
+        },
+        {
+          "level": 4,
+          "text": "대안 비교",
+          "slug": "대안-비교"
+        },
+        {
+          "level": 4,
+          "text": "설정 가이드",
+          "slug": "설정-가이드"
+        },
+        {
+          "level": 4,
+          "text": "트러블슈팅",
+          "slug": "트러블슈팅"
+        },
+        {
+          "level": 4,
+          "text": "참고 자료",
+          "slug": "참고-자료"
+        }
+      ]
+    }
+  ],
+  "extras": {
+    "matrixSlug": "matrix",
+    "auditSlug": "audit"
+  }
+}

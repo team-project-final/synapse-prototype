@@ -1,0 +1,65 @@
+감사 일자: 2026-05-08
+
+### 12.1 Spring Boot 4 생태계 버전 매핑
+
+Spring Boot 4.0.x는 Spring Framework 7, Jakarta EE 11 기반이다. 내부 의존성 버전은 Boot BOM이 자동 관리한다.
+
+| Spring Boot 4 내부 모듈 | 버전 | 비고 |
+|------------------------|------|------|
+| Spring Framework | 7.x | Boot 4 기반 프레임워크 |
+| Spring Security | 7.x | Boot 4 기본 탑재 |
+| Hibernate ORM | 7.x | Jakarta EE 11 기반 |
+| Spring Cloud (Oakwood) | 2025.1.x | Boot 4 호환 릴리스 트레인 |
+| Spring Cloud Gateway | 5.x | Oakwood에 포함 |
+| Spring Kafka | 4.x | Kafka 4 클라이언트 기본 |
+| Spring Modulith | 1.x | Spring Boot 4.x 호환 |
+
+### 12.2 Flutter 생태계 버전 매핑
+
+Flutter 3.41.x / Dart 3.8+ 기준 호환 패키지 버전:
+
+| 패키지 | 권장 버전 | 비고 |
+|--------|-----------|------|
+| flutter_riverpod | ^3.0.0 | Riverpod 3.0 (Dart 3.8 analyzer 호환) |
+| riverpod_generator | ^3.0.0 | build_runner 2.10.x 필요 |
+| freezed | ^3.2.3 | freezed_annotation ^3.1.0과 쌍 |
+| go_router | ^14.0.0 | Flutter 3.32+ 기준 |
+| hive_ce_flutter | 최신 | hive_flutter 대체 (Community Edition) |
+| build_runner | ^2.10.4 | 코드 생성 도구 |
+
+### 12.3 Python AI 생태계 버전 매핑
+
+| 패키지 | 권장 버전 | 비고 |
+|--------|-----------|------|
+| FastAPI | ^0.130.0 (최신 0.136.1) | Python 3.12+ 최적화 |
+| uvicorn | ^0.46.0 | async 성능 개선 |
+| LangChain | ^1.2.0 (최신 1.2.17) | 0.3.x는 2026-12 지원 종료 |
+| httpx | ^0.28.0 | 스트리밍 개선 |
+| pytest | ^9.0.0 | Python 3.13+ 대응 |
+
+### 12.4 인프라 버전 요구사항
+
+| 인프라 | 최소 버전 | 비고 |
+|--------|-----------|------|
+| Kubernetes (EKS) | 1.31+ | 1.29는 2026-04-30 EoL |
+| ArgoCD | 3.2+ (권장 3.4) | 2.x는 EoL |
+| Helm | 3.21 (4.x 이행 권장) | Helm 4.0 출시 (2025-11) |
+| Redis | 7.4.9 (LTS) 또는 8.0 | 7.x는 2026-11-30까지 |
+| pgvector | 0.8.x | HNSW 인덱스 최적화 |
+| Testcontainers | 2.x | Spring Boot 4 완전 지원 |
+| Confluent Schema Registry | 7.x | Kafka 3.x 호환 |
+| Apache Avro | 1.11.x | Schema Registry 7.x 호환 |
+| ArgoCD ApplicationSet | 2.x | matrix generator 사용 |
+
+### 12.5 주요 충돌 및 대안
+
+| 충돌 조합 | 심각도 | 대안 |
+|-----------|--------|------|
+| Spring Boot 4 + Spring Cloud Gateway 4.x | 높음 | Gateway 5.x (Oakwood) 사용 |
+| Riverpod 2.x + Dart 3.8 analyzer | 높음 | Riverpod 3.x 통합 업그레이드 |
+| hive_flutter + Dart 3 sound null safety | 높음 | hive_ce_flutter로 전환 |
+| LangChain 0.3.x + 신규 AI 기능 | 중간 | LangChain 1.x 마이그레이션 |
+| D3.js 7.x + Flutter CanvasKit | 중간 | HtmlElementView 레이어 분리 (현재 설계에 반영됨) |
+| Kubernetes 1.29 (EoL) | 높음 | EKS 1.31+ 즉시 업그레이드 |
+
+---
