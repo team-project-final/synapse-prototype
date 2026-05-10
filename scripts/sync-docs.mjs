@@ -1,8 +1,6 @@
 import { mkdtemp, rm, mkdir, readdir, stat, writeFile, readFile } from 'node:fs/promises';
-import { mkdir as mkdirP } from 'node:fs/promises';
 import { renderMermaidBlocks } from './lib/mermaid-render.mjs';
-import { shouldSplit, countCodeBlocks, splitByH2 } from './lib/split-doc.mjs';
-import { buildManifestEntry, extractOutline } from './lib/manifest.mjs';
+import { buildManifestEntry } from './lib/manifest.mjs';
 import { tmpdir } from 'node:os';
 import { spawn } from 'node:child_process';
 import { join, dirname } from 'node:path';
@@ -63,55 +61,8 @@ async function main() {
       continue;
     }
 
-    const baseEntry = buildManifestEntry(destName, rendered);
-
-    if (shouldSplit({ text: raw, codeCount: countCodeBlocks(raw) })) {
-      const { intro, parts } = splitByH2(rendered);
-      if (parts.length > 0) {
-        const parentSlug = baseEntry.slug;
-        const parentDir = join(PUBLIC_DOCS_DIR, parentSlug);
-        await mkdirP(parentDir, { recursive: true });
-
-        const childSlugs = [];
-        const subWrites = [];
-
-        parts.forEach((p, idx) => {
-          const i = String(idx + 1).padStart(2, '0');
-          const subSlug = `${i}_${p.slug}`;
-          childSlugs.push(subSlug);
-          const subContent = `# ${p.title}\n\n${p.body.trim()}\n`;
-          manifest.push({
-            slug: `${parentSlug}/${subSlug}`,
-            title: p.title,
-            group: baseEntry.group,
-            order: baseEntry.order + (idx + 1) / 100,
-            parent: parentSlug,
-            outline: extractOutline(subContent),
-          });
-          subWrites.push(writeFile(join(parentDir, `${subSlug}.md`), subContent, 'utf8'));
-        });
-
-        await Promise.all(subWrites);
-
-        // Build parent index page with TOC
-        const indexLines = [intro, '', '## 목차', ''];
-        parts.forEach((p, idx) => {
-          const i = String(idx + 1).padStart(2, '0');
-          const subSlug = `${i}_${p.slug}`;
-          indexLines.push(`- [${p.title}](/synapse-prototype/docs/${parentSlug}/${subSlug})`);
-        });
-        await writeFile(join(PUBLIC_DOCS_DIR, destName), indexLines.join('\n'), 'utf8');
-
-        manifest.push({ ...baseEntry, children: childSlugs });
-        copied++;
-        console.log(`[sync-docs] split ${destName} → ${parts.length} sub-pages`);
-        continue;
-      }
-    }
-
-    // Not split — write as-is
     await writeFile(join(PUBLIC_DOCS_DIR, destName), rendered, 'utf8');
-    manifest.push(baseEntry);
+    manifest.push(buildManifestEntry(destName, rendered));
     copied++;
   }
 

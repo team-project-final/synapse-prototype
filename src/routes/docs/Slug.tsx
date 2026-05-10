@@ -10,8 +10,8 @@ import { loadManifest, findEntry, type DocMeta } from '@/lib/docs-manifest';
 import { loadDoc } from '@/lib/docs-loader';
 
 export default function DocsSlug() {
-  const { slug, sub } = useParams();
-  const fullSlug = sub ? `${slug}/${sub}` : slug!;
+  const { slug } = useParams();
+  const fullSlug = slug!;
   const [manifest, setManifest] = useState<DocMeta[] | null>(null);
   const [content, setContent] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
