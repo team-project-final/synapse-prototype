@@ -5,7 +5,8 @@ import { DocsShell } from '@/components/docs/DocsShell';
 import { DocsSidebar } from '@/components/docs/DocsSidebar';
 import { DocsDrawer } from '@/components/docs/DocsDrawer';
 import { DocsArticle } from '@/components/docs/DocsArticle';
-import { loadManifest, type DocMeta } from '@/lib/docs-manifest';
+import { DocsTOC } from '@/components/docs/DocsTOC';
+import { loadManifest, findEntry, type DocMeta } from '@/lib/docs-manifest';
 import { loadDoc } from '@/lib/docs-loader';
 
 export default function DocsSlug() {
@@ -35,19 +36,32 @@ export default function DocsSlug() {
       >
         ☰ 목록
       </button>
-      <DocsShell
-        sidebar={manifest ? <DocsSidebar manifest={manifest} currentSlug={fullSlug} /> : null}
-        toc={null}
-        drawer={
-          <DocsDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-            {manifest && <DocsSidebar manifest={manifest} currentSlug={fullSlug} />}
-          </DocsDrawer>
-        }
-      >
-        {error && <p className="text-[#DC2626]">{error}</p>}
-        {!content && !error && <p className="text-stone-500">불러오는 중…</p>}
-        {content && <DocsArticle source={content} />}
-      </DocsShell>
+      {(() => {
+        const meta = manifest ? findEntry(manifest, fullSlug) : undefined;
+        return (
+          <DocsShell
+            sidebar={manifest ? <DocsSidebar manifest={manifest} currentSlug={fullSlug} /> : null}
+            toc={meta && meta.outline.length > 0 ? <DocsTOC outline={meta.outline} /> : null}
+            drawer={
+              <DocsDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+                {manifest && <DocsSidebar manifest={manifest} currentSlug={fullSlug} />}
+              </DocsDrawer>
+            }
+          >
+            {meta && meta.outline.length > 0 && (
+              <details className="lg:hidden mb-6 rounded-md border border-stone-200 bg-white">
+                <summary className="cursor-pointer px-3 py-2 text-sm font-medium">On this page</summary>
+                <div className="px-3 py-2 border-t border-stone-200">
+                  <DocsTOC outline={meta.outline} />
+                </div>
+              </details>
+            )}
+            {error && <p className="text-[#DC2626]">{error}</p>}
+            {!content && !error && <p className="text-stone-500">불러오는 중…</p>}
+            {content && <DocsArticle source={content} />}
+          </DocsShell>
+        );
+      })()}
     </div>
   );
 }
