@@ -1,7 +1,11 @@
 import { writeFile, readFile, mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { spawn } from 'node:child_process';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const PUPPETEER_CONFIG = join(__dirname, 'puppeteer.config.json');
 
 const MERMAID_FENCE_RE = /^ {0,3}`{3,}mermaid\s*\r?\n([\s\S]*?)^ {0,3}`{3,}\s*$/gm;
 
@@ -29,7 +33,7 @@ async function runMmdc(diagramSource) {
     await new Promise((resolve, reject) => {
       const proc = spawn(
         'npx',
-        ['mmdc', '-i', inputPath, '-o', outputPath, '-b', 'transparent', '-t', 'default'],
+        ['mmdc', '-i', inputPath, '-o', outputPath, '-b', 'transparent', '-t', 'default', '-p', PUPPETEER_CONFIG],
         { stdio: 'pipe', shell: true },
       );
 
