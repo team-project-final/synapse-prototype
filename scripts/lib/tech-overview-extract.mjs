@@ -2,7 +2,8 @@ const SECTION_RE = /^###\s+1\.(\d+)\b\s*(.*?)\s*$/;
 const STOP_H2 = /^##\s+\d/;
 
 export function extractOverview(markdown) {
-  const lines = markdown.split('\n');
+  const normalized = markdown.replace(/\r\n/g, '\n');
+  const lines = normalized.split('\n');
   let inOverview = false;
   let currentIdx = null;
   const buckets = { 1: [], 2: [], 3: [], 4: [] };

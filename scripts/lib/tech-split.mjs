@@ -66,7 +66,8 @@ function countDots(section) {
 }
 
 export function extractTechs(markdown) {
-  const lines = markdown.split('\n');
+  const normalized = markdown.replace(/\r\n/g, '\n');
+  const lines = normalized.split('\n');
   const layers = [];
   let currentLayer = null;
   let currentH3 = null;
@@ -195,10 +196,11 @@ function extractNumberedH2(markdown, num) {
 }
 
 export function splitTechDoc(markdown) {
-  const overview = extractOverview(markdown);
-  const { techs } = extractTechs(markdown);
-  const matrixMd = extractNumberedH2(markdown, 10);
-  const auditMd = extractNumberedH2(markdown, 12);
+  const normalized = markdown.replace(/\r\n/g, '\n');
+  const overview = extractOverview(normalized);
+  const { techs } = extractTechs(normalized);
+  const matrixMd = extractNumberedH2(normalized, 10);
+  const auditMd = extractNumberedH2(normalized, 12);
   const extras = { matrixMd, auditMd };
   const manifest = {
     overview: {
