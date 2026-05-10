@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { parseTechHeading, extractSummary, normalizeLayer, extractTechs } from '../lib/tech-split.mjs';
+import { parseTechHeading, extractSummary, normalizeLayer, extractTechs, splitTechDoc } from '../lib/tech-split.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const FIXTURE = join(__dirname, 'fixtures', 'tech-fixture.md');
@@ -155,5 +155,20 @@ describe('extractTechs (fixture)', () => {
     const { techs } = extractTechs(md);
     const flutter = techs.find((t) => t.slug === 'flutter-3-x');
     expect(flutter.chunkAnchor).toBe('21-flutter-3x');
+  });
+});
+
+describe('splitTechDoc (fixture)', () => {
+  it('returns overview + techs + extras + manifest', async () => {
+    const md = await readFile(FIXTURE, 'utf8');
+    const out = splitTechDoc(md);
+    expect(out.overview.principles).toHaveLength(3);
+    expect(out.techs).toHaveLength(5);
+    expect(out.extras.matrixMd).toContain('| 항목 | 결정 |');
+    expect(out.extras.auditMd).toBeNull();
+    expect(out.manifest.overview.principles).toHaveLength(3);
+    expect(out.manifest.techs[0].slug).toBe('flutter-3-x');
+    expect(out.manifest.techs[0]).not.toHaveProperty('content');
+    expect(out.manifest.extras).toEqual({ matrixSlug: 'matrix', auditSlug: null });
   });
 });

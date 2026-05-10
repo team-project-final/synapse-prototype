@@ -1,4 +1,5 @@
 import GithubSlugger from 'github-slugger';
+import { extractOverview } from './tech-overview-extract.mjs';
 
 const HEADING_RE = /^(?:(\d+(?:\.\d+){0,2})\s+)?(.*?)(?:\s+(\d+(?:\.x|\.[\dx]+)*)(?:\s*\(\s*LTS\s*\))?)?\s*$/;
 
@@ -178,4 +179,43 @@ function extractH4Outline(body) {
     out.push({ level: 4, text, slug: slugger.slug(text) });
   }
   return out;
+}
+
+function extractNumberedH2(markdown, num) {
+  const startRe = new RegExp(`^##\\s+${num}\\.\\s+.*$`, 'm');
+  const startMatch = startRe.exec(markdown);
+  if (!startMatch) return null;
+  const startIdx = startMatch.index + startMatch[0].length;
+  const rest = markdown.slice(startIdx);
+  const nextRe = /^##\s+\d+\.\s+/m;
+  const endMatch = nextRe.exec(rest);
+  const body = endMatch ? rest.slice(0, endMatch.index) : rest;
+  const trimmed = body.trim();
+  return trimmed.length > 0 ? trimmed : null;
+}
+
+export function splitTechDoc(markdown) {
+  const overview = extractOverview(markdown);
+  const { techs } = extractTechs(markdown);
+  const matrixMd = extractNumberedH2(markdown, 10);
+  const auditMd = extractNumberedH2(markdown, 12);
+  const extras = { matrixMd, auditMd };
+  const manifest = {
+    overview: {
+      intro: overview.intro,
+      diagramHtml: overview.diagramHtml,
+      principles: overview.principles,
+      tableMd: overview.tableMd,
+    },
+    techs: techs.map((t) => {
+      const meta = { ...t };
+      delete meta.content;
+      return meta;
+    }),
+    extras: {
+      matrixSlug: matrixMd ? 'matrix' : null,
+      auditSlug: auditMd ? 'audit' : null,
+    },
+  };
+  return { overview, techs, extras, manifest };
 }
