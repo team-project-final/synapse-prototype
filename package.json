@@ -53,6 +53,7 @@
     "eslint": "^9.17.0",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.16",
+    "github-slugger": "^2.0.0",
     "jsdom": "^25.0.1",
     "prettier": "^3.4.2",
     "rehype-autolink-headings": "^7.1.0",

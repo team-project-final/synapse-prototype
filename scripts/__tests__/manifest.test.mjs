@@ -15,7 +15,7 @@ describe('extractOutline', () => {
   it('disambiguates duplicate heading slugs', () => {
     const md = '## Notes\n\n## Notes\n\n### Notes';
     const out = extractOutline(md);
-    expect(out.map((o) => o.slug)).toEqual(['notes', 'notes-2', 'notes-3']);
+    expect(out.map((o) => o.slug)).toEqual(['notes', 'notes-1', 'notes-2']);
   });
 });
 

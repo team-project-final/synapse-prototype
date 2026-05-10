@@ -1,4 +1,4 @@
-import slugify from 'slugify';
+import GithubSlugger from 'github-slugger';
 
 const GROUPS = {
   '01-08': '기획/설계',
@@ -14,18 +14,14 @@ function inferGroup(order) {
 
 export function extractOutline(markdown) {
   const out = [];
-  const seen = new Map();
+  const slugger = new GithubSlugger();
   const re = /^(##{1,2})\s+(.+?)\s*$/gm;
   let m;
   while ((m = re.exec(markdown))) {
     const level = m[1].length;
     if (level !== 2 && level !== 3) continue;
     const text = m[2].trim();
-    let slug = slugify(text, { lower: true, strict: false, locale: 'ko' }) || 'h';
-    const count = (seen.get(slug) ?? 0) + 1;
-    seen.set(slug, count);
-    if (count > 1) slug = `${slug}-${count}`;
-    out.push({ level, text, slug });
+    out.push({ level, text, slug: slugger.slug(text) });
   }
   return out;
 }
