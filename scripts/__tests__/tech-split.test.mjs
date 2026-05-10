@@ -1,5 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { parseTechHeading, extractSummary, normalizeLayer } from '../lib/tech-split.mjs';
+import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+import { parseTechHeading, extractSummary, normalizeLayer, extractTechs } from '../lib/tech-split.mjs';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const FIXTURE = join(__dirname, 'fixtures', 'tech-fixture.md');
 
 describe('parseTechHeading', () => {
   it('extracts section/title/version from "2.1 Flutter 3.x"', () => {
@@ -99,5 +105,55 @@ describe('normalizeLayer', () => {
       layer: 'Edge Compute Layer',
       layerSlug: 'infra',
     });
+  });
+});
+
+describe('extractTechs (fixture)', () => {
+  it('emits 5 techs across 3 sub-layers', async () => {
+    const md = await readFile(FIXTURE, 'utf8');
+    const { techs } = extractTechs(md);
+    const slugs = techs.map((t) => t.slug);
+    expect(slugs).toEqual([
+      'flutter-3-x',
+      'dart-3-x',
+      'java-21-lts',
+      'spring-boot-4',
+      'python-3-12',
+    ]);
+  });
+
+  it('assigns layer/layerSlug correctly across simple + nested', async () => {
+    const md = await readFile(FIXTURE, 'utf8');
+    const { techs } = extractTechs(md);
+    const t = (s) => techs.find((x) => x.slug === s);
+    expect(t('flutter-3-x').layerSlug).toBe('client');
+    expect(t('flutter-3-x').layer).toBe('Client Layer');
+    expect(t('java-21-lts').layerSlug).toBe('backend-java');
+    expect(t('java-21-lts').layer).toBe('Backend / Java·Spring');
+    expect(t('python-3-12').layerSlug).toBe('backend-python');
+  });
+
+  it('captures version + originalSection + summary', async () => {
+    const md = await readFile(FIXTURE, 'utf8');
+    const { techs } = extractTechs(md);
+    const flutter = techs.find((t) => t.slug === 'flutter-3-x');
+    expect(flutter.version).toBe('3.x');
+    expect(flutter.originalSection).toBe('2.1');
+    expect(flutter.summary).toBe('크로스플랫폼 UI 프레임워크.');
+  });
+
+  it('preserves chunk content including h4 children', async () => {
+    const md = await readFile(FIXTURE, 'utf8');
+    const { techs } = extractTechs(md);
+    const flutter = techs.find((t) => t.slug === 'flutter-3-x');
+    expect(flutter.content).toContain('#### 설치');
+    expect(flutter.content).toContain('설치 가이드.');
+  });
+
+  it('records chunkAnchor matching original h3 slug', async () => {
+    const md = await readFile(FIXTURE, 'utf8');
+    const { techs } = extractTechs(md);
+    const flutter = techs.find((t) => t.slug === 'flutter-3-x');
+    expect(flutter.chunkAnchor).toBe('21-flutter-3x');
   });
 });
