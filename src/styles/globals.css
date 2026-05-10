@@ -59,7 +59,7 @@ h1, h2, h3, .display { font-family: var(--font-display); word-break: keep-all; }
 code, pre, .mono { font-family: var(--font-mono); }
 
 .docs-article { color: var(--color-stone-700); overflow-x: clip; }
-.docs-article > * { max-width: min(var(--content-prose), 100%); margin-inline: auto; }
+.docs-article > * { max-width: min(var(--content-prose), 100%); margin-inline: 0; }
 .docs-article > pre,
 .docs-article > table,
 .docs-article > figure.mermaid-svg,
@@ -74,12 +74,12 @@ code, pre, .mono { font-family: var(--font-mono); }
 .heading-anchor { opacity: 0; margin-left: 0.5rem; color: var(--color-amber-primary); text-decoration: none; }
 
 .docs-article :not(pre) > code { background: var(--color-stone-100); padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.875em; }
-.docs-article pre { margin: 1rem auto; padding: 1rem; background: var(--color-stone-900); color: var(--color-stone-100); border-radius: 0.5rem; overflow-x: auto; font-size: 0.875rem; line-height: 1.5; }
+.docs-article pre { margin: 1rem 0; padding: 1rem; background: var(--color-stone-900); color: var(--color-stone-100); border-radius: 0.5rem; overflow-x: auto; font-size: 0.875rem; line-height: 1.5; }
 @media (max-width: 640px) { .docs-article pre { font-size: 0.75rem; line-height: 1.25rem; } }
 
-.docs-article table { display: block; overflow-x: auto; border-collapse: collapse; margin: 1rem auto; font-size: 0.875rem; }
+.docs-article table { display: block; overflow-x: auto; border-collapse: collapse; margin: 1rem 0; font-size: 0.875rem; }
 .docs-article th, .docs-article td { padding: 0.5rem 0.75rem; border: 1px solid var(--color-stone-200); }
 .docs-article tbody tr:nth-child(odd) { background: var(--color-stone-50); }
 
-.docs-article figure.mermaid-svg { margin: 1.25rem auto; }
+.docs-article figure.mermaid-svg { margin: 1.25rem 0; }
 .docs-article figure.mermaid-svg svg { width: 100%; height: auto; }
