@@ -44,7 +44,7 @@ export default function Architecture() {
         <header>
           <h1 className="display text-4xl">시스템 아키텍처</h1>
           <p className="text-stone-600 mt-2">
-            4-서비스 통합 (ADR-001 / ADR-002, 2026-05-09 채택)
+            4-서비스 통합 (ADR-001 / ADR-002)
           </p>
         </header>
 
