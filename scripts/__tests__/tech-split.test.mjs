@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { parseTechHeading, extractSummary } from '../lib/tech-split.mjs';
+import { parseTechHeading, extractSummary, normalizeLayer } from '../lib/tech-split.mjs';
 
 describe('parseTechHeading', () => {
   it('extracts section/title/version from "2.1 Flutter 3.x"', () => {
@@ -54,5 +54,50 @@ describe('extractSummary', () => {
   });
   it('returns empty string when no paragraph', () => {
     expect(extractSummary('\n#### Heading only\n')).toBe('');
+  });
+});
+
+describe('normalizeLayer', () => {
+  it('maps simple layer name', () => {
+    expect(normalizeLayer('Client Layer', null)).toEqual({
+      layer: 'Client Layer',
+      layerSlug: 'client',
+    });
+  });
+  it('maps nested backend java sub-layer', () => {
+    expect(normalizeLayer('Backend Services Layer', 'Java/Spring Ecosystem')).toEqual({
+      layer: 'Backend / Java·Spring',
+      layerSlug: 'backend-java',
+    });
+  });
+  it('maps nested backend python sub-layer', () => {
+    expect(normalizeLayer('Backend Services Layer', 'Python/FastAPI Ecosystem')).toEqual({
+      layer: 'Backend / Python·FastAPI',
+      layerSlug: 'backend-python',
+    });
+  });
+  it('handles korean layers', () => {
+    expect(normalizeLayer('AI/ML 레이어', null)).toEqual({
+      layer: 'AI/ML 레이어',
+      layerSlug: 'aiml',
+    });
+    expect(normalizeLayer('인프라 레이어', null)).toEqual({
+      layer: '인프라 레이어',
+      layerSlug: 'infra',
+    });
+    expect(normalizeLayer('모니터링 & 관측성 레이어', null)).toEqual({
+      layer: '모니터링 & 관측성 레이어',
+      layerSlug: 'observability',
+    });
+    expect(normalizeLayer('외부 서비스 레이어', null)).toEqual({
+      layer: '외부 서비스 레이어',
+      layerSlug: 'external',
+    });
+  });
+  it('falls back to infra for unmapped layer', () => {
+    expect(normalizeLayer('Edge Compute Layer', null)).toEqual({
+      layer: 'Edge Compute Layer',
+      layerSlug: 'infra',
+    });
   });
 });
