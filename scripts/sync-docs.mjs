@@ -1,6 +1,7 @@
 import { mkdtemp, rm, mkdir, readdir, stat, writeFile, readFile } from 'node:fs/promises';
 import { renderMermaidBlocks } from './lib/mermaid-render.mjs';
 import { buildManifestEntry } from './lib/manifest.mjs';
+import { splitTechDoc } from './lib/tech-split.mjs';
 import { tmpdir } from 'node:os';
 import { spawn } from 'node:child_process';
 import { join, dirname } from 'node:path';
@@ -9,6 +10,8 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = join(__dirname, '..');
 const PUBLIC_DOCS_DIR = join(PROJECT_ROOT, 'public', 'docs-md');
+const TECH_DOC_SLUG = '18_기술_스택_정의서';
+const TECH_OUT_DIR = join(PUBLIC_DOCS_DIR, 'tech');
 
 const REPO_URL = process.env.WIKI_REPO_URL ?? 'https://github.com/team-project-final/documents.wiki.git';
 const PAT = process.env.WIKI_PAT;
@@ -64,6 +67,29 @@ async function main() {
     await writeFile(join(PUBLIC_DOCS_DIR, destName), rendered, 'utf8');
     manifest.push(buildManifestEntry(destName, rendered));
     copied++;
+
+    if (destName.replace(/\.md$/, '') === TECH_DOC_SLUG) {
+      await mkdir(TECH_OUT_DIR, { recursive: true });
+      const out = splitTechDoc(rendered);
+      for (const t of out.techs) {
+        await writeFile(join(TECH_OUT_DIR, `${t.slug}.md`), t.content, 'utf8');
+      }
+      if (out.overview.bodyMd) {
+        await writeFile(join(TECH_OUT_DIR, 'overview.md'), out.overview.bodyMd, 'utf8');
+      }
+      if (out.extras.matrixMd) {
+        await writeFile(join(TECH_OUT_DIR, 'matrix.md'), out.extras.matrixMd, 'utf8');
+      }
+      if (out.extras.auditMd) {
+        await writeFile(join(TECH_OUT_DIR, 'audit.md'), out.extras.auditMd, 'utf8');
+      }
+      await writeFile(
+        join(TECH_OUT_DIR, 'tech-manifest.json'),
+        JSON.stringify(out.manifest, null, 2),
+        'utf8',
+      );
+      console.log(`[sync-docs] tech split: ${out.techs.length} techs → ${TECH_OUT_DIR}`);
+    }
   }
 
   // Write manifest.json sorted by order

@@ -22,10 +22,13 @@ export function findEntry(manifest: DocMeta[], slug: string): DocMeta | undefine
   return manifest.find((m) => m.slug === slug);
 }
 
+const HIDDEN_FROM_DOCS_SIDEBAR = new Set(['18_기술_스택_정의서']);
+
 export function groupManifest(manifest: DocMeta[]): { group: string; docs: DocMeta[] }[] {
   const map = new Map<string, DocMeta[]>();
   for (const m of manifest) {
     if (m.parent) continue;
+    if (HIDDEN_FROM_DOCS_SIDEBAR.has(m.slug)) continue;
     if (!map.has(m.group)) map.set(m.group, []);
     map.get(m.group)!.push(m);
   }

@@ -14,9 +14,25 @@ describe('docs-manifest', () => {
   it('groups by group field, sub-pages nested under parent', () => {
     const groups = groupManifest(sample);
     expect(groups).toHaveLength(1);
-    const docs = groups[0].docs;
-    expect(docs[0].slug).toBe('a');
-    expect(docs[1].slug).toBe('b');
-    expect(docs[1].children).toEqual(['b/01_x']);
+    const docs = groups[0]!.docs;
+    expect(docs[0]!.slug).toBe('a');
+    expect(docs[1]!.slug).toBe('b');
+    expect(docs[1]!.children).toEqual(['b/01_x']);
+  });
+});
+
+const withTech: DocMeta[] = [
+  ...sample,
+  { slug: '18_기술_스택_정의서', title: '18. 기술 스택 정의서', group: 'G2', order: 18, outline: [] },
+];
+
+describe('docs-manifest hides tech doc from sidebar', () => {
+  it('groupManifest excludes 18_기술_스택_정의서', () => {
+    const groups = groupManifest(withTech);
+    const slugs = groups.flatMap((g) => g.docs.map((d) => d.slug));
+    expect(slugs).not.toContain('18_기술_스택_정의서');
+  });
+  it('findEntry still returns 18번 when looked up directly', () => {
+    expect(findEntry(withTech, '18_기술_스택_정의서')?.title).toBe('18. 기술 스택 정의서');
   });
 });
