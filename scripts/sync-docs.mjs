@@ -1,4 +1,5 @@
-import { mkdtemp, rm, mkdir, copyFile, readdir, stat } from 'node:fs/promises';
+import { mkdtemp, rm, mkdir, copyFile, readdir, stat, writeFile, readFile } from 'node:fs/promises';
+import { renderMermaidBlocks } from './lib/mermaid-render.mjs';
 import { tmpdir } from 'node:os';
 import { spawn } from 'node:child_process';
 import { join, dirname } from 'node:path';
@@ -46,7 +47,9 @@ async function main() {
     const s = await stat(src);
     if (!s.isFile()) continue;
     const destName = entry === 'Home.md' ? 'index.md' : entry;
-    await copyFile(src, join(PUBLIC_DOCS_DIR, destName));
+    const raw = await readFile(src, 'utf8');
+    const rendered = await renderMermaidBlocks(raw);
+    await writeFile(join(PUBLIC_DOCS_DIR, destName), rendered, 'utf8');
     copied++;
   }
 
