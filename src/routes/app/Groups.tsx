@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 import { ulid } from 'ulid';
 import { Card, Button, Badge, Dialog, Input, toast } from '@/components/ds';
 import { useGroupsStore, type Group } from '@/stores/use-groups';
@@ -6,6 +7,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
 
 export default function Groups() {
+  const navigate = useNavigate();
   const groupsMap = useGroupsStore((s) => s.groups);
   const upsert = useGroupsStore((s) => s.upsert);
   const myGroups = Object.values(groupsMap).filter((g) => g.joined);
@@ -15,12 +17,8 @@ export default function Groups() {
 
   const groups = tab === 'mine' ? myGroups : exploreGroups;
 
-  const enter = () => {
-    toast({
-      message: '이 화면은 데모에서 미구현 — 06_화면_기능_정의서 참조',
-      tone: 'info',
-      duration: 3500,
-    });
+  const enter = (groupId: string) => {
+    navigate(`/app/groups/${groupId}`);
   };
 
   const handleCreate = (input: CreateGroupInput) => {
@@ -82,7 +80,11 @@ export default function Groups() {
                 마지막 활동: {formatDistanceToNow(g.lastActivityAt, { locale: ko, addSuffix: true })}
               </div>
             </div>
-            <Button variant={g.joined ? 'primary' : 'secondary'} className="w-full" onClick={enter}>
+            <Button
+              variant={g.joined ? 'primary' : 'secondary'}
+              className="w-full"
+              onClick={() => enter(g.id)}
+            >
               {g.joined ? '입장하기' : '가입하기'}
             </Button>
           </Card>

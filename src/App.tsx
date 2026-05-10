@@ -20,6 +20,7 @@ import Graph from './routes/app/Graph';
 import Search from './routes/app/Search';
 import Profile from './routes/app/Profile';
 import Groups from './routes/app/Groups';
+import GroupDetail from './routes/app/groups/Detail';
 import { Toaster } from './components/ds';
 import { SeedGuard } from './components/SeedGuard';
 
@@ -50,6 +51,7 @@ export default function App() {
           <Route path="search" element={<Search />} />
           <Route path="profile" element={<Profile />} />
           <Route path="groups" element={<Groups />} />
+          <Route path="groups/:id" element={<GroupDetail />} />
         </Route>
       </Routes>
       <Toaster />
