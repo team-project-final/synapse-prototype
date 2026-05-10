@@ -25,4 +25,12 @@ describe('renderMermaidBlocks', () => {
     const out = await renderMermaidBlocks(md);
     expect(out).toContain('<pre data-mermaid-error');
   }, TEST_TIMEOUT);
+
+  it('html-escapes source content in fallback path', async () => {
+    const md = '```mermaid\n>>> <script>x</script> <<<\n```';
+    const out = await renderMermaidBlocks(md);
+    expect(out).toContain('<pre data-mermaid-error');
+    expect(out).not.toContain('<script>');
+    expect(out).toContain('&lt;script&gt;');
+  }, TEST_TIMEOUT);
 });

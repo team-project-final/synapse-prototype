@@ -3,7 +3,16 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { spawn } from 'node:child_process';
 
-const MERMAID_FENCE_RE = /^`{3}mermaid\r?\n([\s\S]*?)^`{3}/gm;
+const MERMAID_FENCE_RE = /^ {0,3}`{3,}mermaid\s*\r?\n([\s\S]*?)^ {0,3}`{3,}\s*$/gm;
+
+function escapeHtml(s) {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
 
 /**
  * Spawn mmdc (mermaid-cli) to render a single diagram string to SVG.
@@ -84,8 +93,8 @@ export async function renderMermaidBlocks(markdown) {
       const svg = await runMmdc(source.replace(/\r\n/g, '\n').trim());
       replacement = `<figure class="mermaid-svg">\n${svg}\n</figure>`;
     } catch (err) {
-      const escaped = (err.message || 'render error').replace(/"/g, '&quot;');
-      replacement = `<pre data-mermaid-error="${escaped}">${source.trim()}</pre>`;
+      const escaped = escapeHtml(err.message || 'render error');
+      replacement = `<pre data-mermaid-error="${escaped}">${escapeHtml(source.trim())}</pre>`;
     }
     // Replace only the first occurrence to avoid double-replacing
     result = result.replace(full, replacement);
