@@ -48,12 +48,12 @@ html, body { font-family: var(--font-body); }
 h1, h2, h3, .display { font-family: var(--font-display); word-break: keep-all; }
 code, pre, .mono { font-family: var(--font-mono); }
 
-.docs-article { color: var(--color-stone-700); }
-.docs-article > * { max-width: var(--content-prose); margin-inline: auto; }
+.docs-article { color: var(--color-stone-700); overflow-x: clip; }
+.docs-article > * { max-width: min(var(--content-prose), 100%); margin-inline: auto; }
 .docs-article > pre,
 .docs-article > table,
 .docs-article > figure.mermaid-svg,
-.docs-article > .table-wrap { max-width: var(--content-wide); }
+.docs-article > .table-wrap { max-width: min(var(--content-wide), 100%); }
 
 .docs-article h1 { font-size: 2.25rem; line-height: 2.5rem; font-weight: 600; margin: 0 0 1.5rem; }
 .docs-article h2 { font-size: 1.75rem; line-height: 2rem; font-weight: 600; margin: 2.5rem 0 0.75rem; padding-bottom: 0.25rem; border-bottom: 1px solid var(--color-stone-200); }
