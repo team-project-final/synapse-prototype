@@ -128,7 +128,7 @@ export function SvgZoomModal({ svgHtml, onClose }: Props) {
         >
           <div
             ref={svgWrapRef}
-            className="[&>svg]:max-w-none [&>svg]:h-auto bg-white rounded-lg p-4 shadow-lg"
+            className="mermaid-zoom-svg [&>svg]:max-w-none [&>svg]:h-auto bg-white rounded-lg p-4 shadow-lg"
             dangerouslySetInnerHTML={{ __html: svgHtml }}
           />
         </div>

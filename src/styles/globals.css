@@ -84,3 +84,12 @@ code, pre, .mono { font-family: var(--font-mono); }
 
 .docs-article figure.mermaid-svg { margin: 1.25rem 0; overflow-x: auto; }
 .docs-article figure.mermaid-svg svg { display: block; max-width: none; height: auto; }
+
+/* Mermaid SVG text clip fix: mermaid-cli calculates foreignObject widths
+   with different font metrics than the browser, causing text truncation. */
+svg[id^="mermaid-"] foreignObject,
+.docs-article figure.mermaid-svg svg foreignObject,
+.mermaid-zoom-svg foreignObject { overflow: visible; }
+svg[id^="mermaid-"] foreignObject > div,
+.docs-article figure.mermaid-svg svg foreignObject > div,
+.mermaid-zoom-svg foreignObject > div { overflow: visible !important; }
