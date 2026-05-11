@@ -62,8 +62,8 @@
       },
       {
         "level": 3,
-        "text": "포함 (In Scope) — MVP Phase 1 (4주)",
-        "slug": "포함-in-scope--mvp-phase-1-4주"
+        "text": "포함 (In Scope) — MVP Phase 1 (5주)",
+        "slug": "포함-in-scope--mvp-phase-1-5주"
       },
       {
         "level": 3,
@@ -3118,8 +3118,8 @@
       },
       {
         "level": 3,
-        "text": "전체 일정 (4주 팀 프로젝트)",
-        "slug": "전체-일정-4주-팀-프로젝트"
+        "text": "전체 일정 (5주 팀 프로젝트, 22 영업일 + 발표일)",
+        "slug": "전체-일정-5주-팀-프로젝트-22-영업일--발표일"
       },
       {
         "level": 2,
@@ -3138,13 +3138,23 @@
       },
       {
         "level": 3,
-        "text": "W3: 부가 기능 + Kafka 통합 (Week 3)",
-        "slug": "w3-부가-기능--kafka-통합-week-3"
+        "text": "W3: 이벤트 발행자 + 검색 RRF + AI 자동 생성 (Week 3)",
+        "slug": "w3-이벤트-발행자--검색-rrf--ai-자동-생성-week-3"
       },
       {
         "level": 3,
-        "text": "W4: 통합 테스트 + 마무리 (Week 4)",
-        "slug": "w4-통합-테스트--마무리-week-4"
+        "text": "W4: 이벤트 소비자 + 운영 기능 (Week 4)",
+        "slug": "w4-이벤트-소비자--운영-기능-week-4"
+      },
+      {
+        "level": 3,
+        "text": "W5: E2E + 버그 + 발표 준비 (Week 5)",
+        "slug": "w5-e2e--버그--발표-준비-week-5"
+      },
+      {
+        "level": 3,
+        "text": "발표일 (2026-06-15 월)",
+        "slug": "발표일-2026-06-15-월"
       },
       {
         "level": 2,
