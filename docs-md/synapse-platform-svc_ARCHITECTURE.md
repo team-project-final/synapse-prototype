@@ -1,443 +1,390 @@
 # synapse-platform-svc — ARCHITECTURE
 
-> **Synapse Wiki**: [03_프로젝트_아키텍처_정의서](https://github.com/team-project-final/documents/wiki/03_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98_%EC%A0%95%EC%9D%98%EC%84%9C) 기준선
-> **Version**: v1.0 | **Updated**: 2026-05-18
+> **Wiki 03번** 기준선 + **03-D 어댑터 표준** 적용
+> **Version**: v2.0 | **Updated**: 2026-05-18
+> 본 문서는 레포 README + 실제 build/소스 구조에서 확인된 사실을 기반으로 작성됨
 
 ---
 
 ## 1. 책임 범위
 
-Synapse 플랫폼의 **공통 기반 서비스 묶음**. 인증, 결제, 감사, 알림 — 다른 모든 도메인 서비스가 의존하는 횡단 관심사.
+Synapse 플랫폼의 **핵심 기반 서비스 모놀리스**. Spring Modulith로 도메인 모듈을 격리하되 **단일 Spring Boot 애플리케이션 + 단일 Dockerfile**로 배포.
 
-| 포함 서비스 | Wiki 03.2.4 책임 |
-|------------|-----------------|
-| **Auth Service** | OAuth (Google/GitHub/Apple/Microsoft), JWT 발급, MFA, 세션 관리, 테넌트 생성 |
-| **Billing Service** | 플랜 관리, Stripe 연동, Webhook 처리, 사용량 제한, 인보이스 |
-| **Audit Service** | Kafka 이벤트 소비 → audit_logs 적재, 90일 보존, 관리자 조회 API |
-| **Notification Service** | Kafka 이벤트 소비 → notifications 적재, FCM/APNs/SES 발송, 사용자 설정 |
+| 모듈 | 책임 |
+|------|------|
+| `auth` | 인증/인가 — JWT RS256, OAuth2 (Google/GitHub), MFA TOTP, Refresh Token |
+| `user` | 사용자 프로필 관리 |
+| `notification` | 알림 — FCM 푸시, AWS SES 이메일 |
+| `admin` | 관리자 기능, **Audit Log**, **Kafka Consumer** (감사 이벤트 수집) |
+| `shared` | 공통 유틸리티 (FieldEncryptor 등) |
 
-User 정보 관리는 **Auth Service 내부**(users 테이블 + 프로필 API).
+⚠️ **billing 모듈 부재** — Wiki 03번에 명시된 billing은 현재 이 레포에 없음. 향후 추가 또는 별도 레포 결정 필요.
 
 ---
 
-## 2. 레포 구조 (Gradle 멀티모듈)
+## 2. 레포 구조 (실제)
 
 ```
 synapse-platform-svc/
-├── build.gradle.kts                    # 루트 빌드
-├── settings.gradle.kts                 # 모듈 선언
-├── gradle/
-│   └── libs.versions.toml              # Version Catalog
-├── platform-common/                    # 공통 모듈
-│   ├── src/main/java/io/synapse/platform/common/
-│   │   ├── exception/
-│   │   ├── tenant/                     # TenantContext, Interceptor
-│   │   ├── auth/                       # JwtUtils, RoleEnum
-│   │   ├── cloudevents/                # CloudEvents 빌더/파서
-│   │   ├── outbox/                     # Outbox Relay 공통 구현
-│   │   ├── kafka/                      # ProducerConfig, ConsumerConfig
-│   │   ├── grpc/                       # ServerConfig, AuthInterceptor
-│   │   └── observability/              # OTel, MDC
-├── auth-service/                       # 독립 Spring Boot 앱
-│   ├── build.gradle.kts
-│   ├── src/main/java/io/synapse/platform/auth/
-│   │   ├── AuthApplication.java
-│   │   ├── domain/                     # User, Tenant, RefreshToken
-│   │   ├── application/                # AuthService, OAuthService
-│   │   ├── infrastructure/
-│   │   │   ├── persistence/            # JPA Repository
-│   │   │   ├── oauth/                  # 외부 IdP 어댑터
-│   │   │   ├── redis/                  # Refresh Token 저장
-│   │   │   └── outbox/                 # Outbox Publisher
-│   │   └── interfaces/
-│   │       ├── rest/                   # REST Controller
-│   │       ├── grpc/                   # AuthService gRPC 구현
-│   │       └── kafka/                  # (이 서비스는 발행만, 구독 없음)
-│   └── src/main/resources/
-│       ├── application.yml
-│       ├── application-dev.yml
-│       ├── application-prod.yml
-│       ├── db/migration/               # Flyway
-│       └── proto/                      # gRPC 파일 (synapse-shared 참조)
-├── billing-service/                    # 독립 Spring Boot 앱
-│   └── ... (auth와 동일 구조)
-├── audit-service/                      # 독립 Spring Boot 앱
-│   └── ...
-└── notification-service/               # 독립 Spring Boot 앱
-    └── ...
+├── .github/                                # CI/CD
+├── config/                                 # 외부 설정
+├── docs/                                   # 아키텍처/가이드
+├── gradle/wrapper/
+├── src/
+│   ├── main/
+│   │   ├── java/io/synapse/platform/       # ★ 루트 패키지 (추정)
+│   │   │   ├── PlatformApplication.java
+│   │   │   ├── auth/                       # ★ Modulith 모듈 1
+│   │   │   ├── user/                       # ★ Modulith 모듈 2
+│   │   │   ├── notification/               # ★ Modulith 모듈 3
+│   │   │   ├── admin/                      # ★ Modulith 모듈 4
+│   │   │   └── shared/                     # ★ 공통 모듈
+│   │   └── resources/
+│   │       ├── application.yml
+│   │       ├── application-local.yml
+│   │       ├── db/migration/               # Flyway V1 ~ V23
+│   │       └── ...
+│   └── test/
+│       └── java/.../
+│           └── *ModuleStructureTest.java   # Modulith 구조 검증
+├── build.gradle.kts                        # 단일 빌드 파일
+├── settings.gradle.kts
+├── Dockerfile                              # 단일 Dockerfile
+├── docker-compose.yml                      # 로컬 인프라
+├── README.md
+└── SECRETS.md
 ```
 
-### 모듈 의존성
+### 2.1 Spring Modulith 모듈 구조
+
+Spring Modulith는 **Java 패키지 = 모듈** 컨벤션. 각 모듈은 다음과 같이 분리:
 
 ```
-[auth-service]──┐
-[billing-service]├─→ [platform-common] ──→ [synapse-shared] (외부 레포)
-[audit-service]──┤
-[notification-service]┘
+io.synapse.platform.<module>/
+├── package-info.java                       // @ApplicationModule
+├── domain/
+│   ├── model/                              // Aggregate, Entity, VO
+│   └── port/
+│       └── outbound/                       // ★ Port (인터페이스)
+├── application/
+│   └── service/                            // UseCase = Application Service
+├── infrastructure/
+│   ├── adapter/
+│   │   ├── outbound/                       // ★ Adapter (Port 구현)
+│   │   │   ├── kafka/
+│   │   │   ├── redis/
+│   │   │   └── external/                   // FCM, SES, OAuth provider
+│   │   ├── persistence/                    // JPA Repository
+│   │   └── inbound/
+│   │       ├── rest/                       // @RestController
+│   │       └── kafka/                      // @KafkaListener
+│   └── config/
+├── api/                                    // ★ 다른 모듈에 노출하는 인터페이스
+│   └── <Module>Api.java
+└── internal/                               // 외부 접근 차단 (Modulith 강제)
 ```
 
-각 서비스는 **독립 배포 단위** — 별도 Docker 이미지, 별도 K8s Deployment.
+### 2.2 Modulith 모듈 간 통신 규칙
+
+| 통신 | 방법 |
+|------|------|
+| 모듈 간 동기 호출 | 호출 대상 모듈의 `api/` 패키지의 인터페이스만 호출 |
+| 모듈 간 비동기 | **Spring Application Events** (`@ApplicationModuleListener`) — 같은 JVM 내 이벤트 |
+| 외부 svc 호출 (다른 -svc 레포) | **03-D 어댑터**: Port → gRPC/REST/Kafka Adapter |
+| 모듈 격리 검증 | `ModuleStructureTest` (Modulith built-in) |
 
 ---
 
-## 3. 도메인 모델 핵심
+## 3. 기술 스택 (README 기반)
 
-### 3.1 Auth Service
-
-```
-Tenant (테넌트)
-  └─ Users (소속 사용자)
-       ├─ TenantMembership (역할: owner/admin/member)
-       ├─ OAuthIdentity (provider별 외부 ID)
-       ├─ MfaSecret (암호화 저장)
-       └─ RefreshToken (Redis + DB 백업)
-```
-
-**Aggregate Root**: `User`, `Tenant`
-
-### 3.2 Billing Service
-
-```
-Subscription (구독)
-  ├─ Plan (Free/Pro/Team/Enterprise)
-  ├─ StripeCustomer (외부 ID)
-  ├─ Invoices (이력)
-  └─ UsageCounter (월별 사용량)
-```
-
-**Aggregate Root**: `Subscription`
-
-### 3.3 Audit Service
-
-```
-AuditLog (불변, append-only)
-  ├─ eventCategory (auth, authz, billing, ...)
-  ├─ severity (INFO/WARN/CRITICAL)
-  ├─ actor (USER/SYSTEM/API_KEY/ADMIN)
-  └─ details (JSONB)
-```
-
-### 3.4 Notification Service
-
-```
-Notification (인앱 알림)
-  ├─ NotificationPreference (사용자별 설정)
-  ├─ DeviceToken (FCM/APNs 토큰)
-  └─ NotificationTemplate (다국어, 채널별)
-```
-
-상세 ERD는 Wiki 02번 참조.
+| 영역 | 선택 |
+|------|------|
+| Language / Build | Java 21 + Gradle Kotlin DSL |
+| Framework | **Spring Boot 4.0.0** + **Spring Modulith 1.3.0** |
+| DB | PostgreSQL 16 |
+| Cache | Redis 7 |
+| Message Broker | **Kafka (AWS MSK)** |
+| Migration | Flyway (V1 ~ V23) |
+| JWT | jjwt 0.12.6 (**RS256**) |
+| Test | JUnit 5 + Testcontainers + Spring Modulith verification |
+| 정적 분석 | Checkstyle + Spotbugs |
 
 ---
 
-## 4. 외부 인터페이스
+## 4. Modulith 모듈별 책임 + 03-D Port/Adapter
 
-### 4.1 REST API (Gateway 경유)
+### 4.1 `auth` 모듈
 
-| 경로 | 서비스 | Wiki 04번 참조 |
-|------|--------|---------------|
-| `/api/v1/auth/**` | auth-service | 로그인, 회원가입, OAuth, MFA, 토큰 |
-| `/api/v1/users/**` | auth-service | 프로필 조회/수정, 사용자 삭제 |
-| `/api/v1/tenants/**` | auth-service | 테넌트 멤버 관리, 초대 |
-| `/api/v1/billing/**` | billing-service | 플랜 변경, Checkout, Invoice |
-| `/api/v1/notifications/**` | notification-service | 인앱 알림 조회, 읽음 처리, 설정 |
-| `/api/v1/audit/**` (관리자만) | audit-service | 감사 로그 검색 |
-| `/ws/notifications` | notification-service | WebSocket 실시간 푸시 |
+**도메인**: Tenant, User, OAuthIdentity, MfaCredential, RefreshToken (V21~V23 마이그레이션 기반)
 
-### 4.2 Webhook (외부 → 내부)
+**Inbound (외부에서 들어오는 진입점)**:
+- REST: `/api/v1/auth/refresh`, `/auth/mfa/setup`, `/auth/mfa/verify`, `/oauth2/authorization/{google|github}`
+- OAuth Callback: `?userId={uuid}`와 함께 `successRedirectUri`로 redirect
 
-| 경로 | 출처 | 처리 |
-|------|------|------|
-| `/webhooks/stripe` | Stripe | 결제/구독 이벤트 → 검증(`Stripe-Signature`) → 내부 처리 |
-| `/webhooks/oauth/{provider}/callback` | OAuth Provider | Authorization Code → ID Token 검증 → 사용자 매핑 |
+**Outbound Port → Adapter**:
+| Port (도메인) | Adapter (인프라) | 호출 대상 |
+|---------------|-----------------|----------|
+| `OAuthProviderPort` | `GoogleOAuthAdapter` / `GithubOAuthAdapter` | Google / GitHub OAuth API |
+| `RefreshTokenStorePort` | `RedisRefreshTokenAdapter` + `JpaRefreshTokenAdapter` | Redis + DB (백업) |
+| `MfaSecretEncryptorPort` | `AesGcmEncryptorAdapter` | shared.FieldEncryptor |
+| `UserLifecycleEventPublisher` | `UserEventKafkaAdapter` | Kafka (`user.*` 토픽) |
 
-### 4.3 gRPC API (내부 전용)
+### 4.2 `user` 모듈
 
-```protobuf
-// synapse-shared/proto/synapse/internal/platform/v1/auth_service.proto
-service AuthService {
-  rpc Introspect(IntrospectRequest) returns (IntrospectResponse);
-  rpc GetUserById(GetUserRequest) returns (UserSummary);
-}
+**도메인**: UserProfile, UserSettings (V16~V18 마이그레이션)
 
-service UserService {
-  rpc GetById(GetUserRequest) returns (User);
-  rpc BatchGetByIds(BatchGetRequest) returns (BatchGetResponse);
-}
-```
+**Inbound**:
+- REST: `/api/v1/users/me`, `/users/me/settings` 등
+- Module API: `UserApi.getById(UUID)` — 다른 모듈(`notification` 등)이 호출
 
-호출자: 모든 다른 서비스 (JWT 검증, 사용자 정보 조회).
+**Outbound Port → Adapter**: (현재 단순 — JPA 외 외부 의존성 적음)
+| Port | Adapter |
+|------|--------|
+| `UserRepository` | JPA + RLS |
 
-### 4.4 Kafka
+다른 모듈은 `UserApi` 인터페이스로만 user에 접근.
 
-**Producer** (이 레포가 발행):
-- `user.registered` ← auth-service
-- `user.deleted` ← auth-service
-- `billing.subscription.changed` ← billing-service
-- `notification.send` ← notification-service (자체 라우팅용은 거의 없음, 주로 소비자)
-- `audit.event` (Audit Service가 자체 발행하지 않음 — 다른 svc가 발행)
+### 4.3 `notification` 모듈
 
-**Consumer** (이 레포가 구독):
-- `user.registered`, `user.deleted` → notification-service (환영/안내)
-- `billing.subscription.changed` → notification-service, audit-service
-- `card.review.due` → notification-service (복습 리마인더)
-- `gamification.xp.earned`, `gamification.badge.earned`, `gamification.level.up` → notification-service
-- `community.deck.shared`, `community.note.shared`, `community.group.joined`, `community.report.created` → notification-service
-- **모든 도메인 이벤트** → audit-service (감사 로그 수집)
+**도메인**: Notification, NotificationPreference, DeviceToken, NotificationTemplate
+
+**Inbound**:
+- REST: `/api/v1/notifications/**`
+- Kafka Listener: 다른 svc의 모든 도메인 이벤트 (card.reviewed, gamification.*, community.*, billing.*, note.* 등)
+- Spring ApplicationEvent Listener: 같은 JVM 내 `auth`/`user` 이벤트 (예: 회원가입 환영 알림)
+
+**Outbound Port → Adapter**:
+| Port | Adapter | 호출 대상 |
+|------|---------|----------|
+| `PushNotificationGateway` | `FcmPushAdapter`, `ApnsPushAdapter` | FCM / APNs |
+| `EmailGateway` | `SesEmailAdapter` | **AWS SES** |
+| `UserPort` (모듈 간) | `UserApiAdapter` (직접 호출) | user 모듈 |
+| `NotificationDeliveryEventPublisher` | `NotificationEventKafkaAdapter` | Kafka |
+
+### 4.4 `admin` 모듈
+
+**도메인**: AuditLog (append-only)
+
+**Inbound**:
+- REST: `/api/v1/admin/audit/**` (관리자 권한 필요)
+- **Kafka Consumer**: 전 시스템의 모든 도메인 이벤트를 구독하여 audit_logs에 적재
+
+**Outbound Port → Adapter**:
+| Port | Adapter |
+|------|--------|
+| `AuditLogRepository` | JPA (월별 파티셔닝) |
+| `LongTermStoragePort` | `S3GlacierAdapter` (Phase 2 — 90일 이상 데이터) |
+
+### 4.5 `shared` 모듈
+
+순수 공통 유틸 (도메인 없음):
+- `FieldEncryptor` — AES-256-GCM Envelope Encryption (`mfa_credentials`, `oauth_identities.access_token_enc` 등 암호화)
+- CloudEvents 빌더/파서 (Wiki 03.4 표준 형식)
+- TenantContext + Interceptor (멀티테넌시 — Wiki 03.3)
+- Outbox 공통 구현 (03-A.6)
+- Idempotency Helper (03-A.5.3)
+- OpenTelemetry 설정
 
 ---
 
-## 5. 데이터 저장소
+## 5. 외부 인터페이스 요약
 
-### 5.1 PostgreSQL
+### 5.1 REST API (Gateway 경유)
 
-각 서비스별 별도 스키마 (또는 별도 DB — Phase 2):
+README에 명시된 부분:
+- `POST /api/v1/auth/refresh` — Refresh Token으로 Access 갱신
+- `POST /api/v1/auth/mfa/setup` — TOTP 시크릿 + QR URL
+- `POST /api/v1/auth/mfa/verify` — TOTP 코드 검증
+- `GET /oauth2/authorization/google` — Google OAuth 시작
+- `GET /oauth2/authorization/github` — GitHub OAuth 시작
 
-| 서비스 | 스키마 | 핵심 테이블 |
-|--------|--------|------------|
-| auth | `platform_auth` | tenants, users, tenant_memberships, refresh_tokens, oauth_identities, mfa_secrets |
-| billing | `platform_billing` | subscriptions, invoices, usage_counters, plans |
-| audit | `platform_audit` | audit_logs (월별 파티셔닝) |
-| notification | `platform_notification` | notifications, notification_preferences, device_tokens, notification_templates |
+추가 엔드포인트는 Wiki 04번 API 명세서 참조.
 
-**RLS 활성화**: `tenants`, `users`, `audit_logs` 등 — Wiki 03.3 멀티테넌시 정책.
+### 5.2 Kafka
 
-### 5.2 Redis
+**Producer** (Outbox 패턴 — 03-A.6):
+- `user.registered`, `user.deleted` (auth 모듈)
+- `user.profile.updated` (user 모듈)
+- `notification.sent` (notification 모듈)
 
-| 키 패턴 | 서비스 | 용도 | TTL |
-|---------|--------|------|-----|
+**Consumer**:
+- `admin` 모듈: **모든** 도메인 이벤트 (audit 적재)
+- `notification` 모듈: 알림이 필요한 모든 이벤트
+
+---
+
+## 6. 데이터 저장소
+
+### 6.1 PostgreSQL (단일 DB, 모듈별 스키마/테이블 prefix)
+
+| Flyway 버전 | 핵심 변경 |
+|-----|-----|
+| V1~V3 | users, oauth_identities, tenants |
+| V16~V18 | tenant_members, user_settings |
+| V19 | totp_credentials (초기) |
+| V20 | oauth_identities.access_token_enc 추가 (암호화 컬럼) |
+| V21 | refresh_tokens |
+| V22 | totp_credentials → mfa_credentials 이관 |
+| V23 | refresh_tokens(user_id) UNIQUE INDEX |
+
+**RLS 활성화**: `users`, `tenants`, `audit_logs` 등 — Wiki 03.3.
+
+### 6.2 Redis (7 — Cluster)
+
+| 키 패턴 | 모듈 | 용도 | TTL |
+|--------|------|-----|-----|
 | `auth:refresh:{tokenHash}` | auth | Refresh Token 메타 | 7d |
-| `auth:session:{userId}` | auth | 활성 세션 set | 24h |
-| `auth:loginfail:{ip}` | auth | 로그인 실패 카운터 | 1h |
 | `auth:oauth:pkce:{state}` | auth | PKCE codeVerifier | 10m |
-| `billing:usage:{tenantId}:{period}` | billing | 사용량 카운터 | 월말 |
+| `auth:loginfail:{ip}` | auth | 로그인 실패 카운터 | 1h |
 | `notif:unread:{userId}` | notification | 미읽음 카운트 | 영구 |
 | `notif:ratelimit:{userId}:{channel}` | notification | 알림 발송 빈도 제한 | 1h |
 
-### 5.3 S3 / 외부 저장소
+### 6.3 Kafka (AWS MSK)
 
-- 첨부파일: knowledge-svc 소관 (이 레포 아님)
-- 감사 로그 콜드 스토리지: 90일 이전 audit_logs를 S3 Glacier로 이관
-
----
-
-## 6. 외부 의존성
-
-### 6.1 다른 svc 호출 (gRPC)
-
-이 레포는 **다른 svc에 거의 의존하지 않음**. 다른 모든 svc가 platform을 호출하는 구조.
-
-예외:
-- notification-service → 사용자 정보가 필요할 때 자체 auth-service의 UserService 호출 (동일 레포 내)
-
-### 6.2 외부 API
-
-| 서비스 | 호출 대상 | 용도 |
-|--------|----------|------|
-| auth | Google OAuth, GitHub OAuth, Apple Sign In, Microsoft Identity | 로그인 |
-| billing | Stripe API | 결제, 구독, Webhook |
-| notification | FCM (Android/Web), APNs (iOS) | 푸시 알림 |
-| notification | AWS SES | 이메일 발송 |
-| notification | Slack Incoming Webhook (선택) | 관리자 알림 |
-
-**Resilience4j 설정**: 03-A 문서 A.3.3 표 참조.
-
-### 6.3 시크릿 의존성
-
-- AWS Secrets Manager → External Secrets Operator → K8s Secret → env 주입
-- 키 카테고리: 03-B 문서 B.7.3 표 참조
+CloudEvents 1.0 + Binary Mode (Wiki 03.4 + 03-C 참조).
 
 ---
 
-## 7. 빌드 / 배포
+## 7. 환경 변수 (README 기반)
 
-### 7.1 Gradle 빌드
+| 변수 | 설명 |
+|------|------|
+| `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | Google OAuth |
+| `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET` | GitHub OAuth |
+| `JWT_PRIVATE_KEY` / `JWT_PUBLIC_KEY` | **RS256** 키 쌍 (PEM) |
+| `AES_SECRET_KEY` | AES-256-GCM 키 (Base64, 32 bytes) |
+| `REDIS_HOST` / `REDIS_PORT` | Redis 접속 |
 
-```kotlin
-// settings.gradle.kts
-rootProject.name = "synapse-platform-svc"
-include(
-    ":platform-common",
-    ":auth-service",
-    ":billing-service",
-    ":audit-service",
-    ":notification-service"
-)
+운영 환경에서는 AWS Secrets Manager + External Secrets Operator 경유 (03-B.7).
+
+---
+
+## 8. 빌드 / 배포
+
+### 8.1 빌드
+
+```bash
+./gradlew build
+./gradlew test
+./gradlew test --tests "*ModuleStructureTest"    # Modulith 구조 검증
+./gradlew checkstyleMain checkstyleTest spotbugsMain spotbugsTest
 ```
 
-```kotlin
-// auth-service/build.gradle.kts
-plugins {
-    id("org.springframework.boot") version "4.0.0"
-    id("io.spring.dependency-management") version "1.1.6"
-    kotlin("jvm")
-    kotlin("plugin.spring")
-    id("com.google.protobuf") version "0.9.4"
-}
+### 8.2 Docker
 
-dependencies {
-    implementation(project(":platform-common"))
-    implementation("io.synapse:synapse-shared:1.0.0")    // 외부 레포 publish
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-data-redis")
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("io.github.resilience4j:resilience4j-spring-boot3:2.x")
-    implementation("net.devh:grpc-server-spring-boot-starter:3.x")
-    implementation("org.springframework.kafka:spring-kafka")
-    implementation("io.opentelemetry:opentelemetry-api")
-    runtimeOnly("org.postgresql:postgresql")
-    runtimeOnly("org.flywaydb:flyway-core")
-}
-```
-
-### 7.2 Docker
+**단일 이미지**: `ghcr.io/team-project-final/synapse-platform-svc:{version}`
 
 ```dockerfile
-# auth-service/Dockerfile
 FROM eclipse-temurin:21-jre-alpine
-ARG JAR_FILE=build/libs/*.jar
-COPY ${JAR_FILE} app.jar
-EXPOSE 8080 9090
-ENTRYPOINT ["java", \
-  "-XX:+UseZGC", \
-  "-XX:MaxRAMPercentage=75.0", \
-  "-javaagent:/opt/otel/opentelemetry-javaagent.jar", \
-  "-jar", "/app.jar"]
+COPY build/libs/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-XX:+UseZGC", "-XX:MaxRAMPercentage=75.0", "-jar", "/app.jar"]
 ```
 
-각 서비스는 **별도 이미지**: `ghcr.io/team-project-final/auth-service:{version}` 등.
+### 8.3 K8s 배포
 
-### 7.3 K8s 매니페스트
-
-`synapse-gitops` 레포의 `manifests/platform/` 하위에 서비스별 Deployment / Service / VirtualService 정의. 표준 리소스는 Wiki 03.6 표 참조.
+단일 Deployment. HPA는 CPU + 요청률 기반.
 
 ---
 
-## 8. 관측성
+## 9. 관측성
 
-### 8.1 메트릭
+### 9.1 메트릭 (Micrometer → Prometheus)
 
-| 메트릭 | 서비스 | 라벨 |
-|--------|--------|------|
+| 메트릭 | 모듈 | 라벨 |
+|--------|------|------|
 | `auth_login_total` | auth | `result`, `provider`, `tenant` |
-| `auth_token_issued_total` | auth | `tokenType`, `tenant` |
-| `billing_payment_total` | billing | `status`, `plan` |
-| `audit_events_consumed_total` | audit | `eventType`, `severity` |
-| `notification_sent_total` | notification | `channel`, `templateCode`, `status` |
-| `notification_send_duration_seconds` | notification | `channel` |
+| `auth_token_issued_total` | auth | `tokenType` |
+| `notification_sent_total` | notification | `channel`, `templateCode` |
+| `audit_events_consumed_total` | admin | `eventType` |
 
-### 8.2 로그
-
-표준 JSON 포맷 (Wiki 03-A.7.2와 동일):
+### 9.2 로그 (구조화 JSON)
 
 ```json
-{ "@timestamp":"...", "service":"auth-service", "traceId":"...", "tenantId":"...", "userId":"...", "level":"INFO", "message":"...", "context":{...} }
+{ "@timestamp":"...", "service":"synapse-platform-svc", "module":"auth", "traceId":"...", "tenantId":"...", "userId":"...", "level":"INFO", "message":"..." }
 ```
 
-민감 필드 마스킹: `mfa_secret`, `refresh_token`, `password`, `stripe_secret_key`, `email` (일부).
-
-### 8.3 트레이싱
-
-모든 REST/gRPC/Kafka에 OTel 자동 계측. Jaeger 대시보드.
+민감 필드 마스킹: `password`, `mfa_secret`, `refresh_token`, `access_token`, `oauth_secret`.
 
 ---
 
-## 9. 보안
+## 10. 보안 (Wiki 03.7 + 03-B 적용)
 
-### 9.1 인증/인가
-
-| 엔드포인트 | 인증 | 인가 |
-|-----------|------|------|
-| `/api/v1/auth/login`, `/signup`, `/refresh` | Public | - |
-| `/api/v1/auth/me`, `/users/me/**` | JWT 필수 | 본인만 |
-| `/api/v1/tenants/{id}/**` | JWT 필수 | 해당 tenant 멤버 |
-| `/api/v1/audit/**` | JWT 필수 | `tenant.owner` 역할 |
-| `/webhooks/stripe` | Stripe Signature 검증 | - |
-| `/internal/**` | mTLS (Istio) | AuthorizationPolicy |
-
-### 9.2 민감 데이터
-
-- 비밀번호: BCrypt (cost factor 12)
-- MFA Secret: AES-256-GCM Envelope Encryption (03-B.10.3)
-- Refresh Token: SHA-256 해시 후 저장 (평문 저장 금지)
-
-### 9.3 외부 호출 보호
-
-- Stripe Webhook: 서명 검증 + Idempotency-Key
-- OAuth Callback: state + PKCE 검증
-- FCM/APNs: 인증서 자동 갱신 (Phase 2: AWS Secrets Manager 회전)
+| 항목 | 구현 |
+|------|------|
+| 비밀번호 | BCrypt (cost 12) |
+| MFA Secret | AES-256-GCM Envelope Encryption (shared.FieldEncryptor) |
+| OAuth access_token (DB 저장) | AES-256-GCM (V20) |
+| Refresh Token | SHA-256 해시 후 저장 |
+| JWT 서명 | RS256 (RSA 공개키 검증) |
+| OAuth Callback | state + PKCE |
+| Refresh Token Reuse | 감지 시 전 세션 무효화 (03-B.6.3) |
 
 ---
 
-## 10. 로컬 개발
+## 11. 로컬 개발
 
-### 10.1 사전 준비
+### 11.1 사전 준비
 
-```bash
-# JDK 21 + Gradle 8.x
-sdk install java 21.0.5-tem
-./gradlew --version
-```
+- JDK 21
+- Docker Desktop (PostgreSQL + Redis)
+- **Windows + Testcontainers**: Linux engine 명시 필수
+  ```powershell
+  $env:DOCKER_HOST = 'npipe:////./pipe/dockerDesktopLinuxEngine'
+  ```
 
-### 10.2 의존 인프라 기동
-
-```bash
-# 루트의 docker-compose.dev.yml
-docker compose -f docker-compose.dev.yml up -d \
-  postgres redis kafka schema-registry mailhog stripe-mock
-```
-
-| 컴포넌트 | 호스트 | 용도 |
-|---------|--------|------|
-| postgres | localhost:5432 | DB |
-| redis | localhost:6379 | 캐시/세션 |
-| kafka | localhost:9092 | 이벤트 버스 |
-| schema-registry | localhost:8081 | Apicurio Registry |
-| mailhog | localhost:8025 | 이메일 발송 테스트 |
-| stripe-mock | localhost:12111 | Stripe API 모킹 |
-
-### 10.3 단일 서비스 실행
+### 11.2 실행
 
 ```bash
-./gradlew :auth-service:bootRun --args='--spring.profiles.active=dev'
-```
+# 인프라
+docker compose up -d
 
-### 10.4 전체 서비스 실행 (Tilt)
-
-```bash
-tilt up                                  # Tiltfile 기반
-```
-
-### 10.5 테스트
-
-```bash
-./gradlew test                           # 단위
-./gradlew integrationTest                # 통합 (Testcontainers)
-./gradlew :auth-service:test --tests "AuthFlowIT"
+# 애플리케이션
+./gradlew bootRun --args='--spring.profiles.active=local'
 ```
 
 ---
 
-## 11. 트러블슈팅
+## 12. 트러블슈팅
 
 | 증상 | 원인 | 해결 |
 |------|------|------|
-| OAuth callback 401 | state 불일치 (Redis 만료) | TTL 확인, 사용자에게 재시도 안내 |
-| Stripe Webhook 400 | 서명 검증 실패 (시크릿 환경 불일치) | 환경별 Webhook 시크릿 분리 |
-| Refresh Token reuse | 토큰 탈취 또는 클라이언트 동시 요청 | 전 세션 무효화 (03-B.6.3) |
-| FCM 401 | 서버 키 만료 | Firebase Console에서 키 재발급 → Secrets Manager 갱신 |
-| Audit 토픽 lag 증가 | Audit Service 처리 지연 | Consumer concurrency 증설, batch 크기 확인 |
+| Modulith 구조 검증 실패 | 모듈 간 `internal` 패키지 접근 | `api/`만 외부 노출, 나머지는 internal |
+| OAuth Callback 401 | state 불일치 (Redis 만료) | TTL 확인, 사용자 재시도 |
+| Refresh Token reuse | 토큰 탈취 또는 동시 요청 | 전 세션 무효화 (정상 동작) |
+| FCM 401 | 서버 키 만료 | Firebase Console 재발급 → Secrets Manager 갱신 |
+| Audit Kafka lag 증가 | admin 모듈 처리 지연 | Consumer concurrency 증설 |
 
 ---
 
-## 12. 참고 문서
+## 13. 안티패턴 (03-D 위반 + Modulith 위반)
 
-- **Wiki 03_프로젝트_아키텍처_정의서** — 시스템 아키텍처 기준선
-- **Wiki 02_ERD_문서** — DB 스키마
-- **Wiki 04_API_명세서** — REST API 상세
-- **03-A_통신_운영_상세서** — gRPC/Kafka 운영
-- **03-B_내부외부_경계_보안_명세** — 인증/인가/시크릿
-- **03-C_이벤트_스키마_진화_가이드** — Kafka 이벤트 스키마
-- [Stripe Webhook Docs](https://stripe.com/docs/webhooks)
-- [Spring Boot 4 Reference](https://docs.spring.io/spring-boot/)
+- ❌ Controller가 외부 SDK(FCM, OAuth) 직접 호출 — Port 경유
+- ❌ `auth` 모듈에서 `user.internal.UserRepository` 직접 import — `UserApi`만 사용
+- ❌ Adapter에 비즈니스 로직 — Application Service로 이동
+- ❌ Port가 `org.springframework.kafka` import — 도메인은 Kafka 무지
+- ❌ JPA Entity를 Controller까지 노출 — Domain Model + DTO 분리
+
+---
+
+## 14. 알려진 갭
+
+| 갭 | 영향 |
+|---|---|
+| **billing 모듈 부재** | Wiki 03 명시 기능 없음. 후속 결정 필요 |
+| 운영 단계의 OAuth provider | Wiki는 4종(Google/GitHub/Apple/MS), 현재 2종만 |
+| Refresh Token 회전 정책 (V23) | 구현 여부 확인 필요 |
+
+---
+
+## 15. 참고
+
+- **Wiki 03_프로젝트_아키텍처_정의서**
+- **Wiki 02_ERD_문서**
+- **Wiki 04_API_명세서**
+- **03-A** — 통신 운영, Outbox, 멱등성
+- **03-B** — JWT/Cookie/시크릿/감사
+- **03-C** — CloudEvents 스키마
+- **03-D** — Port/Adapter 표준
+- [Spring Modulith Reference](https://docs.spring.io/spring-modulith/reference/)
+- [jjwt 0.12 RS256](https://github.com/jwtk/jjwt)

@@ -1,177 +1,165 @@
 # synapse-knowledge-svc — ARCHITECTURE
 
-> **Synapse Wiki**: [03_프로젝트_아키텍처_정의서](https://github.com/team-project-final/documents/wiki/03_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98_%EC%A0%95%EC%9D%98%EC%84%9C) 기준선
-> **Version**: v1.0 | **Updated**: 2026-05-18
+> **Wiki 03번** 기준선 + **03-D 어댑터 표준** 적용
+> **Version**: v2.0 | **Updated**: 2026-05-18
+> 본 문서는 레포 구조와 platform-svc 패턴(Spring Modulith)을 기반으로 작성됨. README가 아직 부트스트랩 단계이므로 일부는 표준 패턴 추정.
 
 ---
 
 ## 1. 책임 범위
 
-Synapse의 **지식 그래프 도메인** 담당. 노트 작성/관리 + 위키링크 기반 그래프 + 검색을 위한 청킹/임베딩.
+Synapse의 **지식 도메인** — 노트 작성/관리, 위키링크 기반 그래프, 검색.
 
-| 포함 서비스 | Wiki 03.2.4 책임 |
+| 모듈 (추정) | Wiki 03.2.4 책임 |
 |------------|-----------------|
-| **Note Service** | 노트 CRUD (Markdown), 위키링크 `[[링크]]` 파싱, 버전 관리, 첨부파일(S3) |
-| **Graph Service** | 백링크 조회, 그래프 시각화 데이터, PageRank, 클러스터링 |
-| **Chunking Worker** | Kafka 컨슈머 — 노트 → 청크 분할 → 임베딩 생성 요청 |
+| `note` | 노트 CRUD (Markdown), 위키링크 `[[]]` 파싱, 버전 관리, 첨부파일(S3), Elasticsearch 인덱싱 |
+| `graph` | 백링크, 그래프 시각화 데이터, PageRank, 클러스터링 |
+| `chunking` | Markdown → 청크 분할 → AI 임베딩 생성 요청 (learning-svc 호출) |
+| `shared` | 공통 (TenantContext, Outbox, CloudEvents 등) |
 
-⚠️ **AI 임베딩 자체는 learning-svc(Python)에 위임**. 이 레포는 청크 텍스트 생성 + 결과 저장만 담당.
+⚠️ AI 임베딩 자체는 **learning-svc(Python)에 위임**. 이 레포는 청크 텍스트 생성 + 결과 저장만.
 
 ---
 
-## 2. 레포 구조 (Gradle 멀티모듈)
+## 2. 레포 구조 (실제)
 
 ```
 synapse-knowledge-svc/
-├── build.gradle.kts
+├── .github/
+├── docs/                                   # 아키텍처/가이드 문서
+├── gradle/wrapper/
+├── src/                                    # 단일 src 폴더
+│   ├── main/
+│   │   ├── java/io/synapse/knowledge/      # 루트 패키지 (추정)
+│   │   │   ├── KnowledgeApplication.java
+│   │   │   ├── note/                       # Modulith 모듈 (추정)
+│   │   │   ├── graph/                      # Modulith 모듈 (추정)
+│   │   │   ├── chunking/                   # Modulith 모듈 (추정)
+│   │   │   └── shared/
+│   │   └── resources/
+│   │       ├── application.yml
+│   │       └── db/migration/               # Flyway
+│   └── test/
+├── build.gradle.kts                        # 단일 빌드 파일
 ├── settings.gradle.kts
-├── gradle/libs.versions.toml
-├── knowledge-common/                   # 공통 모듈
-│   ├── src/main/java/io/synapse/knowledge/common/
-│   │   ├── markdown/                   # Markdown 파서 (CommonMark)
-│   │   ├── wikilink/                   # [[링크]] 파서
-│   │   ├── chunking/                   # 청킹 알고리즘
-│   │   ├── tenant/
-│   │   ├── outbox/
-│   │   └── observability/
-├── note-service/                       # 독립 Spring Boot 앱
-│   ├── src/main/java/io/synapse/knowledge/note/
-│   │   ├── NoteApplication.java
-│   │   ├── domain/
-│   │   │   ├── note/                   # Note Aggregate
-│   │   │   ├── version/                # NoteVersion
-│   │   │   ├── link/                   # NoteLink (위키링크)
-│   │   │   └── attachment/             # Attachment
-│   │   ├── application/
-│   │   ├── infrastructure/
-│   │   │   ├── persistence/            # JPA
-│   │   │   ├── elasticsearch/          # 검색 인덱서
-│   │   │   ├── s3/                     # 첨부파일 업로드
-│   │   │   └── outbox/
-│   │   └── interfaces/
-│   │       ├── rest/
-│   │       ├── grpc/                   # NoteService gRPC (Card svc가 호출)
-│   │       └── kafka/                  # (구독: user.deleted 등)
-│   └── src/main/resources/
-├── graph-service/                      # 독립 Spring Boot 앱
-│   ├── src/main/java/io/synapse/knowledge/graph/
-│   │   ├── GraphApplication.java
-│   │   ├── domain/
-│   │   ├── application/
-│   │   │   ├── pagerank/               # PageRank 알고리즘
-│   │   │   └── clustering/             # 커뮤니티 검출
-│   │   ├── infrastructure/
-│   │   └── interfaces/
-│   └── src/main/resources/
-└── chunking-worker/                    # 독립 Spring Boot 앱 (헤드리스)
-    ├── src/main/java/io/synapse/knowledge/chunking/
-    │   ├── ChunkingApplication.java
-    │   ├── application/
-    │   │   ├── chunker/                # 텍스트 분할 로직
-    │   │   └── orchestrator/           # AI svc 호출 흐름
-    │   ├── infrastructure/
-    │   │   ├── kafka/                  # note.created/updated 소비
-    │   │   ├── grpc/                   # learning-svc AI 호출
-    │   │   └── persistence/            # note_chunks 저장
-    │   └── interfaces/
-    │       └── kafka/                  # 컨슈머 진입점
-    └── src/main/resources/
+├── README.md
+└── SECRETS.md
 ```
 
-### 모듈 의존성
-
-```
-[note-service]      ─┐
-[graph-service]     ─┼→ [knowledge-common] ─→ [synapse-shared]
-[chunking-worker]   ─┘
-```
+⚠️ 현재 상태: 부트스트랩 초기 (10 commits). README는 "상세 내용은 곧 추가됩니다" — 모듈 구조는 platform-svc의 Spring Modulith 패턴을 따르는 것으로 추정.
 
 ---
 
-## 3. 도메인 모델 핵심
+## 3. Modulith 모듈별 책임 + 03-D Port/Adapter
 
-### 3.1 Note Aggregate
+### 3.1 `note` 모듈
 
-```
-Note (Aggregate Root)
-  ├─ NoteVersion (version histroy)
-  ├─ NoteLink (위키링크: source_note_id → target_note_title|id)
-  ├─ Tag (M:N)
-  └─ Attachment (S3 키 참조)
-```
+**도메인**: Note (Aggregate), NoteVersion, NoteLink (위키링크), NoteTag, Attachment
 
-**Aggregate Root**: `Note`
-
-비즈니스 규칙:
-- 노트 본문은 Markdown 텍스트로 저장
+**비즈니스 규칙**:
+- 본문은 Markdown 텍스트
 - 저장 시 위키링크 자동 파싱 → `note_links` 동기화
 - 변경 시 이전 버전을 `note_versions`에 보관
-- 노트 삭제는 **소프트 삭제** (`deleted_at` 설정) → 30일 후 하드 삭제
+- 삭제는 소프트 (`deleted_at`) → 30일 후 하드 삭제
 
-### 3.2 Graph 도메인 (CQRS Read-only)
+**Inbound**:
+- REST: `/api/v1/notes/**`, `/notes/{id}/attachments`, `/search/notes`
+- gRPC: `NoteService.GetForLearning` (learning-svc가 카드 생성 시 호출), `NoteService.UpdateChunks` (learning-svc AI가 임베딩 결과 콜백)
+- Module API: `NoteApi` (graph 모듈에서 호출)
+- Kafka Listener: `user.deleted`, `tenant.deleted`, `subscription.changed`
 
-Graph Service는 별도 Aggregate 보유하지 않음. Note Service의 데이터를 **Read Model**로 재구성:
-- 노드: notes 테이블 (제목, ID, 태그)
-- 엣지: note_links 테이블
-- 가중치: PageRank 결과 (별도 `note_pagerank` 테이블, 일 1회 배치 갱신)
-- 클러스터: `note_clusters` 테이블 (Louvain 알고리즘)
+**Outbound Port → Adapter** (03-D):
+| Port (도메인) | Adapter (인프라) | 호출 대상 |
+|---------------|-----------------|----------|
+| `ObjectStoragePort` | `S3AttachmentAdapter` | AWS S3 (Presigned URL) |
+| `SearchIndexPort` | `ElasticsearchIndexAdapter` | Elasticsearch (`notes` 인덱스, nori 분석기) |
+| `MarkdownParserPort` | `CommonMarkAdapter` | CommonMark 라이브러리 |
+| `WikiLinkParserPort` | `WikiLinkParserAdapter` | 자체 구현 (정규식 + 토큰화) |
+| `NoteEventPublisher` | `NoteEventKafkaAdapter` (Outbox) | Kafka |
 
-### 3.3 NoteChunk
+### 3.2 `graph` 모듈
 
+**도메인**: 별도 Aggregate 없음 (CQRS Read Model). note 모듈의 데이터를 재구성:
+- 노드: notes
+- 엣지: note_links
+- 가중치: `note_pagerank` (일 1회 배치)
+- 클러스터: `note_clusters` (Louvain 알고리즘, 주 1회)
+
+**Inbound**:
+- REST: `/api/v1/graph/notes/{id}/backlinks`, `/neighborhood`, `/pagerank/top`, `/clusters`
+- gRPC: `GraphService.GetBacklinksBatch`
+- Cron Job: PageRank (일 1회), Clustering (주 1회)
+
+**Outbound Port → Adapter**:
+| Port | Adapter | 호출 대상 |
+|------|---------|----------|
+| `NoteReadPort` | `NoteApiAdapter` (Modulith 모듈 간) | note 모듈 |
+| `GraphAnalyticsPort` | `JpaGraphAdapter` | PostgreSQL (note_links, note_pagerank) |
+| `BacklinkCachePort` | `RedisBacklinkAdapter` | Redis (10분 TTL) |
+
+### 3.3 `chunking` 모듈
+
+**도메인**: NoteChunk (note_id, chunk_index, content, token_count, embedding)
+
+**청킹 전략**: 500 토큰 단위 + 50 토큰 overlap (Phase 1)
+
+**Inbound**:
+- Kafka Listener: `note.created`, `note.updated`, `note.deleted` (note 모듈 발행)
+
+**처리 흐름**:
 ```
-NoteChunk
-  ├─ note_id (FK)
-  ├─ chunk_index
-  ├─ content (텍스트)
-  ├─ token_count
-  ├─ embedding (vector, pgvector)
-  └─ created_at
+1. 멱등성 체크 (processed_events)
+2. Note 본문 조회 (NoteApi via 모듈 간 호출)
+3. Markdown 파싱 + 청킹 (코드 블록/표 보존)
+4. 청크 텍스트 저장 (note_chunks, embedding=NULL)
+5. learning-svc AIService.Embed 호출 (gRPC, batch)
+6. 임베딩 결과를 note_chunks에 UPDATE
+7. processed_events 기록
 ```
 
-청킹 전략 (Phase 1): 500 토큰 단위 + 50 토큰 overlap.
+**Outbound Port → Adapter**:
+| Port | Adapter | 호출 대상 |
+|------|---------|----------|
+| `NoteReadPort` | `NoteApiAdapter` | note 모듈 |
+| `ChunkRepository` (도메인 Port) | `JpaChunkAdapter` | PostgreSQL/pgvector |
+| `AIEmbeddingPort` | `AIServiceGrpcAdapter` | **learning-svc gRPC** |
+| `ChunkingEventPublisher` | `ChunkingEventKafkaAdapter` | Kafka (`chunk.generated`) |
+
+### 3.4 `shared` 모듈
+
+공통 인프라:
+- TenantContext + Interceptor (RLS — Wiki 03.3)
+- Outbox 공통 (03-A.6)
+- CloudEvents 빌더/파서
+- OpenTelemetry 설정
+- Idempotency Helper
 
 ---
 
-## 4. 외부 인터페이스
+## 4. 외부 인터페이스 요약
 
-### 4.1 REST API (Gateway 경유)
+### 4.1 REST (Gateway 경유)
 
-| 경로 | 서비스 | 주요 동작 |
-|------|--------|----------|
-| `/api/v1/notes/**` | note-service | CRUD, 버전 조회, 검색, 위키링크 목록 |
-| `/api/v1/notes/{id}/attachments` | note-service | Presigned URL 발급 (직접 S3 업로드) |
-| `/api/v1/search/notes` | note-service | Elasticsearch 풀텍스트 검색 |
-| `/api/v1/graph/notes/{id}/backlinks` | graph-service | 백링크 목록 |
-| `/api/v1/graph/notes/{id}/neighborhood` | graph-service | 인접 그래프 데이터 |
-| `/api/v1/graph/pagerank/top` | graph-service | 중요 노트 Top N |
-| `/api/v1/graph/clusters` | graph-service | 클러스터 목록 |
+| 경로 | 모듈 | 비고 |
+|------|------|------|
+| `/api/v1/notes/**` | note | CRUD, 버전, 위키링크 목록 |
+| `/api/v1/notes/{id}/attachments` | note | Presigned URL 발급 |
+| `/api/v1/search/notes` | note | Elasticsearch 풀텍스트 |
+| `/api/v1/graph/notes/{id}/backlinks` | graph | 백링크 |
+| `/api/v1/graph/notes/{id}/neighborhood` | graph | 인접 그래프 |
+| `/api/v1/graph/pagerank/top` | graph | 중요 노트 Top N |
+| `/api/v1/graph/clusters` | graph | 클러스터 목록 |
 
-Wiki 04번 API 명세서 참조.
+상세는 Wiki 04 참조.
 
-### 4.2 gRPC API (내부 전용)
+### 4.2 gRPC (Internal)
 
 ```protobuf
-// synapse-shared/proto/synapse/internal/knowledge/v1/note_service.proto
 service NoteService {
-  // Card Service가 카드 생성 시 호출
-  rpc GetForLearning(GetForLearningRequest) returns (NoteForLearning);
-  
-  // AI Service가 청크 임베딩 결과 저장 시 호출
-  rpc UpdateChunks(UpdateChunksRequest) returns (UpdateChunksResponse);
+  rpc GetForLearning(GetForLearningRequest) returns (NoteForLearning);  // learning-svc 호출
+  rpc UpdateChunks(UpdateChunksRequest) returns (UpdateChunksResponse); // learning-svc AI 콜백
 }
 
-message NoteForLearning {
-  string note_id = 1;
-  string tenant_id = 2;
-  string title = 3;
-  string content_markdown = 4;
-  repeated string tags = 5;
-  repeated ChunkRef chunks = 6;
-}
-```
-
-```protobuf
-// graph_service.proto
 service GraphService {
   rpc GetBacklinksBatch(BacklinksBatchRequest) returns (BacklinksBatchResponse);
 }
@@ -179,114 +167,76 @@ service GraphService {
 
 ### 4.3 Kafka
 
-**Producer**:
-- `note.created` ← note-service
-- `note.updated` ← note-service
-- `note.deleted` ← note-service
-- `graph.notes.linked` ← note-service (위키링크 파싱 결과)
+**Producer** (Outbox):
+- `note.created`, `note.updated`, `note.deleted` (note 모듈)
+- `graph.notes.linked` (note 모듈 — 위키링크 파싱 결과)
+- `chunk.generated` (chunking 모듈)
 
 **Consumer**:
-- `user.deleted` → note-service (해당 사용자 노트 일괄 삭제)
-- `tenant.deleted` → note-service (테넌트 노트 전체 삭제)
-- `subscription.changed` → note-service (Feature Flag: 노트 최대 개수 제한)
-- `note.created` / `note.updated` → chunking-worker (청킹 처리)
-- `note.deleted` → chunking-worker (청크 + 임베딩 삭제)
-
-상세 페이로드는 Wiki 03.4 + 03-C 참조.
+- `note.*` → chunking 모듈 (내부 모듈이지만 Kafka 경유로 디커플링)
+- `user.deleted`, `tenant.deleted`, `subscription.changed` → note 모듈
 
 ---
 
 ## 5. 데이터 저장소
 
-### 5.1 PostgreSQL (`knowledge` 스키마)
+### 5.1 PostgreSQL + pgvector
 
-| 테이블 | 용도 | 비고 |
+| 테이블 | 모듈 | 비고 |
 |--------|------|------|
-| `notes` | 노트 본문 (Markdown) | RLS 적용 |
-| `note_versions` | 버전 이력 | 최근 50개만 유지 |
-| `note_links` | 위키링크 (source → target) | 검색용 INDEX |
-| `note_tags` | 태그 매핑 | M:N |
-| `note_chunks` | 청크 + pgvector 임베딩 | HNSW INDEX |
-| `note_attachments` | S3 키 + 메타데이터 | 본체는 S3 |
-| `note_pagerank` | PageRank 점수 캐시 | 일 1회 갱신 |
-| `note_clusters` | 클러스터 결과 | 주 1회 갱신 |
-| `outbox_event` | Outbox 패턴 | 03-A.6 참조 |
-| `processed_events` | 멱등성 | 03-A.5.3 참조 |
+| `notes` | note | RLS, soft delete |
+| `note_versions` | note | 최근 50개 유지 |
+| `note_links` | note | INDEX(source_note_id), INDEX(target_note_id) |
+| `note_tags` | note | M:N |
+| `note_attachments` | note | S3 키 참조 |
+| `note_chunks` | chunking | `embedding vector(N)`, HNSW INDEX |
+| `note_pagerank` | graph | 일 1회 갱신 |
+| `note_clusters` | graph | 주 1회 갱신 |
+| `outbox_event` | 모든 모듈 | 03-A.6 |
+| `processed_events` | 모든 모듈 | 멱등성 |
 
-### 5.2 pgvector 인덱스 설정
+### 5.2 pgvector 인덱스 (HNSW)
 
 ```sql
-CREATE INDEX idx_note_chunks_embedding 
-  ON note_chunks 
+CREATE INDEX idx_note_chunks_embedding
+  ON note_chunks
   USING hnsw (embedding vector_cosine_ops)
   WITH (m = 16, ef_construction = 64);
 ```
 
-검색 쿼리:
-```sql
-SELECT note_id, chunk_index, content,
-       1 - (embedding <=> :query_vector) AS similarity
-FROM note_chunks
-WHERE tenant_id = :tenant_id
-ORDER BY embedding <=> :query_vector
-LIMIT 20;
-```
+### 5.3 Elasticsearch (8.x + nori)
 
-### 5.3 Elasticsearch
-
-인덱스: `notes-{tenant_id}` 또는 `notes` (전체) + tenant_id 필터.
-
-매핑 (한국어 nori 분석기):
-```json
-{
-  "mappings": {
-    "properties": {
-      "tenant_id": { "type": "keyword" },
-      "user_id": { "type": "keyword" },
-      "title": { "type": "text", "analyzer": "nori" },
-      "content": { "type": "text", "analyzer": "nori" },
-      "tags": { "type": "keyword" },
-      "created_at": { "type": "date" },
-      "updated_at": { "type": "date" }
-    }
-  }
-}
-```
-
-Kafka `note.created/updated/deleted` 컨슈머가 ES 동기화 담당 (note-service 내부 indexer 모듈).
+- 인덱스: `notes` (테넌트 필터)
+- 필드: `tenant_id`(keyword), `title`(nori), `content`(nori), `tags`(keyword)
+- 동기화: note 모듈의 Kafka `note.*` Listener가 indexer에 라우팅
 
 ### 5.4 Redis
 
-| 키 패턴 | 용도 | TTL |
+| 키 패턴 | 모듈 | TTL |
 |---------|------|-----|
-| `note:hot:{noteId}` | 자주 조회되는 노트 캐시 | 5m |
-| `graph:backlinks:{noteId}` | 백링크 결과 캐시 | 10m |
-| `graph:neighborhood:{noteId}` | 그래프 시각화 데이터 | 5m |
+| `note:hot:{noteId}` | note | 5m |
+| `graph:backlinks:{noteId}` | graph | 10m |
+| `graph:neighborhood:{noteId}` | graph | 5m |
 
 ### 5.5 S3
 
 - 버킷: `synapse-attachments-{env}`
-- 키 패턴: `{tenant_id}/{note_id}/{attachment_id}/{filename}`
-- 업로드: Pre-signed PUT URL 발급 (서버 경유 안 함)
-- 다운로드: Pre-signed GET URL (TTL 1시간)
+- 키: `{tenant_id}/{note_id}/{attachment_id}/{filename}`
+- 업로드: Presigned PUT URL (서버 미경유)
+- 다운로드: Presigned GET URL (TTL 1h)
 
 ---
 
 ## 6. 외부 의존성
 
-### 6.1 다른 svc 호출 (gRPC)
+이 레포는 **외부 SaaS API를 직접 호출하지 않음**. AI 임베딩은 learning-svc 경유.
 
-| Caller | Callee | 용도 |
-|--------|--------|------|
-| `note-service` | `platform/AuthService.Introspect` | JWT 검증 (이미 Gateway에서 처리되나 추가 방어) |
-| `chunking-worker` | `learning/AIService.Embed` | 청크 → 임베딩 벡터 |
-| `note-service` | `learning/AIService.Embed` (쿼리 시) | 검색 쿼리 임베딩 |
-
-### 6.2 외부 API
-
-이 레포는 직접 외부 API를 호출하지 않음 (Wiki 03번에 따라 AI 호출은 learning-svc 경유).
-
-S3는 AWS SDK 사용 (IRSA로 IAM 인증).
+| 호출 대상 | 방식 | 위치 |
+|----------|------|------|
+| learning-svc `AIService.Embed` | gRPC | chunking 모듈의 `AIServiceGrpcAdapter` |
+| platform-svc `AuthService.Introspect` | gRPC | shared 모듈 (모든 REST에서 사용) |
+| S3 | AWS SDK | note 모듈의 `S3AttachmentAdapter` |
+| Elasticsearch | Java REST Client | note 모듈의 `ElasticsearchIndexAdapter` |
 
 ---
 
@@ -295,183 +245,123 @@ S3는 AWS SDK 사용 (IRSA로 IAM 인증).
 ### 7.1 빌드
 
 ```bash
-./gradlew clean build                    # 전체 모듈
-./gradlew :note-service:bootJar          # 단일 서비스
-./gradlew :chunking-worker:bootJar
+./gradlew build
+./gradlew test
+./gradlew test --tests "*ModuleStructureTest"
 ```
 
-### 7.2 Docker 이미지
+### 7.2 Docker
 
-각 서비스별 별도 이미지:
-- `ghcr.io/team-project-final/note-service:{version}`
-- `ghcr.io/team-project-final/graph-service:{version}`
-- `ghcr.io/team-project-final/chunking-worker:{version}`
+단일 이미지: `ghcr.io/team-project-final/synapse-knowledge-svc:{version}`
 
-### 7.3 K8s 배포 특성
+### 7.3 K8s
 
-| 서비스 | 인입 | 특이사항 |
-|--------|------|---------|
-| note-service | Gateway + gRPC | 일반 Deployment |
-| graph-service | Gateway + gRPC | Read 위주, 캐시 적극 활용 |
-| chunking-worker | Kafka only (헤드리스) | HTTP 노출 없음, K8s Service 미생성 |
-
-### 7.4 Cron Job (Graph Service)
-
-```yaml
-apiVersion: batch/v1
-kind: CronJob
-metadata:
-  name: pagerank-batch
-spec:
-  schedule: "0 3 * * *"                  # 매일 새벽 3시
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          containers:
-            - name: pagerank
-              image: ghcr.io/team-project-final/graph-service:{version}
-              command: ["java", "-jar", "/app.jar", "--job=pagerank"]
-```
+- 단일 Deployment
+- HPA: CPU + Kafka consumer lag (chunking 모듈) 기반
 
 ---
 
-## 8. 청킹 워커 상세 (chunking-worker)
+## 8. 관측성
 
-### 8.1 처리 흐름
+### 8.1 메트릭
 
-```
-[Kafka] note.created
-   ↓
-[chunking-worker]
-1. 멱등성 체크 (processed_events)
-2. Note 본문 조회 (PostgreSQL)
-3. Markdown 파싱 + 코드 블록/표 보존 청킹
-4. 청크 텍스트 저장 (note_chunks, embedding은 NULL)
-5. learning-svc/AIService.Embed gRPC 호출 (batch)
-6. 임베딩 결과를 note_chunks에 UPDATE
-7. processed_events 기록
-```
-
-### 8.2 실패 시나리오
-
-| 실패 | 처리 |
-|------|------|
-| AI Service 일시 장애 | Resilience4j Retry (3회) → 실패 시 DLQ |
-| 텍스트가 너무 큼 (>50K 토큰) | 청킹 자체는 성공, 임베딩만 보류 (별도 큐) |
-| pgvector INSERT 실패 | Transactional 전체 롤백, Kafka offset 미커밋 → 재처리 |
-
-### 8.3 처리량 목표
-
-- 노트 작성 → 청크 임베딩 완료까지 p95 < 10s
-- 동시 처리량: 100 노트/초 (concurrency 3, 인스턴스 5)
-
----
-
-## 9. 관측성
-
-### 9.1 메트릭
-
-| 메트릭 | 서비스 | 라벨 |
-|--------|--------|------|
+| 메트릭 | 모듈 | 라벨 |
+|--------|------|------|
 | `note_operations_total` | note | `operation`, `tenant` |
-| `note_search_duration_seconds` | note | `searchType` (text/semantic/hybrid) |
-| `graph_pagerank_duration_seconds` | graph | - |
+| `note_search_duration_seconds` | note | `searchType` |
 | `chunking_processed_total` | chunking | `result` |
 | `chunking_duration_seconds` | chunking | - |
+| `graph_pagerank_duration_seconds` | graph | - |
 | `elasticsearch_sync_lag_seconds` | note | - |
 
-### 9.2 로그 컨텍스트
+### 8.2 알람
 
-표준 필드 + 도메인 필드:
-```json
-{ "noteId":"...", "wordCount":1234, "chunkCount":12 }
-```
-
-### 9.3 알람
-
-- ES 인덱스 동기화 lag > 60s → 알람
-- 청킹 워커 Kafka lag > 1000 → 알람
-- PageRank 배치 실패 → 알람
+- ES 인덱스 lag > 60s
+- chunking Kafka lag > 1000
+- PageRank 배치 실패
 
 ---
 
-## 10. 보안
+## 9. 보안
 
 | 항목 | 구현 |
 |------|------|
-| 노트 접근 제어 | RLS: `user_id = current_user_id() AND tenant_id = current_tenant_id()` |
-| 첨부파일 접근 | S3 Presigned URL (TTL 1h) + 서버 측 권한 재확인 |
-| Markdown XSS | 클라이언트 렌더링이지만 서버에서도 위험 태그 sanitize |
-| 위키링크 권한 | 다른 사용자 노트로의 링크는 표시만, 클릭 시 권한 검증 |
-| 청크 본문 노출 | RLS 적용, AI Service도 Tenant Context로 격리 |
+| 노트 접근 | RLS: `tenant_id` + `user_id` |
+| 첨부파일 | S3 Presigned URL + 서버 권한 재확인 |
+| 위키링크 권한 | 표시는 자유, 클릭 시 권한 검증 |
+| Markdown XSS | 서버 sanitize (위험 태그 제거) |
+| AI 호출 시 컨텍스트 격리 | TenantContext propagation을 gRPC metadata로 전파 |
 
 ---
 
-## 11. 로컬 개발
+## 10. 로컬 개발
 
-### 11.1 의존 인프라
+### 10.1 인프라
 
 ```bash
 docker compose -f docker-compose.dev.yml up -d \
   postgres-pgvector elasticsearch redis kafka schema-registry minio
 ```
 
-- pgvector: `pgvector/pgvector:pg16`
-- Elasticsearch: `8.x` + nori 플러그인
-- minio: S3 호환 로컬
+- `pgvector/pgvector:pg16`
+- Elasticsearch 8.x + nori
+- MinIO (S3 호환)
 
-### 11.2 초기 설정
+### 10.2 초기화
 
 ```bash
-# Flyway 마이그레이션
-./gradlew :note-service:flywayMigrate
-
-# Elasticsearch 인덱스 생성 (init script)
+./gradlew flywayMigrate
 ./scripts/init-elasticsearch.sh
-
-# MinIO 버킷 생성
 mc mb minio/synapse-attachments-dev
 ```
 
-### 11.3 실행
+### 10.3 실행
 
 ```bash
-./gradlew :note-service:bootRun --args='--spring.profiles.active=dev'
-./gradlew :graph-service:bootRun --args='--spring.profiles.active=dev'
-./gradlew :chunking-worker:bootRun --args='--spring.profiles.active=dev'
-```
-
-### 11.4 샘플 데이터
-
-```bash
-# synapse-data-mocking 레포의 스크립트 사용
-git clone https://github.com/team-project-final/synapse-data-mocking
-cd synapse-data-mocking && npm run seed:knowledge
+./gradlew bootRun --args='--spring.profiles.active=local'
 ```
 
 ---
 
-## 12. 트러블슈팅
+## 11. 트러블슈팅
 
 | 증상 | 원인 | 해결 |
 |------|------|------|
-| pgvector 쿼리 느림 | HNSW 인덱스 누락 또는 파라미터 부적절 | `EXPLAIN ANALYZE`로 확인, `ef_search` 조정 |
-| ES 검색 결과 누락 | 인덱싱 lag | Kafka 컨슈머 lag 확인, 강제 reindex |
-| 청크가 너무 많아짐 | 노트 크기 큼 + overlap 큼 | 청크 크기/overlap 정책 재검토 |
-| 위키링크 깨짐 | 노트 이름 변경 시 처리 안 됨 | `note.updated` 이벤트에서 backlink 갱신 트리거 |
-| PageRank 결과 이상 | 노트 그래프가 너무 sparse | 최소 임계치(예: 노드 10개 이상) 적용 |
+| pgvector 쿼리 느림 | HNSW 인덱스 누락 또는 `ef_search` 낮음 | `SET hnsw.ef_search = 100` |
+| ES 검색 결과 누락 | 인덱싱 lag | Consumer lag 확인, 강제 reindex |
+| 위키링크 깨짐 (노트 이름 변경 시) | `note.updated` 처리 누락 | backlink 갱신 트리거 확인 |
+| 청크 너무 많음 | 노트 큼 + overlap 큼 | 청크 크기 정책 재검토 |
+| PageRank 이상값 | 그래프가 너무 sparse | 최소 임계치(노드 10+) 적용 |
 
 ---
 
-## 13. 참고 문서
+## 12. 안티패턴 (03-D)
 
-- **Wiki 03_프로젝트_아키텍처_정의서** (Note/Graph/AI 서비스)
-- **Wiki 02_ERD_문서** — 테이블 상세
-- **Wiki 04_API_명세서**
-- **03-A_통신_운영_상세서** — gRPC/Outbox/멱등성
-- **03-B_내부외부_경계_보안_명세** — RLS, mTLS
-- **03-C_이벤트_스키마_진화_가이드** — note.* 이벤트 스키마
-- [pgvector](https://github.com/pgvector/pgvector)
+- ❌ Controller가 Elasticsearch RestClient 직접 호출 — `SearchIndexPort` 경유
+- ❌ chunking 모듈이 learning-svc gRPC stub 직접 import — `AIEmbeddingPort` 경유
+- ❌ graph 모듈이 `note.internal.NoteRepository` 직접 import — `NoteApi` (모듈 API) 사용
+- ❌ S3 키를 도메인 Aggregate에 노출 — Attachment VO 안에 캡슐화
+- ❌ pgvector 쿼리를 도메인 서비스에서 직접 작성 — Repository로 추출
+
+---
+
+## 13. 현재 상태
+
+- 부트스트랩 초기 단계 (10 commits)
+- README 상세 내용 추가 예정
+- 본 ARCHITECTURE는 platform-svc의 패턴 기반 추정 포함
+
+---
+
+## 14. 참고
+
+- **Wiki 03** (Note/Graph/AI 서비스)
+- **Wiki 02** — 테이블 ERD
+- **Wiki 04** — REST API
+- **03-A** — gRPC, Outbox, 멱등성
+- **03-B** — RLS, mTLS
+- **03-C** — note.* 이벤트 스키마
+- **03-D** — Port/Adapter 표준
+- [pgvector HNSW](https://github.com/pgvector/pgvector)
 - [Elasticsearch nori](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-nori.html)
 - [CommonMark Spec](https://commonmark.org/)

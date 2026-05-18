@@ -1,289 +1,338 @@
 # synapse-frontend — ARCHITECTURE
 
-> **Synapse Wiki**: [03_프로젝트_아키텍처_정의서](https://github.com/team-project-final/documents/wiki/03_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98_%EC%A0%95%EC%9D%98%EC%84%9C) 기준선
-> **Version**: v1.0 | **Updated**: 2026-05-18
+> **Wiki 03번** 기준선 + **03-D 어댑터 표준** 적용
+> **Version**: v2.0 | **Updated**: 2026-05-18
+> 본 문서는 레포의 실제 코드 구조(README + service-boundary 모델)를 기반으로 작성됨
 
 ---
 
 ## 1. 책임 범위
 
-Synapse 플랫폼의 **유일한 클라이언트 애플리케이션**. Web / iOS / Android 3개 플랫폼을 단일 Flutter 코드베이스로 지원.
+Synapse 플랫폼의 **유일한 클라이언트 애플리케이션**. Flutter 단일 코드베이스로 Web / iOS / Android 3개 플랫폼 지원.
 
-| 항목 | 내용 |
-|------|------|
-| 플랫폼 | Flutter Web (CanvasKit) / iOS / Android |
-| 배포 | Web → Cloudflare Pages, iOS → App Store, Android → Google Play |
-| 주요 화면 | 로그인/회원가입, 노트 편집, 카드 학습, 그래프 시각화, 커뮤니티, 설정 |
-| 호출 대상 | Spring Cloud Gateway 1곳 (직접 호출 서비스 없음) |
-| 인증 | JWT (Access 15min) + Refresh httpOnly Cookie |
+- 호출 대상: API Gateway 1곳 (백엔드 svc 직접 호출 없음)
+- 인증: JWT (Access) + Refresh
+- 환경 분리: `APP_ENV=dev|staging|prod` Dart define
 
 ---
 
-## 2. 레포 구조
+## 2. 레포 구조 (실제)
 
 ```
 synapse-frontend/
+├── docs/                                   # 아키텍처 / 가이드 문서
 ├── lib/
-│   ├── main.dart                      # 앱 진입점
-│   ├── app/                           # 앱 전역 (라우터, 테마, 로컬라이제이션)
-│   │   ├── router.dart                # GoRouter 설정
-│   │   ├── theme/
-│   │   └── localization/
-│   ├── core/                          # 공통 기능
-│   │   ├── network/                   # Dio 클라이언트, 인터셉터
-│   │   ├── storage/                   # Hive, SecureStorage
-│   │   ├── auth/                      # 토큰 관리
-│   │   ├── error/                     # 공통 에러 처리
-│   │   ├── observability/             # 로그, Sentry
-│   │   └── widgets/                   # 공통 위젯 (Button, Dialog, ...)
-│   └── features/                      # 기능별 모듈 (Vertical Slice)
-│       ├── auth/
-│       │   ├── data/                  # repository, datasource, DTO
-│       │   ├── domain/                # entity, usecase
-│       │   └── presentation/          # screen, widget, controller (Riverpod)
-│       ├── note/
-│       ├── card/
-│       ├── graph/
-│       ├── community/
-│       ├── gamification/
-│       └── notification/
-├── assets/
-├── test/
-├── integration_test/
-├── web/                                # Web 빌드 진입점
-├── ios/
+│   ├── main.dart
+│   ├── app.dart
+│   ├── core/
+│   │   ├── constants/                      # AppRoutes 등 공통 상수
+│   │   ├── network/                        # Dio 클라이언트, 환경 선택
+│   │   ├── router/                         # GoRouter 라우트 테이블
+│   │   ├── services/                       # ServiceBoundary 레지스트리
+│   │   └── theme/                          # 디자인 토큰, ThemeData
+│   ├── services/                           # ★ 서비스 경계별 디렉토리
+│   │   ├── platform/                       # → synapse-platform-svc
+│   │   │   ├── auth/
+│   │   │   ├── billing/
+│   │   │   ├── notifications/
+│   │   │   ├── settings/
+│   │   │   └── admin/
+│   │   ├── engagement/                     # → synapse-engagement-svc
+│   │   │   ├── community/
+│   │   │   └── gamification/
+│   │   ├── knowledge/                      # → synapse-knowledge-svc
+│   │   │   ├── notes/
+│   │   │   ├── graph/
+│   │   │   └── search/
+│   │   └── learning/                       # → synapse-learning-svc
+│   │       ├── cards/
+│   │       ├── srs/
+│   │       └── ai/
+│   └── shared/                             # 여러 boundary 공통
+│       ├── features/                       # dashboard 등 cross-service
+│       └── widgets/                        # 재사용 위젯
 ├── android/
+├── ios/
+├── web/
+├── test/
 ├── pubspec.yaml
-└── analysis_options.yaml
+├── analysis_options.yaml
+├── README.md
+└── SECRETS.md
 ```
 
-### 아키텍처 패턴
-
-**Feature-based + Clean Architecture (Lite)**
+### 2.1 각 feature의 내부 구조 (Clean Architecture Lite)
 
 ```
-presentation (UI + Riverpod Controller)
-     ↓ 호출
-   domain (UseCase, Entity)
-     ↓ 호출
-    data (Repository, DataSource, DTO)
-     ↓
-  core/network → Gateway
+services/<boundary>/<feature>/
+├── data/                                   # Repository 구현, DataSource, DTO
+│   ├── datasources/
+│   ├── models/                             # DTO (Dio 응답 매핑)
+│   └── repositories/                       # Repository 인터페이스 구현
+├── domain/                                 # Entity, UseCase, Repository 인터페이스(Port)
+│   ├── entities/
+│   ├── repositories/                       # ★ Port (abstract class)
+│   └── usecases/
+├── presentation/
+│   └── screens/                            # UI Widget
+└── providers/                              # Riverpod 3 manual providers
 ```
+
+### 2.2 핵심 패턴 매핑 (03-D Repository = Port)
+
+| 03-D 개념 | Flutter 구현 |
+|----------|------------|
+| **Outbound Port** | `domain/repositories/XxxRepository` (abstract class) |
+| **Adapter** | `data/repositories/XxxRepositoryImpl` |
+| **DTO** | `data/models/XxxDto` |
+| **Mapper** | DTO → Entity 변환 (boundary methods 또는 별도 mapper) |
+| **UseCase** | `domain/usecases/XxxUseCase` — Repository에만 의존 |
+| **DI** | Riverpod manual `Provider` |
+| **Inbound Adapter** | `presentation/screens` (UI) — controller가 UseCase 호출 |
 
 ---
 
-## 3. 핵심 의존성
+## 3. 기술 스택 (실제)
 
-| 카테고리 | 라이브러리 | 용도 |
-|----------|-----------|------|
-| 라우팅 | `go_router` ^14.x | 선언적 라우팅, Deep Link |
-| 상태관리 | `flutter_riverpod` ^3.x | Provider 기반 상태 + DI |
-| 코드 생성 | `riverpod_generator`, `freezed`, `json_serializable` | 보일러플레이트 제거 |
-| HTTP | `dio` ^5.x | 인터셉터, 재시도 |
-| WebSocket | `web_socket_channel` | 실시간 알림/그래프 |
-| 로컬 저장 | `hive` + `flutter_secure_storage` | 노트 캐시 / 토큰 |
-| 마크다운 | `flutter_markdown`, `markdown` | 노트 렌더링 |
-| 그래프 시각화 | `graphview` 또는 직접 구현 (Web: D3.js bridge) | 노트 그래프 |
-| 차트 | `fl_chart` | 학습 통계 |
-| 모니터링 | `sentry_flutter` | 에러 추적 |
-| OAuth | `flutter_appauth`, `sign_in_with_apple`, `google_sign_in` | 외부 IdP |
+| 영역 | 선택 |
+|------|------|
+| Framework | Flutter 3.x |
+| Language | Dart `>=3.11.0 <4.0.0` |
+| 상태관리 | **Riverpod 3 manual providers** (codegen 사용 안 함) |
+| 라우팅 | GoRouter |
+| HTTP | Dio |
+| 로컬 저장 | Hive Flutter |
+| 폰트 | google_fonts |
+| 테스트 | flutter_test, integration_test, mockito |
+| 린팅 | flutter_lints + `analysis_options.yaml` |
+
+⚠️ **codegen 미사용**이므로 `riverpod_generator`, `freezed`, `json_serializable`은 도입하지 않음. 모든 Provider는 손으로 `Provider(...)` / `NotifierProvider(...)` 직접 작성.
 
 ---
 
 ## 4. 외부 인터페이스
 
-### 4.1 Gateway REST API 호출
+### 4.1 Gateway 호출 (유일한 외부 인터페이스)
 
-`core/network/api_client.dart`에서 Dio 인스턴스 단일화:
+| 환경 | Base URL |
+|------|---------|
+| `dev` | `http://localhost:8080` |
+| `staging` | `https://api-staging.synapse.app` |
+| `prod` | `https://api.synapse.app` |
 
 ```dart
+// core/network/api_client.dart 패턴
 final apiClient = Dio(BaseOptions(
-  baseUrl: const String.fromEnvironment('API_BASE_URL'),
+  baseUrl: _resolveBaseUrl(),                // APP_ENV로 결정
   connectTimeout: const Duration(seconds: 10),
   receiveTimeout: const Duration(seconds: 30),
 ));
 
 apiClient.interceptors.addAll([
-  AuthInterceptor(),                      // JWT 자동 첨부 + Refresh 처리
-  TraceIdInterceptor(),                   // traceparent 헤더 주입
-  ErrorInterceptor(),                     // RFC 7807 → Exception 변환
+  AuthInterceptor(),       // JWT 자동 첨부 + 401 시 refresh
+  TraceIdInterceptor(),    // W3C traceparent 주입
+  ErrorInterceptor(),      // RFC 7807 → AppException 변환
   LoggingInterceptor(),
 ]);
 ```
 
-### 4.2 WebSocket
+### 4.2 인증 흐름
 
-- `/ws/notifications` → 인앱 알림 푸시
-- `/ws/graph` → 그래프 협업 (Phase 2)
+- 로그인 → `accessToken` (응답) + `refreshToken` (httpOnly Cookie — Web) / `flutter_secure_storage` (Mobile)
+- 모든 요청에 `Authorization: Bearer {accessToken}` 헤더
+- 401 응답 시 `AuthInterceptor`가 자동으로 `POST /api/v1/auth/refresh` 호출 후 재시도
+- Web에서 `withCredentials: true` 설정 필수
 
-연결 관리: 재연결, 백오프, traceparent 헤더 포함.
+### 4.3 WebSocket (Phase 2)
 
-### 4.3 인증 흐름
-
-```
-1. 로그인 (이메일/OAuth)
-   POST /api/v1/auth/login → accessToken (응답) + refreshToken (httpOnly Cookie)
-2. 이후 모든 요청: Authorization: Bearer {accessToken}
-3. 401 응답 시:
-   - AuthInterceptor가 자동으로 POST /api/v1/auth/refresh 호출
-   - Refresh Token Cookie는 브라우저/WebView가 자동 첨부
-   - 새 accessToken 받아서 원 요청 재시도
-4. Refresh 실패 → 로그인 화면으로 강제 이동
-```
-
-⚠️ **Flutter Web에서 httpOnly Cookie 사용**: CORS + SameSite + Credentials 설정 필수. `dio.options.extra['withCredentials'] = true`.
+- `/ws/notifications` — 인앱 실시간 알림
+- 토큰은 query parameter 또는 첫 메시지로 전달
 
 ---
 
-## 5. 상태관리 패턴 (Riverpod 3.x)
+## 5. 03-D Port/Adapter 적용 예시
 
-### 5.1 Provider 분류
-
-| Provider | 용도 |
-|----------|------|
-| `Provider` | 불변 의존성 (Dio, Repository 등) |
-| `NotifierProvider` | 변경 가능한 상태 (화면 상태) |
-| `AsyncNotifierProvider` | 비동기 상태 (API 호출) |
-| `StreamProvider` | WebSocket 등 스트림 |
-| `FutureProvider` | 일회성 비동기 (Splash) |
-
-### 5.2 코드 생성 표준
+### 5.1 Notes feature
 
 ```dart
-// note_list_controller.dart
-@riverpod
-class NoteListController extends _$NoteListController {
-  @override
-  Future<List<NoteSummary>> build() async {
-    final repo = ref.read(noteRepositoryProvider);
-    return repo.getRecent();
-  }
-  
-  Future<void> createNote(String title) async {
-    final repo = ref.read(noteRepositoryProvider);
-    final created = await repo.create(title);
-    state = AsyncData([created, ...state.value ?? []]);
-  }
+// services/knowledge/notes/domain/repositories/note_repository.dart
+abstract class NoteRepository {
+  Future<List<NoteSummary>> getRecent({int limit = 20});
+  Future<Note> getById(NoteId id);
+  Future<Note> create({required String title, String? content});
+  Future<void> update(NoteId id, NoteUpdateInput input);
+  Future<void> delete(NoteId id);
 }
+
+// services/knowledge/notes/data/repositories/note_repository_impl.dart
+class NoteRepositoryImpl implements NoteRepository {
+  NoteRepositoryImpl(this._apiClient, this._mapper);
+  
+  final ApiClient _apiClient;
+  final NoteMapper _mapper;
+  
+  @override
+  Future<List<NoteSummary>> getRecent({int limit = 20}) async {
+    try {
+      final response = await _apiClient.get(
+        '/api/v1/notes',
+        queryParameters: {'limit': limit},
+      );
+      return (response.data['data'] as List)
+          .map((json) => _mapper.toSummary(json as Map<String, dynamic>))
+          .toList(growable: false);
+    } on DioException catch (e) {
+      throw NoteRepositoryException.fromDio(e);
+    }
+  }
+  // ...
+}
+
+// services/knowledge/notes/data/models/note_dto.dart
+class NoteDto {
+  // JSON 직접 매핑 (codegen 사용 안 함)
+  NoteDto.fromJson(Map<String, dynamic> json)
+      : id = json['id'] as String,
+        title = json['title'] as String,
+        // ...
+}
+
+// services/knowledge/notes/providers/note_providers.dart
+final noteApiClientProvider = Provider<ApiClient>((ref) =>
+    ref.watch(coreApiClientProvider));
+
+final noteMapperProvider = Provider<NoteMapper>((ref) => NoteMapper());
+
+final noteRepositoryProvider = Provider<NoteRepository>((ref) =>
+    NoteRepositoryImpl(
+      ref.watch(noteApiClientProvider),
+      ref.watch(noteMapperProvider),
+    ));
+
+final recentNotesProvider = FutureProvider<List<NoteSummary>>((ref) async {
+  final repo = ref.watch(noteRepositoryProvider);
+  return repo.getRecent();
+});
 ```
 
-빌드 시 `dart run build_runner build`로 `.g.dart` 생성.
+### 5.2 5개 boundary × 주요 Repository 매핑
+
+| Boundary | feature | Repository |
+|----------|---------|-----------|
+| platform | auth | `AuthRepository`, `OAuthRepository`, `MfaRepository` |
+| platform | billing | `BillingRepository`, `SubscriptionRepository` |
+| platform | notifications | `NotificationRepository` (REST) + WebSocket Adapter |
+| platform | settings | `UserSettingsRepository` |
+| platform | admin | `AuditRepository` (관리자 전용 화면) |
+| engagement | community | `StudyGroupRepository`, `ShareRepository`, `ReportRepository` |
+| engagement | gamification | `XpRepository`, `BadgeRepository`, `LeaderboardRepository`, `StreakRepository` |
+| knowledge | notes | `NoteRepository`, `AttachmentRepository` |
+| knowledge | graph | `GraphRepository` (백링크/이웃/PageRank) |
+| knowledge | search | `SearchRepository` (text + semantic) |
+| learning | cards | `CardRepository`, `DeckRepository` |
+| learning | srs | `ReviewRepository`, `SessionRepository` |
+| learning | ai | `AiCardGenerationRepository` (SSE), `AiQaRepository` (SSE) |
 
 ---
 
-## 6. 로컬 저장소 전략
+## 6. 라우팅 + 인증 가드
+
+```dart
+// core/router/app_router.dart 패턴
+final appRouterProvider = Provider<GoRouter>((ref) {
+  final authState = ref.watch(authStateProvider);
+  
+  return GoRouter(
+    initialLocation: AppRoutes.home,
+    redirect: (context, state) {
+      final isLoggedIn = authState.value?.isAuthenticated ?? false;
+      final isAuthRoute = state.matchedLocation.startsWith('/auth');
+      
+      if (!isLoggedIn && !isAuthRoute) return AppRoutes.login;
+      if (isLoggedIn && isAuthRoute) return AppRoutes.home;
+      return null;
+    },
+    routes: [
+      // platform
+      GoRoute(path: '/auth/login', ...),
+      // knowledge
+      GoRoute(path: '/notes', ...),
+      GoRoute(path: '/notes/:id', ...),
+      // learning
+      GoRoute(path: '/cards', ...),
+      // engagement
+      GoRoute(path: '/community', ...),
+      // shared
+      GoRoute(path: '/', ...),                  // dashboard
+    ],
+  );
+});
+```
+
+---
+
+## 7. 로컬 저장 전략
 
 | 데이터 | 저장소 | 이유 |
 |--------|--------|------|
-| Access Token (메모리) | Riverpod state | 페이지 새로고침 시 Refresh로 재발급 |
-| Refresh Token | httpOnly Cookie (Web) / SecureStorage (Mobile) | XSS 방지 |
+| Access Token | Riverpod state (메모리) | 새로고침 시 Refresh로 재발급 |
+| Refresh Token (Web) | httpOnly Cookie | XSS 방지 |
+| Refresh Token (Mobile) | `flutter_secure_storage` (Keychain/Keystore) | XSS 방지 |
 | 노트 초안 (오프라인) | Hive | 동기화 전 임시 저장 |
-| 최근 본 노트 캐시 | Hive (LRU 100개) | 빠른 로드 |
-| 학습 통계 캐시 | Hive (TTL 5분) | API 호출 최소화 |
-| 사용자 설정 | SharedPreferences | 가벼운 키-값 |
-
----
-
-## 7. 라우팅 (GoRouter)
-
-```dart
-final router = GoRouter(
-  initialLocation: '/',
-  redirect: authGuard,                    // 비인증 사용자는 /login으로
-  routes: [
-    GoRoute(path: '/login', builder: ...),
-    GoRoute(path: '/signup', builder: ...),
-    ShellRoute(                            // 인증 후 진입하는 셸
-      builder: (ctx, state, child) => MainShell(child: child),
-      routes: [
-        GoRoute(path: '/notes', ...),
-        GoRoute(path: '/notes/:id', ...),
-        GoRoute(path: '/cards', ...),
-        GoRoute(path: '/graph', ...),
-        GoRoute(path: '/community', ...),
-        GoRoute(path: '/settings', ...),
-      ],
-    ),
-  ],
-  errorBuilder: (ctx, state) => NotFoundScreen(),
-);
-```
-
-Deep Link: `synapse://notes/{id}` (모바일) / `https://synapse.app/notes/{id}` (Web).
+| 최근 노트 캐시 | Hive (LRU) | 빠른 로드 |
+| 사용자 설정 | Hive 또는 SharedPreferences | 경량 키-값 |
 
 ---
 
 ## 8. 빌드 / 배포
 
-### 8.1 환경 분리
+### 8.1 개발 실행
 
 ```bash
-# Development
-flutter run --dart-define=API_BASE_URL=http://localhost:8080 \
-            --dart-define=ENV=dev
-
-# Staging
-flutter build web --dart-define=API_BASE_URL=https://api-staging.synapse.app \
-                  --dart-define=ENV=staging
-
-# Production
-flutter build web --release \
-                  --dart-define=API_BASE_URL=https://api.synapse.app \
-                  --dart-define=ENV=prod \
-                  --web-renderer canvaskit
+flutter pub get
+flutter run -d chrome --dart-define=APP_ENV=dev
+# 또는 웹서버:
+flutter run -d web-server --web-hostname 127.0.0.1 --web-port 8088
 ```
 
-### 8.2 CI/CD (GitHub Actions)
+### 8.2 검증
 
-```yaml
-# .github/workflows/web.yml
-on:
-  push:
-    branches: [main]
-jobs:
-  build-web:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-      - run: flutter pub get
-      - run: dart run build_runner build --delete-conflicting-outputs
-      - run: flutter analyze
-      - run: flutter test --coverage
-      - run: flutter build web --release \
-            --dart-define=API_BASE_URL=${{ secrets.PROD_API_URL }}
-      - uses: cloudflare/wrangler-action@v3
-        with:
-          command: pages deploy build/web --project-name=synapse-frontend
+```bash
+flutter analyze
+flutter test
+flutter pub outdated
 ```
 
-| 플랫폼 | 배포 도구 | 트리거 |
-|--------|----------|--------|
-| Web | Cloudflare Pages | `main` 푸시 |
-| Android | Fastlane → Google Play | Git Tag `v*` |
-| iOS | Fastlane → App Store Connect | Git Tag `v*` |
+### 8.3 빌드
+
+```bash
+# Web
+flutter build web --release --dart-define=APP_ENV=prod
+
+# Android
+flutter build appbundle --release --dart-define=APP_ENV=prod --obfuscate \
+  --split-debug-info=build/symbols/
+
+# iOS
+flutter build ipa --release --dart-define=APP_ENV=prod --obfuscate \
+  --split-debug-info=build/symbols/
+```
+
+### 8.4 배포 (예상)
+
+| 플랫폼 | 도구 |
+|--------|------|
+| Web | Cloudflare Pages |
+| Android | Google Play (Fastlane) |
+| iOS | App Store Connect (Fastlane) |
 
 ---
 
 ## 9. 관측성
 
-### 9.1 분산 추적
-
-- 모든 요청에 `traceparent` 헤더 자동 주입 (Dio 인터셉터)
-- Sentry 트랜잭션과 OTel trace ID 연결
-
-### 9.2 에러 추적
-
-- Sentry SDK 활성화 (prod/staging)
-- Riverpod Provider Observer로 모든 상태 변경 로깅 (dev only)
-- 사용자 ID + tenant ID는 Sentry user context에 설정
-
-### 9.3 성능
-
-- Flutter DevTools로 frame rate 측정
-- Web: Lighthouse CI (PR마다 자동)
-- 목표: First Contentful Paint < 1.5s, Time to Interactive < 3s
+- 분산 추적: 모든 요청에 `traceparent` 헤더 주입 (Dio interceptor)
+- 에러 추적: Sentry (도입 시점 별도 검토)
+- 로그: 개발 환경에서는 console, prod는 Sentry breadcrumbs
 
 ---
 
@@ -291,50 +340,22 @@ jobs:
 
 | 항목 | 구현 |
 |------|------|
-| 토큰 저장 (Web) | Refresh Token은 httpOnly Cookie, Access Token은 메모리만 |
-| 토큰 저장 (Mobile) | flutter_secure_storage (Keychain / EncryptedSharedPreferences) |
-| 인증서 핀닝 (Mobile) | Dio + http_certificate_pinning |
-| 코드 난독화 | `flutter build --obfuscate --split-debug-info` (Mobile only) |
-| 외부 링크 | `url_launcher` 사용 시 사용자 확인 다이얼로그 |
+| 토큰 저장 (Web) | Access는 메모리, Refresh는 httpOnly Cookie |
+| 토큰 저장 (Mobile) | `flutter_secure_storage` |
+| Web `withCredentials` | Dio extra `withCredentials: true` + Gateway CORS 허용 |
+| 코드 난독화 (Mobile) | `--obfuscate --split-debug-info` |
 | 마크다운 XSS | `flutter_markdown` 기본 sanitize, 커스텀 HTML 비활성 |
-| 딥링크 검증 | 외부에서 들어오는 ID는 서버 권한 재검증 |
+| 외부 링크 | `url_launcher` 사용 시 확인 다이얼로그 |
 
 ---
 
-## 11. 로컬 개발
+## 11. 안티패턴 (03-D 위반 사례)
 
-### 11.1 사전 준비
-
-```bash
-# Flutter 3.x + Dart 3.x (FVM 권장)
-fvm install 3.27.0
-fvm use 3.27.0
-
-# 의존성 설치
-flutter pub get
-
-# 코드 생성 (변경 시마다)
-dart run build_runner watch --delete-conflicting-outputs
-```
-
-### 11.2 백엔드 연동
-
-```bash
-# 백엔드 docker compose 기동 (별도 레포)
-# Gateway가 localhost:8080에서 listening
-
-flutter run -d chrome --dart-define=API_BASE_URL=http://localhost:8080
-```
-
-### 11.3 테스트
-
-```bash
-flutter test                           # 단위 + 위젯
-flutter test integration_test/         # E2E
-flutter test --coverage                # 커버리지
-```
-
-목표 커버리지: 도메인/UseCase 80%+, Repository 70%+, Widget 60%+.
+- ❌ Screen / Widget이 Dio 직접 호출 — 항상 Repository(Port) 경유
+- ❌ DTO를 Widget까지 전달 — Entity로 변환해서 전달
+- ❌ Repository 인터페이스가 `dio` import — 도메인은 HTTP 라이브러리 무지
+- ❌ Provider 안에서 비즈니스 로직 — UseCase로 추출
+- ❌ 한 Repository가 여러 boundary를 조합 — boundary 간 조합은 `shared/`에서
 
 ---
 
@@ -342,18 +363,28 @@ flutter test --coverage                # 커버리지
 
 | 증상 | 원인 | 해결 |
 |------|------|------|
-| Web에서 Cookie 미전송 | CORS `withCredentials` 누락 | Dio: `extra['withCredentials'] = true`, Gateway: `Access-Control-Allow-Credentials: true` |
-| Hot reload 후 Provider 상태 꼬임 | `ref.read` 남용 | `ref.watch` / `ref.listen` 우선 사용 |
-| CanvasKit 로딩 느림 | CDN 미사용 | Flutter 빌드 시 `--web-renderer canvaskit-experimental` + Cloudflare 캐시 |
-| Mobile에서 Cookie 미적용 | Cookie Jar 미설정 | `dio_cookie_manager` + `PersistCookieJar` 추가 |
+| Web에서 Cookie 미전송 | `withCredentials` 미설정 | Dio + Gateway CORS 양쪽 설정 |
+| 401 무한 루프 | Refresh 호출도 401 반환 | `/auth/refresh`는 AuthInterceptor 대상에서 제외 |
+| Riverpod state 안 갱신 | `ref.read` 남용 | `ref.watch` / `ref.listen` 우선 |
+| Hot reload 후 Provider 꼬임 | 의존성 그래프 변경 | `ref.invalidate(...)` 또는 앱 재시작 |
 
 ---
 
-## 13. 참고 문서
+## 13. 참고
 
-- **Wiki 03_프로젝트_아키텍처_정의서** — 전체 시스템 아키텍처
-- **Wiki 04_API_명세서** — 호출 대상 API
-- **Wiki 05_화면_흐름_시퀀스_다이어그램** — 화면 플로우
-- **Wiki 06_화면_기능_정의서** — 화면별 기능
-- **03-A_통신_운영_상세서** — 백엔드 통신 SLO
-- **03-B_내부외부_경계_보안_명세** — JWT/Cookie 정책
+- **README.md** — 빠른 시작
+- **Wiki 03** — 전체 아키텍처
+- **Wiki 04** — 호출 대상 API 명세
+- **03-A** — 통신 SLO
+- **03-B** — JWT/Cookie 정책
+- **03-D** — Port/Adapter 표준
+
+---
+
+## 14. 현재 상태
+
+> Repository README 명시: "placeholder screens for the wiki-defined domains. API integration and production UI details are expected to be added inside each service feature boundary."
+
+- 도메인/서비스-바운더리 아키텍처 + GoRouter 라우트 등록 완료
+- placeholder 화면 단계
+- API 연동과 production UI는 각 서비스 feature boundary 안에서 추가 예정
