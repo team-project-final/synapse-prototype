@@ -1038,6 +1038,174 @@
     ]
   },
   {
+    "slug": "03-D_서비스간_호출_어댑터_표준",
+    "title": "03-D_서비스간_호출_어댑터_표준",
+    "group": "기획/설계",
+    "order": 3.04,
+    "outline": [
+      {
+        "level": 2,
+        "text": "D.1 이 문서가 다루는 것 / 다루지 않는 것",
+        "slug": "d1-이-문서가-다루는-것--다루지-않는-것"
+      },
+      {
+        "level": 2,
+        "text": "D.2 핵심 원칙",
+        "slug": "d2-핵심-원칙"
+      },
+      {
+        "level": 3,
+        "text": "D.2.1 5가지 규칙",
+        "slug": "d21-5가지-규칙"
+      },
+      {
+        "level": 3,
+        "text": "D.2.2 왜 이렇게 하는가",
+        "slug": "d22-왜-이렇게-하는가"
+      },
+      {
+        "level": 2,
+        "text": "D.3 표준 패키지 구조 (Java/Spring Boot)",
+        "slug": "d3-표준-패키지-구조-javaspring-boot"
+      },
+      {
+        "level": 3,
+        "text": "D.3.1 의존성 방향 규칙",
+        "slug": "d31-의존성-방향-규칙"
+      },
+      {
+        "level": 2,
+        "text": "D.4 패턴별 표준 코드",
+        "slug": "d4-패턴별-표준-코드"
+      },
+      {
+        "level": 3,
+        "text": "D.4.1 gRPC 호출 어댑터",
+        "slug": "d41-grpc-호출-어댑터"
+      },
+      {
+        "level": 3,
+        "text": "D.4.2 Kafka 발행 어댑터",
+        "slug": "d42-kafka-발행-어댑터"
+      },
+      {
+        "level": 3,
+        "text": "D.4.3 Kafka 구독 어댑터 (Inbound)",
+        "slug": "d43-kafka-구독-어댑터-inbound"
+      },
+      {
+        "level": 3,
+        "text": "D.4.4 외부 API 어댑터 (Stripe)",
+        "slug": "d44-외부-api-어댑터-stripe"
+      },
+      {
+        "level": 3,
+        "text": "D.4.5 외부 API 어댑터 (OpenAI — Python)",
+        "slug": "d45-외부-api-어댑터-openai--python"
+      },
+      {
+        "level": 3,
+        "text": "D.4.6 Flutter (synapse-frontend) Repository 패턴",
+        "slug": "d46-flutter-synapse-frontend-repository-패턴"
+      },
+      {
+        "level": 2,
+        "text": "D.5 안티패턴",
+        "slug": "d5-안티패턴"
+      },
+      {
+        "level": 2,
+        "text": "D.6 테스트 전략",
+        "slug": "d6-테스트-전략"
+      },
+      {
+        "level": 3,
+        "text": "D.6.1 UseCase 테스트 — Fake Port",
+        "slug": "d61-usecase-테스트--fake-port"
+      },
+      {
+        "level": 3,
+        "text": "D.6.2 Adapter 테스트 — Testcontainers + WireMock/grpc-mock",
+        "slug": "d62-adapter-테스트--testcontainers--wiremockgrpc-mock"
+      },
+      {
+        "level": 3,
+        "text": "D.6.3 ArchUnit 게이트",
+        "slug": "d63-archunit-게이트"
+      },
+      {
+        "level": 2,
+        "text": "D.7 어댑터 빌드 가이드",
+        "slug": "d7-어댑터-빌드-가이드"
+      },
+      {
+        "level": 3,
+        "text": "D.7.1 명명 규칙",
+        "slug": "d71-명명-규칙"
+      },
+      {
+        "level": 3,
+        "text": "D.7.2 패키지 별 어노테이션",
+        "slug": "d72-패키지-별-어노테이션"
+      },
+      {
+        "level": 2,
+        "text": "D.8 5개 레포 적용 매핑",
+        "slug": "d8-5개-레포-적용-매핑"
+      },
+      {
+        "level": 3,
+        "text": "D.8.1 synapse-frontend (Flutter)",
+        "slug": "d81-synapse-frontend-flutter"
+      },
+      {
+        "level": 3,
+        "text": "D.8.2 synapse-platform-svc",
+        "slug": "d82-synapse-platform-svc"
+      },
+      {
+        "level": 3,
+        "text": "D.8.3 synapse-knowledge-svc",
+        "slug": "d83-synapse-knowledge-svc"
+      },
+      {
+        "level": 3,
+        "text": "D.8.4 synapse-learning-svc",
+        "slug": "d84-synapse-learning-svc"
+      },
+      {
+        "level": 3,
+        "text": "D.8.5 synapse-engagement-svc",
+        "slug": "d85-synapse-engagement-svc"
+      },
+      {
+        "level": 2,
+        "text": "D.9 마이그레이션 가이드 (기존 코드 → 어댑터 패턴)",
+        "slug": "d9-마이그레이션-가이드-기존-코드--어댑터-패턴"
+      },
+      {
+        "level": 2,
+        "text": "D.10 운영 체크리스트",
+        "slug": "d10-운영-체크리스트"
+      },
+      {
+        "level": 3,
+        "text": "D.10.1 신규 외부 호출 추가 시",
+        "slug": "d101-신규-외부-호출-추가-시"
+      },
+      {
+        "level": 3,
+        "text": "D.10.2 외부 svc 변경에 대응할 때",
+        "slug": "d102-외부-svc-변경에-대응할-때"
+      },
+      {
+        "level": 2,
+        "text": "D.11 참고 / 관련 문서",
+        "slug": "d11-참고--관련-문서"
+      }
+    ]
+  },
+  {
     "slug": "04_API_명세서",
     "title": "4. API 명세서",
     "group": "기획/설계",
