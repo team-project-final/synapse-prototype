@@ -43,9 +43,12 @@ const KNOWN_LAYERS = new Set([
 
 let cache: TechManifest | null = null;
 
+const BUILD_TS = import.meta.env.VITE_BUILD_TS ?? '';
+
 export async function loadTechManifest(base: string): Promise<TechManifest> {
   if (cache) return cache;
-  const res = await fetch(`${base}docs-md/tech/tech-manifest.json`);
+  const bust = BUILD_TS ? `?v=${BUILD_TS}` : '';
+  const res = await fetch(`${base}docs-md/tech/tech-manifest.json${bust}`);
   if (!res.ok) throw new Error(`tech-manifest 404 (${res.status})`);
   cache = (await res.json()) as TechManifest;
   return cache;

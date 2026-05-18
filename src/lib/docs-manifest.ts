@@ -10,9 +10,12 @@ export type DocMeta = {
 
 let cache: DocMeta[] | null = null;
 
+const BUILD_TS = import.meta.env.VITE_BUILD_TS ?? '';
+
 export async function loadManifest(base: string): Promise<DocMeta[]> {
   if (cache) return cache;
-  const res = await fetch(`${base}docs-md/manifest.json`);
+  const bust = BUILD_TS ? `?v=${BUILD_TS}` : '';
+  const res = await fetch(`${base}docs-md/manifest.json${bust}`);
   if (!res.ok) throw new Error(`manifest 404 (${res.status})`);
   cache = (await res.json()) as DocMeta[];
   return cache;

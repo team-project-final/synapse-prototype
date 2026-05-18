@@ -37,6 +37,8 @@ jobs:
         run: npm run test
 
       - name: Build
+        env:
+          VITE_BUILD_TS: ${{ github.run_id }}
         run: npm run build
 
       - name: Deploy to gh-pages
