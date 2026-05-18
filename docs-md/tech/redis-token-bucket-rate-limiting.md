@@ -30,8 +30,8 @@ Synapse의 플랜별 API 사용량 제한을 구현한다. Free 플랜 100req/mi
 - `requestedTokens`: 요청당 소비 토큰 수 (AI API는 10토큰 소비)
 
 #### 프로젝트 내 사용 위치
-- `synapse-gateway/src/main/java/config/RateLimiterConfig.java`
-- `synapse-gateway/src/main/resources/application.yml`
+- `api-gateway/src/main/java/config/RateLimiterConfig.java`
+- `api-gateway/src/main/resources/application.yml`
 - Redis: `rate_limit:{userId}:{planTier}` 키 패턴
 
 #### 설정 가이드

@@ -79,7 +79,7 @@ spec:
 
 #### ApplicationSet (Synapse 적용)
 
-Synapse는 5개 서비스(`platform-svc` / `engagement-svc` / `knowledge-svc` / `learning-card` / `learning-ai`) × 3개 환경(`dev` / `staging` / `prod`) = 15개 ArgoCD Application을 단일 **ApplicationSet matrix generator**로 정의한다.
+Synapse는 4개 서비스 레포(`platform-svc` / `engagement-svc` / `knowledge-svc` / `learning-svc`)를 기준으로 운영하되, `learning-svc`는 `learning-card`와 `learning-ai` 두 런타임으로 배포한다. 따라서 배포 단위는 5개 런타임 × 3개 환경(`dev` / `staging` / `prod`) = 15개 ArgoCD Application을 단일 **ApplicationSet matrix generator**로 정의한다.
 
 | 환경 | autoSync | 트리거 |
 |------|---|---|

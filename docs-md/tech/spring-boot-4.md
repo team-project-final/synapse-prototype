@@ -3,7 +3,7 @@
 Spring 프레임워크 기반의 독립 실행형 프로덕션 수준 애플리케이션을 최소한의 설정으로 빠르게 개발할 수 있는 Java 마이크로서비스 프레임워크이다.
 
 #### 역할
-Synapse의 11개 마이크로서비스(Gateway 포함) 전체를 Spring Boot 4로 구현한다. Auto-configuration으로 DB 연결, 보안, 메트릭, 헬스체크 등의 인프라 설정을 최소화하고 비즈니스 로직에 집중할 수 있는 환경을 제공한다. Actuator로 Prometheus 메트릭을 노출하고 Kubernetes 헬스체크 엔드포인트를 제공한다.
+Synapse의 API Gateway와 4개 굵은 서비스 중 Java 런타임을 Spring Boot 4로 구현한다. FastAPI 기반 learning-ai는 같은 learning-svc 안의 별도 Python 런타임으로 운영한다. Auto-configuration으로 DB 연결, 보안, 메트릭, 헬스체크 등의 인프라 설정을 최소화하고 비즈니스 로직에 집중할 수 있는 환경을 제공한다. Actuator로 Prometheus 메트릭을 노출하고 Kubernetes 헬스체크 엔드포인트를 제공한다.
 
 #### 선택 이유
 Spring Boot 4는 Spring Framework 7 기반으로 Java 21 Virtual Threads 자동 지원, GraalVM Native Image 지원, AOT 처리 개선이 포함된다. 팀의 Java/Spring 역량이 충분하며, 방대한 Spring 생태계(Security, Data, Cloud, Batch 등)를 필요에 따라 추가할 수 있다.
@@ -33,9 +33,11 @@ Spring Boot 4는 Spring Framework 7 기반으로 Java 21 Virtual Threads 자동 
 - Spring Boot Actuator: 운영 모니터링 엔드포인트
 
 #### 프로젝트 내 사용 위치
-- `synapse-auth/`, `synapse-note/`, `synapse-card/`, `synapse-graph/`
-- `synapse-billing/`, `synapse-audit/`, `synapse-community/`
-- `synapse-gamification/`, `synapse-notification/`, `synapse-gateway/`
+- `api-gateway/`
+- `synapse-platform-svc/` — auth, audit, billing, notification 모듈
+- `synapse-engagement-svc/` — community, gamification 모듈
+- `synapse-knowledge-svc/` — note, graph, chunking 모듈
+- `synapse-learning-svc/learning-card/` — card, srs Java 런타임
 
 #### 설정 가이드
 
@@ -43,7 +45,7 @@ Spring Boot 4는 Spring Framework 7 기반으로 Java 21 Virtual Threads 자동 
 # application.yml — 공통 설정 (모든 서비스)
 spring:
   application:
-    name: synapse-note-service
+    name: synapse-knowledge-svc
   threads:
     virtual:
       enabled: true

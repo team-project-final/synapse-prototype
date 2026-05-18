@@ -3,7 +3,7 @@
 AWS Elastic Kubernetes Service(EKS)는 AWS에서 관리하는 Kubernetes 서비스로, 컨트롤 플레인을 AWS가 운영하고 사용자는 워커 노드와 워크로드만 관리한다.
 
 #### 역할 (Synapse 프로젝트 내)
-- 11개 마이크로서비스의 프로덕션 배포 및 운영 환경
+- 4개 서비스 레포와 learning-svc 내부 2개 런타임의 프로덕션 배포 및 운영 환경
 - 네임스페이스 분리: `synapse-prod` (프로덕션), `synapse-staging` (스테이징)
 - HPA(Horizontal Pod Autoscaler)를 통한 서비스별 자동 스케일링
 - ArgoCD를 통한 GitOps 기반 배포

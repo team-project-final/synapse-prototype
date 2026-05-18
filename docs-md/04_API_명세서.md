@@ -372,6 +372,38 @@ Stripe Webhook 수신 (내부 전용)
 }
 ```
 
+### GET /notes/{id}/links
+
+위키링크(forward link) 목록 조회
+
+```json
+{
+  "data": [
+    {
+      "targetNoteId": "uuid",
+      "targetTitle": "링크된 노트",
+      "contextSnippet": "...[[링크된 노트]] 내용..."
+    }
+  ]
+}
+```
+
+### POST /notes/{id}/versions/{versionId}/restore
+
+특정 버전으로 노트 복원
+
+```json
+// Response 200
+{
+  "data": {
+    "id": "uuid",
+    "title": "복원된 노트 제목",
+    "restoredFromVersion": "versionId",
+    "updatedAt": "2026-05-07T10:00:00Z"
+  }
+}
+```
+
 ### GET /notes/{id}/versions
 
 노트 버전 이력
@@ -386,6 +418,33 @@ Stripe Webhook 수신 (내부 전용)
 
 ```
 GET /notes/search?q=머신러닝&tags=AI&sort=relevance
+```
+
+### GET /tags/autocomplete
+
+태그 자동완성
+
+```
+GET /tags/autocomplete?prefix=프로&limit=10
+```
+
+```json
+{
+  "data": ["프로그래밍", "프로젝트", "프로토타입"]
+}
+```
+
+### GET /tags/popular
+
+인기 태그 목록
+
+```json
+{
+  "data": [
+    { "name": "프로그래밍", "count": 45 },
+    { "name": "알고리즘", "count": 32 }
+  ]
+}
 ```
 
 ---
@@ -555,6 +614,29 @@ GET /notes/search?q=머신러닝&tags=AI&sort=relevance
 
 ## 4.10 AI 도메인
 
+### POST /ai/embeddings
+
+텍스트 임베딩 벡터 생성 (내부 + 외부 API)
+
+```json
+// Request
+{
+  "texts": ["머신러닝의 기초 개념", "딥러닝 활성화 함수"],
+  "model": "text-embedding-3-small"
+}
+
+// Response 200
+{
+  "data": {
+    "embeddings": [
+      { "index": 0, "vector": [0.012, -0.034, ...], "dimension": 1536 },
+      { "index": 1, "vector": [0.008, -0.021, ...], "dimension": 1536 }
+    ],
+    "usage": { "totalTokens": 24 }
+  }
+}
+```
+
 ### POST /ai/cards/generate
 
 AI 카드 자동 생성
@@ -579,6 +661,49 @@ AI 카드 자동 생성
       }
     ],
     "usage": { "inputTokens": 500, "outputTokens": 300 }
+  }
+}
+```
+
+### GET /ai/cards/generations
+
+카드 생성 이력 조회
+
+```
+GET /ai/cards/generations?limit=20&cursor=...
+```
+
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "noteId": "uuid",
+      "noteTitle": "머신러닝 개요",
+      "cardCount": 5,
+      "status": "completed",
+      "createdAt": "2026-05-07T10:00:00Z"
+    }
+  ],
+  "pagination": { "cursor": "...", "hasMore": true }
+}
+```
+
+### GET /ai/cards/generations/{id}
+
+카드 생성 상태 조회
+
+```json
+{
+  "data": {
+    "id": "uuid",
+    "noteId": "uuid",
+    "status": "completed",
+    "cards": [
+      { "frontContent": "...", "backContent": "...", "confidence": 0.92 }
+    ],
+    "usage": { "inputTokens": 500, "outputTokens": 300 },
+    "createdAt": "2026-05-07T10:00:00Z"
   }
 }
 ```
@@ -684,6 +809,52 @@ Anki .apkg 형식 내보내기
 
 ## 4.13 Admin 도메인 (관리자 전용)
 
+### GET /admin/users
+
+사용자 목록 관리
+
+```
+GET /admin/users?q=검색어&status=active&limit=20&cursor=...
+```
+
+```json
+{
+  "data": [
+    {
+      "id": "uuid",
+      "email": "user@example.com",
+      "displayName": "홍길동",
+      "tenantId": "uuid",
+      "status": "active",
+      "createdAt": "2026-05-07T10:00:00Z"
+    }
+  ],
+  "pagination": { "cursor": "...", "hasMore": true }
+}
+```
+
+### PUT /admin/users/{id}/status
+
+사용자 상태 변경 (suspend/activate)
+
+```json
+// Request
+{ "status": "suspended", "reason": "policy_violation" }
+
+// Response 200
+{
+  "data": {
+    "id": "uuid",
+    "status": "suspended",
+    "updatedAt": "2026-05-07T12:00:00Z"
+  }
+}
+```
+
+### DELETE /admin/users/{id}
+
+사용자 삭제 (소프트 삭제, 30일 유예)
+
 ### GET /admin/tenants
 
 테넌트 목록 관리
@@ -706,6 +877,48 @@ Anki .apkg 형식 내보내기
 
 ```
 GET /admin/audit-logs?tenantId=uuid&action=note.create&from=2026-05-01&to=2026-05-07
+```
+
+### POST /admin/search/accuracy-test
+
+검색 정확도 테스트 실행
+
+```json
+// Request
+{
+  "testQueries": [
+    { "query": "머신러닝 과적합", "expectedNoteIds": ["uuid1", "uuid2"] }
+  ]
+}
+
+// Response 202
+{
+  "data": {
+    "jobId": "uuid",
+    "status": "running",
+    "totalQueries": 10
+  }
+}
+```
+
+### GET /admin/search/accuracy-report
+
+검색 정확도 리포트 조회
+
+```json
+{
+  "data": {
+    "jobId": "uuid",
+    "status": "completed",
+    "metrics": {
+      "precision": 0.85,
+      "recall": 0.78,
+      "f1Score": 0.81,
+      "mrr": 0.72
+    },
+    "completedAt": "2026-05-07T12:00:00Z"
+  }
+}
 ```
 
 ### GET /admin/reports
@@ -1626,3 +1839,4 @@ GET /notifications?limit=20&cursor=...&category=achievement
 |------|------|-----------|--------|
 | v1.0 | 2026-05-07 | 최초 작성 — Auth, Tenant, Billing, Notes, Cards, SRS, Graph, AI, Stats, Import/Export, Admin, Audit 도메인 | Synapse Team |
 | v1.1 | 2026-05-08 | Community, Gamification, Notification 도메인 추가. Admin 도메인 확장 (신고 관리, 공유 콘텐츠 모더레이션, 게이미피케이션 설정). expiresIn=900 확인 (Auth 4.2). | Synapse Team |
+| v1.2 | 2026-05-15 | 노트 위키링크/버전 복원/태그 관리, AI 임베딩/카드 생성 이력, Admin 사용자 관리/검색 정확도 테스트 엔드포인트 추가. 프로젝트 관리 문서 동기화. | Synapse Team |

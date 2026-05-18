@@ -3,7 +3,7 @@
 Docker는 애플리케이션을 컨테이너 단위로 패키징하는 플랫폼이며, Docker Compose는 다중 컨테이너 애플리케이션의 로컬 개발 환경을 정의하고 실행하는 도구이다.
 
 #### 역할 (Synapse 프로젝트 내)
-- 11개 마이크로서비스 및 모든 인프라(PostgreSQL, Redis, Elasticsearch, Kafka, Zookeeper)를 단일 `docker-compose.yml`로 로컬 실행
+- 4개 서비스 레포와 learning-svc 내부 2개 런타임 및 모든 인프라(PostgreSQL, Redis, Elasticsearch, Kafka, Zookeeper)를 단일 `docker-compose.yml`로 로컬 실행
 - 개발자 온보딩: `docker compose up -d` 한 명령으로 전체 환경 구동
 - 프로덕션 이미지: 멀티 스테이지 빌드로 개발용 도구 제거, 최소화된 런타임 이미지 생성
 - GitHub Actions CI에서 Docker 이미지 빌드 → AWS ECR 푸시
@@ -105,7 +105,7 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 | 포트 충돌 | 로컬 서비스와 충돌 | `.env`에서 포트 오버라이드 설정 |
 | 빌드 캐시 오염 | 구버전 레이어 캐시 | `docker compose build --no-cache` |
 | 볼륨 권한 오류 | Linux/Mac 파일 시스템 차이 | `user: "${UID}:${GID}"` 설정 |
-| 메모리 부족 | 11개 서비스 동시 실행 | Docker Desktop 메모리 8GB 이상 할당 |
+| 메모리 부족 | 4개 서비스와 learning-svc 2개 런타임 동시 실행 | Docker Desktop 메모리 8GB 이상 할당 |
 
 #### 참고 자료
 - Docker Compose: https://docs.docker.com/compose/

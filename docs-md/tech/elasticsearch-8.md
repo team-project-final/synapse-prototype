@@ -33,8 +33,8 @@ PostgreSQL의 내장 전문 검색(`tsvector`)은 기본 기능은 충분하나,
 - `index.routing`: 테넌트별 인덱스 분리 또는 라우팅
 
 #### 프로젝트 내 사용 위치
-- `synapse-note/src/main/java/search/NoteSearchService.java` — 검색 로직
-- `synapse-note/src/main/java/consumer/NoteIndexConsumer.java` — Kafka 이벤트 소비 → ES 인덱싱
+- `synapse-knowledge-svc/src/main/java/.../search/NoteSearchService.java` — 검색 로직
+- `synapse-knowledge-svc/src/main/java/.../consumer/NoteIndexConsumer.java` — Kafka 이벤트 소비 → ES 인덱싱
 - 인덱스: `synapse-notes-{tenantId}` (테넌트별 인덱스) 또는 `synapse-notes` (단일 인덱스 + 라우팅)
 
 #### 설정 가이드

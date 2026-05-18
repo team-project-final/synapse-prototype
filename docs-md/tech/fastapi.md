@@ -32,10 +32,10 @@ FastAPI는 Starlette 기반으로 비동기 I/O를 네이티브 지원하여 Ope
 - `lifespan` — 앱 시작/종료 이벤트 (DB 연결 풀 초기화)
 
 #### 프로젝트 내 사용 위치
-- `synapse-ai/app/main.py` — FastAPI 앱 초기화
-- `synapse-ai/app/routers/` — generate, search, summarize 라우터
-- `synapse-ai/app/models/` — Pydantic 요청/응답 모델
-- `synapse-ai/app/services/` — LangChain 통합 서비스
+- `synapse-learning-svc/learning-ai/app/main.py` — FastAPI 앱 초기화
+- `synapse-learning-svc/learning-ai/app/routers/` — generate, search, summarize 라우터
+- `synapse-learning-svc/learning-ai/app/models/` — Pydantic 요청/응답 모델
+- `synapse-learning-svc/learning-ai/app/services/` — LangChain 통합 서비스
 
 #### 설정 가이드
 

@@ -28,9 +28,9 @@ Gateway 레이어에서 WebFlux는 선택이 아닌 필수이다(Spring Cloud Ga
 - `flatMap` / `map` / `filter` — 리액티브 연산자
 
 #### 프로젝트 내 사용 위치
-- `synapse-gateway/` — Gateway 전체 런타임
-- `synapse-note/src/main/java/client/AiServiceClient.java`
-- `synapse-card/src/main/java/client/NoteServiceClient.java`
+- `api-gateway/` — Gateway 전체 런타임
+- `synapse-knowledge-svc/src/main/java/.../client/LearningAiClient.java`
+- `synapse-learning-svc/learning-card/src/main/java/.../client/KnowledgeClient.java`
 
 #### 설정 가이드
 

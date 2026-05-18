@@ -7,7 +7,7 @@
 | **클라이언트** | flutter_riverpod | 3.0.x | 상태 관리 | flutter_bloc, Provider | 적은 보일러플레이트, 컴파일 타임 안전, 자동 dispose |
 | **게이트웨이** | Spring Cloud Gateway | 5.x | API Gateway (JWT, Rate Limit, 라우팅) | Kong, Nginx, AWS API GW | Spring 생태계 통합, Reactive |
 | **게이트웨이** | Resilience4j | 2.x | Circuit Breaker | Hystrix | Spring Boot 4 네이티브 지원 |
-| **백엔드** | Spring Boot | 4.x | 10개 마이크로서비스 프레임워크 | Quarkus, Micronaut | 팀 친숙도, 생태계 성숙도 |
+| **백엔드** | Spring Boot | 4.x | 4개 굵은 서비스와 Java 런타임 프레임워크 | Quarkus, Micronaut | 팀 친숙도, 생태계 성숙도 |
 | **백엔드** | Java | 21 (LTS) | Spring Boot 런타임 | Kotlin, Scala | Virtual Threads, 안정성 |
 | **백엔드** | FastAPI | 0.136.x | AI Service (Python 비동기) | Flask, Django | 비동기 I/O, OpenAPI 자동 생성 |
 | **백엔드** | Python | 3.12 | AI Service 언어 | Go, Node.js | AI/ML 라이브러리 생태계 최적 |
@@ -114,7 +114,7 @@
 │  GitHub Actions CI ──► AWS ECR ──► K8s Manifest Repo ──► ArgoCD    │
 │                                                    ↓                 │
 │                                  ArgoCD ApplicationSet 2.x           │
-│                                  (Matrix: 5 services × 3 envs)      │
+│                                  (Matrix: 4 service repos + 2 learning runtimes × 3 envs)      │
 │                                           AWS EKS (synapse-prod)    │
 │                                           AWS EKS (synapse-staging) │
 │                                                                      │

@@ -257,6 +257,11 @@
         "level": 2,
         "text": "2.6 마이그레이션 전략",
         "slug": "26-마이그레이션-전략"
+      },
+      {
+        "level": 2,
+        "text": "2.7 변경 이력",
+        "slug": "27-변경-이력"
       }
     ]
   },
@@ -405,6 +410,630 @@
         "level": 2,
         "text": "변경 이력",
         "slug": "변경-이력"
+      }
+    ]
+  },
+  {
+    "slug": "03-A_통신_운영_상세서",
+    "title": "03-A_통신_운영_상세서",
+    "group": "기획/설계",
+    "order": 3.01,
+    "outline": [
+      {
+        "level": 2,
+        "text": "A.1 이 문서가 다루는 것 / 다루지 않는 것",
+        "slug": "a1-이-문서가-다루는-것--다루지-않는-것"
+      },
+      {
+        "level": 2,
+        "text": "A.2 통신 방식 선택 의사결정 트리",
+        "slug": "a2-통신-방식-선택-의사결정-트리"
+      },
+      {
+        "level": 3,
+        "text": "추가 가이드",
+        "slug": "추가-가이드"
+      },
+      {
+        "level": 2,
+        "text": "A.3 gRPC 운영 가이드",
+        "slug": "a3-grpc-운영-가이드"
+      },
+      {
+        "level": 3,
+        "text": "A.3.1 채널 설정 (Spring Boot 4 + grpc-spring-boot-starter)",
+        "slug": "a31-채널-설정-spring-boot-4--grpc-spring-boot-starter"
+      },
+      {
+        "level": 3,
+        "text": "A.3.2 Deadline 표준값",
+        "slug": "a32-deadline-표준값"
+      },
+      {
+        "level": 3,
+        "text": "A.3.3 Resilience4j 표준 설정값",
+        "slug": "a33-resilience4j-표준-설정값"
+      },
+      {
+        "level": 3,
+        "text": "A.3.4 데코레이터 적용 순서",
+        "slug": "a34-데코레이터-적용-순서"
+      },
+      {
+        "level": 2,
+        "text": "A.4 서비스별 통신 SLO + 임계치",
+        "slug": "a4-서비스별-통신-slo--임계치"
+      },
+      {
+        "level": 2,
+        "text": "A.5 Kafka 컨슈머 운영 가이드",
+        "slug": "a5-kafka-컨슈머-운영-가이드"
+      },
+      {
+        "level": 3,
+        "text": "A.5.1 컨슈머 그룹 네이밍",
+        "slug": "a51-컨슈머-그룹-네이밍"
+      },
+      {
+        "level": 3,
+        "text": "A.5.2 표준 컨슈머 설정",
+        "slug": "a52-표준-컨슈머-설정"
+      },
+      {
+        "level": 3,
+        "text": "A.5.3 멱등 처리 패턴 (CloudEvents `id` 기반)",
+        "slug": "a53-멱등-처리-패턴-cloudevents-id-기반"
+      },
+      {
+        "level": 3,
+        "text": "A.5.4 컨슈머 Lag 임계치",
+        "slug": "a54-컨슈머-lag-임계치"
+      },
+      {
+        "level": 2,
+        "text": "A.6 Transactional Outbox 구현 표준",
+        "slug": "a6-transactional-outbox-구현-표준"
+      },
+      {
+        "level": 3,
+        "text": "A.6.1 스키마",
+        "slug": "a61-스키마"
+      },
+      {
+        "level": 3,
+        "text": "A.6.2 폴링 방식 Outbox Relay (MVP)",
+        "slug": "a62-폴링-방식-outbox-relay-mvp"
+      },
+      {
+        "level": 3,
+        "text": "A.6.3 CDC 방식 (Phase 2 — Debezium)",
+        "slug": "a63-cdc-방식-phase-2--debezium"
+      },
+      {
+        "level": 2,
+        "text": "A.7 분산 추적 전파 표준",
+        "slug": "a7-분산-추적-전파-표준"
+      },
+      {
+        "level": 3,
+        "text": "A.7.1 HTTP/gRPC 전파 (자동)",
+        "slug": "a71-httpgrpc-전파-자동"
+      },
+      {
+        "level": 3,
+        "text": "A.7.2 Kafka 헤더 전파 (수동)",
+        "slug": "a72-kafka-헤더-전파-수동"
+      },
+      {
+        "level": 3,
+        "text": "A.7.3 샘플링 정책",
+        "slug": "a73-샘플링-정책"
+      },
+      {
+        "level": 2,
+        "text": "A.8 부하 테스트 기준선",
+        "slug": "a8-부하-테스트-기준선"
+      },
+      {
+        "level": 2,
+        "text": "A.9 운영 체크리스트",
+        "slug": "a9-운영-체크리스트"
+      },
+      {
+        "level": 3,
+        "text": "A.9.1 신규 gRPC API 추가 시",
+        "slug": "a91-신규-grpc-api-추가-시"
+      },
+      {
+        "level": 3,
+        "text": "A.9.2 신규 Kafka 컨슈머 추가 시",
+        "slug": "a92-신규-kafka-컨슈머-추가-시"
+      },
+      {
+        "level": 3,
+        "text": "A.9.3 운영 인시던트 응답 절차",
+        "slug": "a93-운영-인시던트-응답-절차"
+      },
+      {
+        "level": 2,
+        "text": "A.10 참고 / 관련 문서",
+        "slug": "a10-참고--관련-문서"
+      }
+    ]
+  },
+  {
+    "slug": "03-B_내부외부_경계_보안_명세",
+    "title": "03-B_내부외부_경계_보안_명세",
+    "group": "기획/설계",
+    "order": 3.02,
+    "outline": [
+      {
+        "level": 2,
+        "text": "B.1 이 문서가 다루는 것 / 다루지 않는 것",
+        "slug": "b1-이-문서가-다루는-것--다루지-않는-것"
+      },
+      {
+        "level": 2,
+        "text": "B.2 네트워크 영역 모델 (Trust Zone)",
+        "slug": "b2-네트워크-영역-모델-trust-zone"
+      },
+      {
+        "level": 3,
+        "text": "B.2.1 Zone 간 트래픽 정책 매트릭스",
+        "slug": "b21-zone-간-트래픽-정책-매트릭스"
+      },
+      {
+        "level": 2,
+        "text": "B.3 Kubernetes NetworkPolicy",
+        "slug": "b3-kubernetes-networkpolicy"
+      },
+      {
+        "level": 3,
+        "text": "B.3.1 기본 정책: Deny-All",
+        "slug": "b31-기본-정책-deny-all"
+      },
+      {
+        "level": 3,
+        "text": "B.3.2 Gateway 인입 정책",
+        "slug": "b32-gateway-인입-정책"
+      },
+      {
+        "level": 3,
+        "text": "B.3.3 서비스별 인입 정책 (외부 노출 서비스)",
+        "slug": "b33-서비스별-인입-정책-외부-노출-서비스"
+      },
+      {
+        "level": 3,
+        "text": "B.3.4 인출 정책 (Egress)",
+        "slug": "b34-인출-정책-egress"
+      },
+      {
+        "level": 3,
+        "text": "B.3.5 외부 호출이 필요한 서비스 (개별 허용)",
+        "slug": "b35-외부-호출이-필요한-서비스-개별-허용"
+      },
+      {
+        "level": 3,
+        "text": "B.3.6 서비스별 외부 호출 매트릭스",
+        "slug": "b36-서비스별-외부-호출-매트릭스"
+      },
+      {
+        "level": 2,
+        "text": "B.4 Istio Service Mesh + mTLS",
+        "slug": "b4-istio-service-mesh--mtls"
+      },
+      {
+        "level": 3,
+        "text": "B.4.1 PeerAuthentication: 전 영역 STRICT mTLS",
+        "slug": "b41-peerauthentication-전-영역-strict-mtls"
+      },
+      {
+        "level": 3,
+        "text": "B.4.2 AuthorizationPolicy: 기본 Deny",
+        "slug": "b42-authorizationpolicy-기본-deny"
+      },
+      {
+        "level": 3,
+        "text": "B.4.3 서비스별 허용 정책",
+        "slug": "b43-서비스별-허용-정책"
+      },
+      {
+        "level": 3,
+        "text": "B.4.4 ServiceAccount 매핑 표",
+        "slug": "b44-serviceaccount-매핑-표"
+      },
+      {
+        "level": 3,
+        "text": "B.4.5 mTLS 인증서 회전",
+        "slug": "b45-mtls-인증서-회전"
+      },
+      {
+        "level": 2,
+        "text": "B.5 `/internal/**` 경로 차단",
+        "slug": "b5-internal-경로-차단"
+      },
+      {
+        "level": 3,
+        "text": "B.5.1 L1: Gateway 라우팅 배제",
+        "slug": "b51-l1-gateway-라우팅-배제"
+      },
+      {
+        "level": 3,
+        "text": "B.5.2 L2: 서비스 측 Filter",
+        "slug": "b52-l2-서비스-측-filter"
+      },
+      {
+        "level": 3,
+        "text": "B.5.3 L3: Istio AuthorizationPolicy",
+        "slug": "b53-l3-istio-authorizationpolicy"
+      },
+      {
+        "level": 3,
+        "text": "B.5.4 L4: NetworkPolicy",
+        "slug": "b54-l4-networkpolicy"
+      },
+      {
+        "level": 2,
+        "text": "B.6 외부 IdP 호출 (Auth Service)",
+        "slug": "b6-외부-idp-호출-auth-service"
+      },
+      {
+        "level": 3,
+        "text": "B.6.1 PKCE 강제",
+        "slug": "b61-pkce-강제"
+      },
+      {
+        "level": 3,
+        "text": "B.6.2 ID Token 검증",
+        "slug": "b62-id-token-검증"
+      },
+      {
+        "level": 3,
+        "text": "B.6.3 Refresh Token 회전 + Reuse Detection",
+        "slug": "b63-refresh-token-회전--reuse-detection"
+      },
+      {
+        "level": 2,
+        "text": "B.7 시크릿 관리 (External Secrets Operator)",
+        "slug": "b7-시크릿-관리-external-secrets-operator"
+      },
+      {
+        "level": 3,
+        "text": "B.7.1 SecretStore 정의",
+        "slug": "b71-secretstore-정의"
+      },
+      {
+        "level": 3,
+        "text": "B.7.2 ExternalSecret 예시 (Billing → Stripe)",
+        "slug": "b72-externalsecret-예시-billing--stripe"
+      },
+      {
+        "level": 3,
+        "text": "B.7.3 시크릿 카테고리별 회전 주기",
+        "slug": "b73-시크릿-카테고리별-회전-주기"
+      },
+      {
+        "level": 3,
+        "text": "B.7.4 시크릿 사용 원칙",
+        "slug": "b74-시크릿-사용-원칙"
+      },
+      {
+        "level": 2,
+        "text": "B.8 감사 로그 정책 (audit.event)",
+        "slug": "b8-감사-로그-정책-auditevent"
+      },
+      {
+        "level": 3,
+        "text": "B.8.1 감사 대상 이벤트",
+        "slug": "b81-감사-대상-이벤트"
+      },
+      {
+        "level": 3,
+        "text": "B.8.2 감사 로그 스키마",
+        "slug": "b82-감사-로그-스키마"
+      },
+      {
+        "level": 3,
+        "text": "B.8.3 보존 정책",
+        "slug": "b83-보존-정책"
+      },
+      {
+        "level": 3,
+        "text": "B.8.4 감사 로그 무결성",
+        "slug": "b84-감사-로그-무결성"
+      },
+      {
+        "level": 2,
+        "text": "B.9 침입 탐지 + 응답",
+        "slug": "b9-침입-탐지--응답"
+      },
+      {
+        "level": 3,
+        "text": "B.9.1 자동 탐지 규칙",
+        "slug": "b91-자동-탐지-규칙"
+      },
+      {
+        "level": 3,
+        "text": "B.9.2 인시던트 대응 절차",
+        "slug": "b92-인시던트-대응-절차"
+      },
+      {
+        "level": 2,
+        "text": "B.10 데이터 암호화",
+        "slug": "b10-데이터-암호화"
+      },
+      {
+        "level": 3,
+        "text": "B.10.1 전송 중 암호화 (Transit)",
+        "slug": "b101-전송-중-암호화-transit"
+      },
+      {
+        "level": 3,
+        "text": "B.10.2 저장 시 암호화 (At Rest)",
+        "slug": "b102-저장-시-암호화-at-rest"
+      },
+      {
+        "level": 3,
+        "text": "B.10.3 애플리케이션 레벨 암호화 (민감 필드)",
+        "slug": "b103-애플리케이션-레벨-암호화-민감-필드"
+      },
+      {
+        "level": 2,
+        "text": "B.11 운영 체크리스트",
+        "slug": "b11-운영-체크리스트"
+      },
+      {
+        "level": 3,
+        "text": "B.11.1 신규 서비스 배포 시",
+        "slug": "b111-신규-서비스-배포-시"
+      },
+      {
+        "level": 3,
+        "text": "B.11.2 보안 사고 발생 시 즉시 조치",
+        "slug": "b112-보안-사고-발생-시-즉시-조치"
+      },
+      {
+        "level": 3,
+        "text": "B.11.3 분기별 보안 점검",
+        "slug": "b113-분기별-보안-점검"
+      },
+      {
+        "level": 2,
+        "text": "B.12 참고 / 관련 문서",
+        "slug": "b12-참고--관련-문서"
+      }
+    ]
+  },
+  {
+    "slug": "03-C_이벤트_스키마_진화_가이드",
+    "title": "03-C_이벤트_스키마_진화_가이드",
+    "group": "기획/설계",
+    "order": 3.03,
+    "outline": [
+      {
+        "level": 2,
+        "text": "C.1 이 문서가 다루는 것 / 다루지 않는 것",
+        "slug": "c1-이-문서가-다루는-것--다루지-않는-것"
+      },
+      {
+        "level": 2,
+        "text": "C.2 CloudEvents 1.0 스키마 표준",
+        "slug": "c2-cloudevents-10-스키마-표준"
+      },
+      {
+        "level": 3,
+        "text": "C.2.1 필수 / 선택 필드",
+        "slug": "c21-필수--선택-필드"
+      },
+      {
+        "level": 3,
+        "text": "C.2.2 표준 이벤트 예시",
+        "slug": "c22-표준-이벤트-예시"
+      },
+      {
+        "level": 3,
+        "text": "C.2.3 Kafka 메시지 매핑",
+        "slug": "c23-kafka-메시지-매핑"
+      },
+      {
+        "level": 3,
+        "text": "C.2.4 Kafka 메시지 키 정책",
+        "slug": "c24-kafka-메시지-키-정책"
+      },
+      {
+        "level": 2,
+        "text": "C.3 Schema Registry 도입",
+        "slug": "c3-schema-registry-도입"
+      },
+      {
+        "level": 3,
+        "text": "C.3.1 도구 선택: Apicurio Registry",
+        "slug": "c31-도구-선택-apicurio-registry"
+      },
+      {
+        "level": 3,
+        "text": "C.3.2 Subject 네이밍 규칙",
+        "slug": "c32-subject-네이밍-규칙"
+      },
+      {
+        "level": 3,
+        "text": "C.3.3 호환성 정책",
+        "slug": "c33-호환성-정책"
+      },
+      {
+        "level": 3,
+        "text": "C.3.4 Schema Registry 클라이언트 설정",
+        "slug": "c34-schema-registry-클라이언트-설정"
+      },
+      {
+        "level": 3,
+        "text": "C.3.5 Producer 검증 흐름",
+        "slug": "c35-producer-검증-흐름"
+      },
+      {
+        "level": 3,
+        "text": "C.3.6 Consumer 검증 흐름",
+        "slug": "c36-consumer-검증-흐름"
+      },
+      {
+        "level": 2,
+        "text": "C.4 호환 변경 vs 비호환 변경",
+        "slug": "c4-호환-변경-vs-비호환-변경"
+      },
+      {
+        "level": 3,
+        "text": "C.4.1 호환 변경 (Schema 버전 마이너 업)",
+        "slug": "c41-호환-변경-schema-버전-마이너-업"
+      },
+      {
+        "level": 3,
+        "text": "C.4.2 비호환 변경 (새 토픽 v2 필요)",
+        "slug": "c42-비호환-변경-새-토픽-v2-필요"
+      },
+      {
+        "level": 3,
+        "text": "C.4.3 호환 변경 예시",
+        "slug": "c43-호환-변경-예시"
+      },
+      {
+        "level": 3,
+        "text": "C.4.4 비호환 변경 시 절차 (`v1` → `v2`)",
+        "slug": "c44-비호환-변경-시-절차-v1--v2"
+      },
+      {
+        "level": 2,
+        "text": "C.5 Dual-write 마이그레이션 패턴",
+        "slug": "c5-dual-write-마이그레이션-패턴"
+      },
+      {
+        "level": 3,
+        "text": "C.5.1 Producer 코드",
+        "slug": "c51-producer-코드"
+      },
+      {
+        "level": 3,
+        "text": "C.5.2 단계별 Feature Flag",
+        "slug": "c52-단계별-feature-flag"
+      },
+      {
+        "level": 3,
+        "text": "C.5.3 Consumer 측 점진적 마이그레이션",
+        "slug": "c53-consumer-측-점진적-마이그레이션"
+      },
+      {
+        "level": 2,
+        "text": "C.6 신규 토픽 추가 절차",
+        "slug": "c6-신규-토픽-추가-절차"
+      },
+      {
+        "level": 3,
+        "text": "C.6.1 단계",
+        "slug": "c61-단계"
+      },
+      {
+        "level": 3,
+        "text": "C.6.2 토픽 설정 표준값",
+        "slug": "c62-토픽-설정-표준값"
+      },
+      {
+        "level": 2,
+        "text": "C.7 DLQ (Dead Letter Queue) 전략",
+        "slug": "c7-dlq-dead-letter-queue-전략"
+      },
+      {
+        "level": 3,
+        "text": "C.7.1 네이밍 + 자동 생성",
+        "slug": "c71-네이밍--자동-생성"
+      },
+      {
+        "level": 3,
+        "text": "C.7.2 발송 조건",
+        "slug": "c72-발송-조건"
+      },
+      {
+        "level": 3,
+        "text": "C.7.3 Spring Kafka 설정",
+        "slug": "c73-spring-kafka-설정"
+      },
+      {
+        "level": 3,
+        "text": "C.7.4 DLQ 메시지 추가 헤더",
+        "slug": "c74-dlq-메시지-추가-헤더"
+      },
+      {
+        "level": 3,
+        "text": "C.7.5 DLQ 모니터링 + 처리",
+        "slug": "c75-dlq-모니터링--처리"
+      },
+      {
+        "level": 2,
+        "text": "C.8 이벤트 재처리 (Replay)",
+        "slug": "c8-이벤트-재처리-replay"
+      },
+      {
+        "level": 3,
+        "text": "C.8.1 재처리가 필요한 시나리오",
+        "slug": "c81-재처리가-필요한-시나리오"
+      },
+      {
+        "level": 3,
+        "text": "C.8.2 컨슈머 그룹 재설정",
+        "slug": "c82-컨슈머-그룹-재설정"
+      },
+      {
+        "level": 3,
+        "text": "C.8.3 멱등성 검증 필수",
+        "slug": "c83-멱등성-검증-필수"
+      },
+      {
+        "level": 3,
+        "text": "C.8.4 시간 범위 부분 replay",
+        "slug": "c84-시간-범위-부분-replay"
+      },
+      {
+        "level": 2,
+        "text": "C.9 CI/CD 검증 게이트",
+        "slug": "c9-cicd-검증-게이트"
+      },
+      {
+        "level": 3,
+        "text": "C.9.1 스키마 변경 PR 시 자동 검증",
+        "slug": "c91-스키마-변경-pr-시-자동-검증"
+      },
+      {
+        "level": 3,
+        "text": "C.9.2 PR 머지 시 자동 등록",
+        "slug": "c92-pr-머지-시-자동-등록"
+      },
+      {
+        "level": 3,
+        "text": "C.9.3 Producer 빌드 시 스키마 일치 검증",
+        "slug": "c93-producer-빌드-시-스키마-일치-검증"
+      },
+      {
+        "level": 2,
+        "text": "C.10 운영 체크리스트",
+        "slug": "c10-운영-체크리스트"
+      },
+      {
+        "level": 3,
+        "text": "C.10.1 신규 토픽/이벤트 추가 시",
+        "slug": "c101-신규-토픽이벤트-추가-시"
+      },
+      {
+        "level": 3,
+        "text": "C.10.2 스키마 변경 시",
+        "slug": "c102-스키마-변경-시"
+      },
+      {
+        "level": 3,
+        "text": "C.10.3 DLQ 발생 시",
+        "slug": "c103-dlq-발생-시"
+      },
+      {
+        "level": 2,
+        "text": "C.11 참고 / 관련 문서",
+        "slug": "c11-참고--관련-문서"
       }
     ]
   },
@@ -616,6 +1245,16 @@
       },
       {
         "level": 3,
+        "text": "GET /notes/{id}/links",
+        "slug": "get-notesidlinks"
+      },
+      {
+        "level": 3,
+        "text": "POST /notes/{id}/versions/{versionId}/restore",
+        "slug": "post-notesidversionsversionidrestore"
+      },
+      {
+        "level": 3,
         "text": "GET /notes/{id}/versions",
         "slug": "get-notesidversions"
       },
@@ -628,6 +1267,16 @@
         "level": 3,
         "text": "GET /notes/search",
         "slug": "get-notessearch"
+      },
+      {
+        "level": 3,
+        "text": "GET /tags/autocomplete",
+        "slug": "get-tagsautocomplete"
+      },
+      {
+        "level": 3,
+        "text": "GET /tags/popular",
+        "slug": "get-tagspopular"
       },
       {
         "level": 2,
@@ -731,8 +1380,23 @@
       },
       {
         "level": 3,
+        "text": "POST /ai/embeddings",
+        "slug": "post-aiembeddings"
+      },
+      {
+        "level": 3,
         "text": "POST /ai/cards/generate",
         "slug": "post-aicardsgenerate"
+      },
+      {
+        "level": 3,
+        "text": "GET /ai/cards/generations",
+        "slug": "get-aicardsgenerations"
+      },
+      {
+        "level": 3,
+        "text": "GET /ai/cards/generations/{id}",
+        "slug": "get-aicardsgenerationsid"
       },
       {
         "level": 3,
@@ -801,6 +1465,21 @@
       },
       {
         "level": 3,
+        "text": "GET /admin/users",
+        "slug": "get-adminusers"
+      },
+      {
+        "level": 3,
+        "text": "PUT /admin/users/{id}/status",
+        "slug": "put-adminusersidstatus"
+      },
+      {
+        "level": 3,
+        "text": "DELETE /admin/users/{id}",
+        "slug": "delete-adminusersid"
+      },
+      {
+        "level": 3,
         "text": "GET /admin/tenants",
         "slug": "get-admintenants"
       },
@@ -823,6 +1502,16 @@
         "level": 3,
         "text": "GET /admin/audit-logs",
         "slug": "get-adminaudit-logs"
+      },
+      {
+        "level": 3,
+        "text": "POST /admin/search/accuracy-test",
+        "slug": "post-adminsearchaccuracy-test"
+      },
+      {
+        "level": 3,
+        "text": "GET /admin/search/accuracy-report",
+        "slug": "get-adminsearchaccuracy-report"
       },
       {
         "level": 3,
@@ -3168,8 +3857,8 @@
       },
       {
         "level": 2,
-        "text": "5. 장기 로드맵 안내 (Phase 1~4)",
-        "slug": "5-장기-로드맵-안내-phase-14"
+        "text": "5. 5주 MVP와 제품 장기 Phase 구분",
+        "slug": "5-5주-mvp와-제품-장기-phase-구분"
       },
       {
         "level": 2,
@@ -3598,6 +4287,971 @@
         "level": 2,
         "text": "11. 변경 이력",
         "slug": "11-변경-이력"
+      }
+    ]
+  },
+  {
+    "slug": "synapse-frontend_ARCHITECTURE",
+    "title": "synapse-frontend — ARCHITECTURE",
+    "group": "서비스 아키텍처",
+    "order": 20.01,
+    "outline": [
+      {
+        "level": 2,
+        "text": "1. 책임 범위",
+        "slug": "1-책임-범위"
+      },
+      {
+        "level": 2,
+        "text": "2. 레포 구조",
+        "slug": "2-레포-구조"
+      },
+      {
+        "level": 3,
+        "text": "아키텍처 패턴",
+        "slug": "아키텍처-패턴"
+      },
+      {
+        "level": 2,
+        "text": "3. 핵심 의존성",
+        "slug": "3-핵심-의존성"
+      },
+      {
+        "level": 2,
+        "text": "4. 외부 인터페이스",
+        "slug": "4-외부-인터페이스"
+      },
+      {
+        "level": 3,
+        "text": "4.1 Gateway REST API 호출",
+        "slug": "41-gateway-rest-api-호출"
+      },
+      {
+        "level": 3,
+        "text": "4.2 WebSocket",
+        "slug": "42-websocket"
+      },
+      {
+        "level": 3,
+        "text": "4.3 인증 흐름",
+        "slug": "43-인증-흐름"
+      },
+      {
+        "level": 2,
+        "text": "5. 상태관리 패턴 (Riverpod 3.x)",
+        "slug": "5-상태관리-패턴-riverpod-3x"
+      },
+      {
+        "level": 3,
+        "text": "5.1 Provider 분류",
+        "slug": "51-provider-분류"
+      },
+      {
+        "level": 3,
+        "text": "5.2 코드 생성 표준",
+        "slug": "52-코드-생성-표준"
+      },
+      {
+        "level": 2,
+        "text": "6. 로컬 저장소 전략",
+        "slug": "6-로컬-저장소-전략"
+      },
+      {
+        "level": 2,
+        "text": "7. 라우팅 (GoRouter)",
+        "slug": "7-라우팅-gorouter"
+      },
+      {
+        "level": 2,
+        "text": "8. 빌드 / 배포",
+        "slug": "8-빌드--배포"
+      },
+      {
+        "level": 3,
+        "text": "8.1 환경 분리",
+        "slug": "81-환경-분리"
+      },
+      {
+        "level": 3,
+        "text": "8.2 CI/CD (GitHub Actions)",
+        "slug": "82-cicd-github-actions"
+      },
+      {
+        "level": 2,
+        "text": "9. 관측성",
+        "slug": "9-관측성"
+      },
+      {
+        "level": 3,
+        "text": "9.1 분산 추적",
+        "slug": "91-분산-추적"
+      },
+      {
+        "level": 3,
+        "text": "9.2 에러 추적",
+        "slug": "92-에러-추적"
+      },
+      {
+        "level": 3,
+        "text": "9.3 성능",
+        "slug": "93-성능"
+      },
+      {
+        "level": 2,
+        "text": "10. 보안",
+        "slug": "10-보안"
+      },
+      {
+        "level": 2,
+        "text": "11. 로컬 개발",
+        "slug": "11-로컬-개발"
+      },
+      {
+        "level": 3,
+        "text": "11.1 사전 준비",
+        "slug": "111-사전-준비"
+      },
+      {
+        "level": 3,
+        "text": "11.2 백엔드 연동",
+        "slug": "112-백엔드-연동"
+      },
+      {
+        "level": 3,
+        "text": "11.3 테스트",
+        "slug": "113-테스트"
+      },
+      {
+        "level": 2,
+        "text": "12. 트러블슈팅",
+        "slug": "12-트러블슈팅"
+      },
+      {
+        "level": 2,
+        "text": "13. 참고 문서",
+        "slug": "13-참고-문서"
+      }
+    ]
+  },
+  {
+    "slug": "synapse-platform-svc_ARCHITECTURE",
+    "title": "synapse-platform-svc — ARCHITECTURE",
+    "group": "서비스 아키텍처",
+    "order": 20.02,
+    "outline": [
+      {
+        "level": 2,
+        "text": "1. 책임 범위",
+        "slug": "1-책임-범위"
+      },
+      {
+        "level": 2,
+        "text": "2. 레포 구조 (Gradle 멀티모듈)",
+        "slug": "2-레포-구조-gradle-멀티모듈"
+      },
+      {
+        "level": 3,
+        "text": "모듈 의존성",
+        "slug": "모듈-의존성"
+      },
+      {
+        "level": 2,
+        "text": "3. 도메인 모델 핵심",
+        "slug": "3-도메인-모델-핵심"
+      },
+      {
+        "level": 3,
+        "text": "3.1 Auth Service",
+        "slug": "31-auth-service"
+      },
+      {
+        "level": 3,
+        "text": "3.2 Billing Service",
+        "slug": "32-billing-service"
+      },
+      {
+        "level": 3,
+        "text": "3.3 Audit Service",
+        "slug": "33-audit-service"
+      },
+      {
+        "level": 3,
+        "text": "3.4 Notification Service",
+        "slug": "34-notification-service"
+      },
+      {
+        "level": 2,
+        "text": "4. 외부 인터페이스",
+        "slug": "4-외부-인터페이스"
+      },
+      {
+        "level": 3,
+        "text": "4.1 REST API (Gateway 경유)",
+        "slug": "41-rest-api-gateway-경유"
+      },
+      {
+        "level": 3,
+        "text": "4.2 Webhook (외부 → 내부)",
+        "slug": "42-webhook-외부--내부"
+      },
+      {
+        "level": 3,
+        "text": "4.3 gRPC API (내부 전용)",
+        "slug": "43-grpc-api-내부-전용"
+      },
+      {
+        "level": 3,
+        "text": "4.4 Kafka",
+        "slug": "44-kafka"
+      },
+      {
+        "level": 2,
+        "text": "5. 데이터 저장소",
+        "slug": "5-데이터-저장소"
+      },
+      {
+        "level": 3,
+        "text": "5.1 PostgreSQL",
+        "slug": "51-postgresql"
+      },
+      {
+        "level": 3,
+        "text": "5.2 Redis",
+        "slug": "52-redis"
+      },
+      {
+        "level": 3,
+        "text": "5.3 S3 / 외부 저장소",
+        "slug": "53-s3--외부-저장소"
+      },
+      {
+        "level": 2,
+        "text": "6. 외부 의존성",
+        "slug": "6-외부-의존성"
+      },
+      {
+        "level": 3,
+        "text": "6.1 다른 svc 호출 (gRPC)",
+        "slug": "61-다른-svc-호출-grpc"
+      },
+      {
+        "level": 3,
+        "text": "6.2 외부 API",
+        "slug": "62-외부-api"
+      },
+      {
+        "level": 3,
+        "text": "6.3 시크릿 의존성",
+        "slug": "63-시크릿-의존성"
+      },
+      {
+        "level": 2,
+        "text": "7. 빌드 / 배포",
+        "slug": "7-빌드--배포"
+      },
+      {
+        "level": 3,
+        "text": "7.1 Gradle 빌드",
+        "slug": "71-gradle-빌드"
+      },
+      {
+        "level": 3,
+        "text": "7.2 Docker",
+        "slug": "72-docker"
+      },
+      {
+        "level": 3,
+        "text": "7.3 K8s 매니페스트",
+        "slug": "73-k8s-매니페스트"
+      },
+      {
+        "level": 2,
+        "text": "8. 관측성",
+        "slug": "8-관측성"
+      },
+      {
+        "level": 3,
+        "text": "8.1 메트릭",
+        "slug": "81-메트릭"
+      },
+      {
+        "level": 3,
+        "text": "8.2 로그",
+        "slug": "82-로그"
+      },
+      {
+        "level": 3,
+        "text": "8.3 트레이싱",
+        "slug": "83-트레이싱"
+      },
+      {
+        "level": 2,
+        "text": "9. 보안",
+        "slug": "9-보안"
+      },
+      {
+        "level": 3,
+        "text": "9.1 인증/인가",
+        "slug": "91-인증인가"
+      },
+      {
+        "level": 3,
+        "text": "9.2 민감 데이터",
+        "slug": "92-민감-데이터"
+      },
+      {
+        "level": 3,
+        "text": "9.3 외부 호출 보호",
+        "slug": "93-외부-호출-보호"
+      },
+      {
+        "level": 2,
+        "text": "10. 로컬 개발",
+        "slug": "10-로컬-개발"
+      },
+      {
+        "level": 3,
+        "text": "10.1 사전 준비",
+        "slug": "101-사전-준비"
+      },
+      {
+        "level": 3,
+        "text": "10.2 의존 인프라 기동",
+        "slug": "102-의존-인프라-기동"
+      },
+      {
+        "level": 3,
+        "text": "10.3 단일 서비스 실행",
+        "slug": "103-단일-서비스-실행"
+      },
+      {
+        "level": 3,
+        "text": "10.4 전체 서비스 실행 (Tilt)",
+        "slug": "104-전체-서비스-실행-tilt"
+      },
+      {
+        "level": 3,
+        "text": "10.5 테스트",
+        "slug": "105-테스트"
+      },
+      {
+        "level": 2,
+        "text": "11. 트러블슈팅",
+        "slug": "11-트러블슈팅"
+      },
+      {
+        "level": 2,
+        "text": "12. 참고 문서",
+        "slug": "12-참고-문서"
+      }
+    ]
+  },
+  {
+    "slug": "synapse-knowledge-svc_ARCHITECTURE",
+    "title": "synapse-knowledge-svc — ARCHITECTURE",
+    "group": "서비스 아키텍처",
+    "order": 20.03,
+    "outline": [
+      {
+        "level": 2,
+        "text": "1. 책임 범위",
+        "slug": "1-책임-범위"
+      },
+      {
+        "level": 2,
+        "text": "2. 레포 구조 (Gradle 멀티모듈)",
+        "slug": "2-레포-구조-gradle-멀티모듈"
+      },
+      {
+        "level": 3,
+        "text": "모듈 의존성",
+        "slug": "모듈-의존성"
+      },
+      {
+        "level": 2,
+        "text": "3. 도메인 모델 핵심",
+        "slug": "3-도메인-모델-핵심"
+      },
+      {
+        "level": 3,
+        "text": "3.1 Note Aggregate",
+        "slug": "31-note-aggregate"
+      },
+      {
+        "level": 3,
+        "text": "3.2 Graph 도메인 (CQRS Read-only)",
+        "slug": "32-graph-도메인-cqrs-read-only"
+      },
+      {
+        "level": 3,
+        "text": "3.3 NoteChunk",
+        "slug": "33-notechunk"
+      },
+      {
+        "level": 2,
+        "text": "4. 외부 인터페이스",
+        "slug": "4-외부-인터페이스"
+      },
+      {
+        "level": 3,
+        "text": "4.1 REST API (Gateway 경유)",
+        "slug": "41-rest-api-gateway-경유"
+      },
+      {
+        "level": 3,
+        "text": "4.2 gRPC API (내부 전용)",
+        "slug": "42-grpc-api-내부-전용"
+      },
+      {
+        "level": 3,
+        "text": "4.3 Kafka",
+        "slug": "43-kafka"
+      },
+      {
+        "level": 2,
+        "text": "5. 데이터 저장소",
+        "slug": "5-데이터-저장소"
+      },
+      {
+        "level": 3,
+        "text": "5.1 PostgreSQL (`knowledge` 스키마)",
+        "slug": "51-postgresql-knowledge-스키마"
+      },
+      {
+        "level": 3,
+        "text": "5.2 pgvector 인덱스 설정",
+        "slug": "52-pgvector-인덱스-설정"
+      },
+      {
+        "level": 3,
+        "text": "5.3 Elasticsearch",
+        "slug": "53-elasticsearch"
+      },
+      {
+        "level": 3,
+        "text": "5.4 Redis",
+        "slug": "54-redis"
+      },
+      {
+        "level": 3,
+        "text": "5.5 S3",
+        "slug": "55-s3"
+      },
+      {
+        "level": 2,
+        "text": "6. 외부 의존성",
+        "slug": "6-외부-의존성"
+      },
+      {
+        "level": 3,
+        "text": "6.1 다른 svc 호출 (gRPC)",
+        "slug": "61-다른-svc-호출-grpc"
+      },
+      {
+        "level": 3,
+        "text": "6.2 외부 API",
+        "slug": "62-외부-api"
+      },
+      {
+        "level": 2,
+        "text": "7. 빌드 / 배포",
+        "slug": "7-빌드--배포"
+      },
+      {
+        "level": 3,
+        "text": "7.1 빌드",
+        "slug": "71-빌드"
+      },
+      {
+        "level": 3,
+        "text": "7.2 Docker 이미지",
+        "slug": "72-docker-이미지"
+      },
+      {
+        "level": 3,
+        "text": "7.3 K8s 배포 특성",
+        "slug": "73-k8s-배포-특성"
+      },
+      {
+        "level": 3,
+        "text": "7.4 Cron Job (Graph Service)",
+        "slug": "74-cron-job-graph-service"
+      },
+      {
+        "level": 2,
+        "text": "8. 청킹 워커 상세 (chunking-worker)",
+        "slug": "8-청킹-워커-상세-chunking-worker"
+      },
+      {
+        "level": 3,
+        "text": "8.1 처리 흐름",
+        "slug": "81-처리-흐름"
+      },
+      {
+        "level": 3,
+        "text": "8.2 실패 시나리오",
+        "slug": "82-실패-시나리오"
+      },
+      {
+        "level": 3,
+        "text": "8.3 처리량 목표",
+        "slug": "83-처리량-목표"
+      },
+      {
+        "level": 2,
+        "text": "9. 관측성",
+        "slug": "9-관측성"
+      },
+      {
+        "level": 3,
+        "text": "9.1 메트릭",
+        "slug": "91-메트릭"
+      },
+      {
+        "level": 3,
+        "text": "9.2 로그 컨텍스트",
+        "slug": "92-로그-컨텍스트"
+      },
+      {
+        "level": 3,
+        "text": "9.3 알람",
+        "slug": "93-알람"
+      },
+      {
+        "level": 2,
+        "text": "10. 보안",
+        "slug": "10-보안"
+      },
+      {
+        "level": 2,
+        "text": "11. 로컬 개발",
+        "slug": "11-로컬-개발"
+      },
+      {
+        "level": 3,
+        "text": "11.1 의존 인프라",
+        "slug": "111-의존-인프라"
+      },
+      {
+        "level": 3,
+        "text": "11.2 초기 설정",
+        "slug": "112-초기-설정"
+      },
+      {
+        "level": 3,
+        "text": "11.3 실행",
+        "slug": "113-실행"
+      },
+      {
+        "level": 3,
+        "text": "11.4 샘플 데이터",
+        "slug": "114-샘플-데이터"
+      },
+      {
+        "level": 2,
+        "text": "12. 트러블슈팅",
+        "slug": "12-트러블슈팅"
+      },
+      {
+        "level": 2,
+        "text": "13. 참고 문서",
+        "slug": "13-참고-문서"
+      }
+    ]
+  },
+  {
+    "slug": "synapse-learning-svc_ARCHITECTURE",
+    "title": "synapse-learning-svc — ARCHITECTURE",
+    "group": "서비스 아키텍처",
+    "order": 20.04,
+    "outline": [
+      {
+        "level": 2,
+        "text": "1. 책임 범위",
+        "slug": "1-책임-범위"
+      },
+      {
+        "level": 2,
+        "text": "2. 레포 구조 (폴리글랏)",
+        "slug": "2-레포-구조-폴리글랏"
+      },
+      {
+        "level": 3,
+        "text": "언어 간 분리 원칙",
+        "slug": "언어-간-분리-원칙"
+      },
+      {
+        "level": 2,
+        "text": "3. 도메인 모델 핵심",
+        "slug": "3-도메인-모델-핵심"
+      },
+      {
+        "level": 3,
+        "text": "3.1 Card Service (Java)",
+        "slug": "31-card-service-java"
+      },
+      {
+        "level": 3,
+        "text": "3.2 ReviewSession",
+        "slug": "32-reviewsession"
+      },
+      {
+        "level": 3,
+        "text": "3.3 AI Service (Python)",
+        "slug": "33-ai-service-python"
+      },
+      {
+        "level": 2,
+        "text": "4. 외부 인터페이스",
+        "slug": "4-외부-인터페이스"
+      },
+      {
+        "level": 3,
+        "text": "4.1 REST API (Gateway 경유)",
+        "slug": "41-rest-api-gateway-경유"
+      },
+      {
+        "level": 3,
+        "text": "4.2 gRPC API",
+        "slug": "42-grpc-api"
+      },
+      {
+        "level": 3,
+        "text": "4.3 Kafka",
+        "slug": "43-kafka"
+      },
+      {
+        "level": 2,
+        "text": "5. 데이터 저장소",
+        "slug": "5-데이터-저장소"
+      },
+      {
+        "level": 3,
+        "text": "5.1 PostgreSQL (`learning` 스키마)",
+        "slug": "51-postgresql-learning-스키마"
+      },
+      {
+        "level": 3,
+        "text": "5.2 Redis",
+        "slug": "52-redis"
+      },
+      {
+        "level": 3,
+        "text": "5.3 pgvector / Elasticsearch",
+        "slug": "53-pgvector--elasticsearch"
+      },
+      {
+        "level": 2,
+        "text": "6. AI Service 세부 설계",
+        "slug": "6-ai-service-세부-설계"
+      },
+      {
+        "level": 3,
+        "text": "6.1 LLM 호출 전략",
+        "slug": "61-llm-호출-전략"
+      },
+      {
+        "level": 3,
+        "text": "6.2 시맨틱 캐시",
+        "slug": "62-시맨틱-캐시"
+      },
+      {
+        "level": 3,
+        "text": "6.3 RAG 파이프라인",
+        "slug": "63-rag-파이프라인"
+      },
+      {
+        "level": 3,
+        "text": "6.4 사용량 제한",
+        "slug": "64-사용량-제한"
+      },
+      {
+        "level": 2,
+        "text": "7. 빌드 / 배포",
+        "slug": "7-빌드--배포"
+      },
+      {
+        "level": 3,
+        "text": "7.1 Java 빌드",
+        "slug": "71-java-빌드"
+      },
+      {
+        "level": 3,
+        "text": "7.2 Python 빌드",
+        "slug": "72-python-빌드"
+      },
+      {
+        "level": 3,
+        "text": "7.3 Docker 이미지",
+        "slug": "73-docker-이미지"
+      },
+      {
+        "level": 3,
+        "text": "7.4 K8s 배포 특성",
+        "slug": "74-k8s-배포-특성"
+      },
+      {
+        "level": 2,
+        "text": "8. 관측성",
+        "slug": "8-관측성"
+      },
+      {
+        "level": 3,
+        "text": "8.1 메트릭",
+        "slug": "81-메트릭"
+      },
+      {
+        "level": 3,
+        "text": "8.2 로그 (AI Service Python)",
+        "slug": "82-로그-ai-service-python"
+      },
+      {
+        "level": 3,
+        "text": "8.3 추적",
+        "slug": "83-추적"
+      },
+      {
+        "level": 2,
+        "text": "9. 보안",
+        "slug": "9-보안"
+      },
+      {
+        "level": 2,
+        "text": "10. 로컬 개발",
+        "slug": "10-로컬-개발"
+      },
+      {
+        "level": 3,
+        "text": "10.1 인프라",
+        "slug": "101-인프라"
+      },
+      {
+        "level": 3,
+        "text": "10.2 Card Service",
+        "slug": "102-card-service"
+      },
+      {
+        "level": 3,
+        "text": "10.3 AI Service",
+        "slug": "103-ai-service"
+      },
+      {
+        "level": 3,
+        "text": "10.4 LLM mocking (CI/통합 테스트)",
+        "slug": "104-llm-mocking-ci통합-테스트"
+      },
+      {
+        "level": 3,
+        "text": "10.5 테스트",
+        "slug": "105-테스트"
+      },
+      {
+        "level": 2,
+        "text": "11. 트러블슈팅",
+        "slug": "11-트러블슈팅"
+      },
+      {
+        "level": 2,
+        "text": "12. 참고 문서",
+        "slug": "12-참고-문서"
+      }
+    ]
+  },
+  {
+    "slug": "synapse-engagement-svc_ARCHITECTURE",
+    "title": "synapse-engagement-svc — ARCHITECTURE",
+    "group": "서비스 아키텍처",
+    "order": 20.05,
+    "outline": [
+      {
+        "level": 2,
+        "text": "1. 책임 범위",
+        "slug": "1-책임-범위"
+      },
+      {
+        "level": 2,
+        "text": "2. 레포 구조 (Gradle 멀티모듈)",
+        "slug": "2-레포-구조-gradle-멀티모듈"
+      },
+      {
+        "level": 3,
+        "text": "모듈 의존성",
+        "slug": "모듈-의존성"
+      },
+      {
+        "level": 2,
+        "text": "3. 도메인 모델 핵심",
+        "slug": "3-도메인-모델-핵심"
+      },
+      {
+        "level": 3,
+        "text": "3.1 Community Service",
+        "slug": "31-community-service"
+      },
+      {
+        "level": 3,
+        "text": "3.2 Gamification Service",
+        "slug": "32-gamification-service"
+      },
+      {
+        "level": 3,
+        "text": "3.3 배지 평가 엔진",
+        "slug": "33-배지-평가-엔진"
+      },
+      {
+        "level": 2,
+        "text": "4. 외부 인터페이스",
+        "slug": "4-외부-인터페이스"
+      },
+      {
+        "level": 3,
+        "text": "4.1 REST API",
+        "slug": "41-rest-api"
+      },
+      {
+        "level": 3,
+        "text": "4.2 gRPC API",
+        "slug": "42-grpc-api"
+      },
+      {
+        "level": 3,
+        "text": "4.3 Kafka",
+        "slug": "43-kafka"
+      },
+      {
+        "level": 2,
+        "text": "5. 데이터 저장소",
+        "slug": "5-데이터-저장소"
+      },
+      {
+        "level": 3,
+        "text": "5.1 PostgreSQL (`engagement` 스키마)",
+        "slug": "51-postgresql-engagement-스키마"
+      },
+      {
+        "level": 3,
+        "text": "5.2 Redis (핵심 자원)",
+        "slug": "52-redis-핵심-자원"
+      },
+      {
+        "level": 3,
+        "text": "5.3 Sorted Set 리더보드 사용 예시",
+        "slug": "53-sorted-set-리더보드-사용-예시"
+      },
+      {
+        "level": 2,
+        "text": "6. 외부 의존성",
+        "slug": "6-외부-의존성"
+      },
+      {
+        "level": 3,
+        "text": "6.1 다른 svc 호출 (gRPC)",
+        "slug": "61-다른-svc-호출-grpc"
+      },
+      {
+        "level": 3,
+        "text": "6.2 외부 API",
+        "slug": "62-외부-api"
+      },
+      {
+        "level": 2,
+        "text": "7. 빌드 / 배포",
+        "slug": "7-빌드--배포"
+      },
+      {
+        "level": 3,
+        "text": "7.1 Gradle",
+        "slug": "71-gradle"
+      },
+      {
+        "level": 3,
+        "text": "7.2 Docker",
+        "slug": "72-docker"
+      },
+      {
+        "level": 3,
+        "text": "7.3 K8s 배포 특성",
+        "slug": "73-k8s-배포-특성"
+      },
+      {
+        "level": 3,
+        "text": "7.4 Cron Job",
+        "slug": "74-cron-job"
+      },
+      {
+        "level": 2,
+        "text": "8. 게임화 안전장치 (Anti-cheating)",
+        "slug": "8-게임화-안전장치-anti-cheating"
+      },
+      {
+        "level": 3,
+        "text": "XP Cap 예시",
+        "slug": "xp-cap-예시"
+      },
+      {
+        "level": 2,
+        "text": "9. 관측성",
+        "slug": "9-관측성"
+      },
+      {
+        "level": 3,
+        "text": "9.1 메트릭",
+        "slug": "91-메트릭"
+      },
+      {
+        "level": 3,
+        "text": "9.2 로그",
+        "slug": "92-로그"
+      },
+      {
+        "level": 3,
+        "text": "9.3 알람",
+        "slug": "93-알람"
+      },
+      {
+        "level": 2,
+        "text": "10. 보안 + 멀티테넌시",
+        "slug": "10-보안--멀티테넌시"
+      },
+      {
+        "level": 2,
+        "text": "11. 로컬 개발",
+        "slug": "11-로컬-개발"
+      },
+      {
+        "level": 3,
+        "text": "11.1 인프라",
+        "slug": "111-인프라"
+      },
+      {
+        "level": 3,
+        "text": "11.2 초기 데이터",
+        "slug": "112-초기-데이터"
+      },
+      {
+        "level": 3,
+        "text": "11.3 실행",
+        "slug": "113-실행"
+      },
+      {
+        "level": 3,
+        "text": "11.4 이벤트 주입 (테스트)",
+        "slug": "114-이벤트-주입-테스트"
+      },
+      {
+        "level": 3,
+        "text": "11.5 테스트",
+        "slug": "115-테스트"
+      },
+      {
+        "level": 2,
+        "text": "12. 트러블슈팅",
+        "slug": "12-트러블슈팅"
+      },
+      {
+        "level": 2,
+        "text": "13. 참고 문서",
+        "slug": "13-참고-문서"
       }
     ]
   }

@@ -6,7 +6,7 @@ Flutter의 차세대 상태 관리 라이브러리로, Provider 패키지의 완
 Synapse 클라이언트의 모든 상태 관리를 담당한다. 노트 편집 상태, SRS 복습 세션 진행, 지식 그래프 필터링, 사용자 인증 상태, 구독 플랜 상태, 커뮤니티 그룹 데이터, 게이미피케이션 XP/레벨 등을 Provider로 관리한다. `@riverpod` 어노테이션으로 Provider를 선언하고, `ref.watch`/`ref.read`로 상태를 구독하여 UI와 비즈니스 로직을 분리한다.
 
 #### 선택 이유
-Synapse는 11개 백엔드 서비스와 통신하는 복잡한 클라이언트 앱이다. Riverpod는 BLoC 대비 보일러플레이트가 적고, `@riverpod` 코드 생성으로 타입 안전한 Provider를 빠르게 작성할 수 있다. 또한 Provider 간 의존성 자동 관리, 자동 dispose, 비동기 데이터 로딩(`AsyncValue`)이 내장되어 API 호출이 많은 SaaS 앱에 적합하다. 7명 팀에서 5주 내 30+ 화면을 구현해야 하므로 생산성이 핵심이다.
+Synapse는 4개 백엔드 서비스와 learning-svc 내부의 Java/Python 런타임을 함께 호출하는 복잡한 클라이언트 앱이다. Riverpod는 BLoC 대비 보일러플레이트가 적고, `@riverpod` 코드 생성으로 타입 안전한 Provider를 빠르게 작성할 수 있다. 또한 Provider 간 의존성 자동 관리, 자동 dispose, 비동기 데이터 로딩(`AsyncValue`)이 내장되어 API 호출이 많은 SaaS 앱에 적합하다. 7명 팀에서 5주 내 30+ 화면을 구현해야 하므로 생산성이 핵심이다.
 
 #### 대안 비교
 

@@ -34,8 +34,8 @@ PostgreSQL 내에서 벡터 검색을 처리함으로써 별도의 벡터 DB(Pin
 
 #### 프로젝트 내 사용 위치
 - `notes_embeddings` 테이블 — 노트 청크별 임베딩 저장
-- `synapse-ai/app/services/rag_service.py` — LangChain PGVector 통합
-- `synapse-ai/app/services/search_service.py` — 하이브리드 검색
+- `synapse-learning-svc/learning-ai/app/services/rag_service.py` — LangChain PGVector 통합
+- `synapse-learning-svc/learning-ai/app/services/search_service.py` — 하이브리드 검색
 
 #### 설정 가이드
 

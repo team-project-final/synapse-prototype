@@ -3,7 +3,7 @@
 AWS Elastic Container Registry(ECR)는 Docker 컨테이너 이미지를 안전하게 저장, 관리, 배포하는 AWS 관리형 컨테이너 레지스트리이다.
 
 #### 역할 (Synapse 프로젝트 내)
-- 11개 마이크로서비스의 Docker 이미지 저장소
+- 4개 서비스 레포와 learning-svc 내부 런타임의 Docker 이미지 저장소
 - GitHub Actions CI에서 빌드된 이미지를 `<account>.dkr.ecr.ap-northeast-2.amazonaws.com/synapse/<service>:<tag>` 형식으로 푸시
 - EKS 노드에서 이미지 풀 (IAM 역할 기반 인증, 별도 자격증명 불필요)
 - 이미지 취약점 스캔 (ECR Enhanced Scanning, Inspector 연동)

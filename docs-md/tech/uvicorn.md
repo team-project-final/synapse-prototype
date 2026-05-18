@@ -27,8 +27,8 @@ FastAPI는 ASGI 프레임워크이므로 ASGI 서버가 필수이다. uvicorn은
 - `--proxy-headers`: 리버스 프록시 뒤에서 실제 IP 추출
 
 #### 프로젝트 내 사용 위치
-- `synapse-ai/Dockerfile` — 프로덕션 서버 실행
-- `synapse-ai/docker-compose.yml` — 로컬 개발 실행
+- `synapse-learning-svc/learning-ai/Dockerfile` — 프로덕션 서버 실행
+- `synapse-learning-svc/learning-ai/docker-compose.yml` — 로컬 개발 실행
 
 #### 설정 가이드
 
@@ -52,10 +52,10 @@ CMD ["gunicorn", "app.main:app",
 # docker-compose.yml — 개발 환경
 services:
   ai-service:
-    build: ./synapse-ai
+    build: ./synapse-learning-svc/learning-ai
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     volumes:
-      - ./synapse-ai/app:/app/app
+      - ./synapse-learning-svc/learning-ai/app:/app/app
 ```
 
 #### 트러블슈팅

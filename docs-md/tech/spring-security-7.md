@@ -31,8 +31,8 @@ Spring Security는 Spring 생태계의 표준 보안 솔루션으로, OAuth 2.0 
 - `UserDetailsService`: 사용자 정보 로드
 
 #### 프로젝트 내 사용 위치
-- `synapse-auth/src/main/java/security/` — JWT 발급, OAuth 2.0 핸들러
-- `synapse-gateway/src/main/java/security/` — JWT 검증 필터
+- `synapse-platform-svc/src/main/java/.../auth/` — JWT 발급, OAuth 2.0 핸들러
+- `api-gateway/src/main/java/security/` — JWT 검증 필터
 - 모든 서비스: `@PreAuthorize` 메서드 보안
 
 #### 설정 가이드

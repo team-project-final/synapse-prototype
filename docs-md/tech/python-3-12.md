@@ -30,15 +30,15 @@ AI/ML 라이브러리 생태계(LangChain, OpenAI SDK, sentence-transformers, hu
 - `poetry`: 의존성 및 가상환경 관리
 
 #### 프로젝트 내 사용 위치
-- `synapse-ai/` — AI Service 전체
-- `synapse-ai/app/services/` — LangChain, OpenAI 통합
+- `synapse-learning-svc/learning-ai/` — AI Service 전체
+- `synapse-learning-svc/learning-ai/app/services/` — LangChain, OpenAI 통합
 
 #### 설정 가이드
 
 ```toml
 # pyproject.toml
 [tool.poetry]
-name = "synapse-ai"
+name = "synapse-learning-ai"
 version = "1.0.0"
 python = "^3.12"
 

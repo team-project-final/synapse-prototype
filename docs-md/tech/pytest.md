@@ -30,9 +30,9 @@ Python 생태계에서 사실상의 표준 테스트 프레임워크이며, `pyt
 - `--cov` — 커버리지 측정
 
 #### 프로젝트 내 사용 위치
-- `synapse-ai/tests/unit/` — 단위 테스트
-- `synapse-ai/tests/integration/` — 통합 테스트
-- `synapse-ai/tests/conftest.py` — 공통 픽스처
+- `synapse-learning-svc/learning-ai/tests/unit/` — 단위 테스트
+- `synapse-learning-svc/learning-ai/tests/integration/` — 통합 테스트
+- `synapse-learning-svc/learning-ai/tests/conftest.py` — 공통 픽스처
 
 #### 설정 가이드
 

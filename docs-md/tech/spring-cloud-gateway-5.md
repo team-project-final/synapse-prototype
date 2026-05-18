@@ -3,7 +3,7 @@
 Spring 생태계의 API 게이트웨이 솔루션으로, Netty 기반 논블로킹 I/O와 WebFlux를 사용하여 마이크로서비스 앞단의 단일 진입점을 제공한다.
 
 #### 역할
-Synapse의 모든 클라이언트 요청이 통과하는 단일 진입점이다. JWT 토큰 검증, 테넌트 ID 추출 및 헤더 주입, 각 마이크로서비스로의 라우팅, Rate Limiting, Circuit Breaking, 요청/응답 로깅을 담당한다. 11개 마이크로서비스를 단일 도메인(`api.synapse.app`)으로 노출한다.
+Synapse의 모든 클라이언트 요청이 통과하는 단일 진입점이다. JWT 토큰 검증, 테넌트 ID 추출 및 헤더 주입, 4개 백엔드 서비스와 learning-svc 내부 런타임으로의 라우팅, Rate Limiting, Circuit Breaking, 요청/응답 로깅을 담당한다. 모든 API를 단일 도메인(`api.synapse.app`)으로 노출한다.
 
 #### 선택 이유
 Spring Boot 기반 백엔드 생태계와의 자연스러운 통합, Spring Security와의 JWT 검증 통합, Resilience4j와의 서킷 브레이커 통합이 핵심 선택 이유이다. Netflix Zuul 대비 논블로킹 아키텍처로 높은 처리량을 달성한다.
@@ -33,9 +33,9 @@ Spring Boot 기반 백엔드 생태계와의 자연스러운 통합, Spring Secu
 - **WebClient**: 다운스트림 서비스 호출에 논블로킹 HTTP 클라이언트 사용
 
 #### 프로젝트 내 사용 위치
-- `synapse-gateway/` — 게이트웨이 서비스 모듈
-- `synapse-gateway/src/main/resources/application.yml` — 라우팅 설정
-- `synapse-gateway/src/main/java/filters/` — 커스텀 필터 구현
+- `api-gateway/` — 게이트웨이 서비스 모듈
+- `api-gateway/src/main/resources/application.yml` — 라우팅 설정
+- `api-gateway/src/main/java/filters/` — 커스텀 필터 구현
 
 #### 설정 가이드
 

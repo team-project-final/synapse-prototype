@@ -3,7 +3,7 @@
 Prometheus는 시계열 메트릭 수집 및 저장 시스템이며, Grafana는 수집된 메트릭을 시각화하는 대시보드 플랫폼이다.
 
 #### 역할 (Synapse 프로젝트 내)
-- 11개 서비스의 CPU, 메모리, 네트워크 메트릭 수집 (cAdvisor, node-exporter)
+- 4개 서비스와 learning-svc 내부 런타임의 CPU, 메모리, 네트워크 메트릭 수집 (cAdvisor, node-exporter)
 - 서비스별 비즈니스 메트릭: 초당 API 호출(RPS), 응답 시간(p50/p95/p99), 에러율
 - AI 서비스 전용 메트릭: LLM API 호출 횟수, 평균 토큰 수, 시맨틱 캐시 히트율
 - Grafana 대시보드: 서비스 overview, SLO 트래킹, 비용 모니터링
